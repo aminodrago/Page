@@ -1,0 +1,30 @@
+{
+    "name": "lavalite/page",
+    "description": "Page package for lavalite framework",
+    "keywords": ["lavalite", "framework", "page", "laravel"],
+    "authors": [
+        {
+            "name": "Lava Lite",
+            "email": "info@lavalite.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.1.*",
+        "rtconner/laravel-tagging": "dev-master",
+        "venturecraft/revisionable": "dev-master",
+        "dimsav/laravel-translatable": "dev-master",
+        "philf/setting": "dev-master",
+        "lavalite/file-up": "dev-master",
+        "lavalite/image-resize": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Lavalite\\Page\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
