@@ -32,7 +32,8 @@ class Page extends Ardent{
 		'build_from' => 'name' );
 
 	public static $rules = array(
-		'name'      => 'required');
+		'name'      => 'required'
+	);
 	/**
 	* Array with the fields translated in the Translation table
 	*

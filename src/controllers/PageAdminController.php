@@ -49,7 +49,7 @@ class PageAdminController extends AdminController{
 	{
 		$this->hasAccess('page.create');
 		$this->setTheme('create');
-		$data['page']	= new Page(); 
+		$data['page']	= new $this->model(new Page());
 		return $this->theme->of('page::admin.create', $data)->render();
 	}
 
@@ -57,7 +57,7 @@ class PageAdminController extends AdminController{
 	{
 		
 		$this->hasAccess('page.create');
-		$row = new Page();	
+		$row = new $this->model(new Page());
 		if ($row->save()) {
 
 			\Session::flash('success',  \Lang::get('messages.success.create', array('Module' => \Lang::get('page::module.name'))));
