@@ -4,7 +4,7 @@ use \LaravelBook\Ardent\Ardent;
 use \Venturecraft\Revisionable\RevisionableTrait;
 use \Conner\Tagging\Taggable;
 use \Lavalite\FileUp\FileUpTrait;
-use \Dimsav\Translatable\Translatable;
+use \Lavalite\Translatable\Translatable;
 
 class Page extends Ardent{
 
