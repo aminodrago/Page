@@ -19,7 +19,7 @@ class PublicController extends \BaseController{
 	public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
 	{
 		$this->model 	= $page;
-		$this->theme = \Theme::uses('admin')->layout('default'); //$this->setupTheme('admin', 'default');
+		$this->theme = \Theme::uses('admin')->layout('page'); //$this->setupTheme('admin', 'default');
 		\Former::framework('TwitterBootstrap3');
 		\Former::config('fetch_errors', true);
 

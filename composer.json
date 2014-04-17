@@ -10,13 +10,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.1.*",
-        "rtconner/laravel-tagging": "dev-master",
-        "venturecraft/revisionable": "dev-master",
-        "dimsav/laravel-translatable": "dev-master",
-        "philf/setting": "dev-master",
-        "lavalite/file-up": "dev-master",
-        "lavalite/image-resize": "dev-master"
+        "illuminate/support": "4.1.*"
     },
     "autoload": {
         "classmap": [

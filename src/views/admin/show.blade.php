@@ -3,7 +3,7 @@
 		{{-- Breadcrumbs --}}
 		<div class="col-md-8 col-xs-7 view-breadcrumb">
 			<ol class="breadcrumb">
-				<li><a href="{{ URL::to('admin') }}">{{ Lang::get('appl.home') }}</a></li>
+				<li><a href="{{ URL::to('admin') }}">{{ Lang::get('app.home') }}</a></li>
 				<li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::module.names') }}</a></li>
 				<li class="active">{{ $page['name'] }}</li>
 			</ol>
@@ -12,9 +12,9 @@
 
 		{{-- Buttons --}} 
 		<div class="col-md-4 col-xs-5 view-buttons" align="right">
-			<a class="btn btn-info view-btn-back" href="{{ URL::to('admin/page') }}" ><i class="fa fa-angle-left"></i> {{ Lang::get('appl.back') }}</a>
+			<a class="btn btn-info view-btn-back" href="{{ URL::to('admin/page') }}" ><i class="fa fa-angle-left"></i> {{ Lang::get('app.back') }}</a>
 			<a class="btn btn-info view-btn-edit {{ ($permissions['edit']) ? '' : 'disabled' }}" href="{{ URL::to('admin/page') . '/' . $page['id'] . '/edit'}}">
-				<i class="fa fa-pencil-square-o"></i> {{ Lang::get('appl.edit') }}
+				<i class="fa fa-pencil-square-o"></i> {{ Lang::get('app.edit') }}
 			</a>
 		</div>
 	</div>

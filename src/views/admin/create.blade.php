@@ -4,23 +4,23 @@
 		{{-- Breadcrumbs --}}
 		<div class="col-md-8 col-xs-8 view-breadcrumb" >
 			<ol class="breadcrumb">
-				<li><a href="{{ URL::to('admin') }}">{{  Lang::get('appl.home') }}</a></li>
+				<li><a href="{{ URL::to('admin') }}">{{  Lang::get('app.home') }}</a></li>
 				<li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::module.names') }}</a></li>
-				<li class="active">{{ Lang::get('appl.new') }} {{ Lang::get('page::module.name') }}</li>
+				<li class="active">{{ Lang::get('app.new') }} {{ Lang::get('page::module.name') }}</li>
 			</ol>
 		</div>
 
 
 		{{-- Buttons --}} 
 		<div class="col-md-4 col-xs-4 view-buttons">
-			<a class="btn btn-info pull-right" href="{{ URL::to('admin/page') }}"><i class="fa fa-angle-left"></i> {{  Lang::get('appl.back') }}</a>
+			<a class="btn btn-info pull-right" href="{{ URL::to('admin/page') }}"><i class="fa fa-angle-left"></i> {{  Lang::get('app.back') }}</a>
 		</div>
 	</div>
 
 	{{-- Content --}} 
 	<div class='view-content'> 
 		<fieldset>
-			{{Former::legend( Lang::get('appl.new')  . ' ' . Lang::get('page::module.name'))}}
+			{{Former::legend( Lang::get('app.new')  . ' ' . Lang::get('page::module.name'))}}
 			{{Former::vertical_open()
 			->id('page')
 			->method('POST')
@@ -57,8 +57,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					{{Former::actions()
-					->large_primary_submit(Lang::get('appl.submit'))
-					->large_default_reset(Lang::get('appl.reset'))}}
+					->large_primary_submit(Lang::get('app.submit'))
+					->large_default_reset(Lang::get('app.reset'))}}
 				</div>
 
 			</div>
