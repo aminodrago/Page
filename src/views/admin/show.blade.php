@@ -4,7 +4,7 @@
 		<div class="col-md-8 col-xs-7 view-breadcrumb">
 			<ol class="breadcrumb">
 				<li><a href="{{ URL::to('admin') }}">{{ Lang::get('app.home') }}</a></li>
-				<li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::module.names') }}</a></li>
+				<li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::package.names') }}</a></li>
 				<li class="active">{{ $page['name'] }}</li>
 			</ol>
 		</div>
@@ -23,7 +23,7 @@
 	<div class='view-content'> 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">{{ Lang::get('page::module.name') }} [{{ $page['name'] }}]</h3>
+				<h3 class="panel-title">{{ Lang::get('page::package.name') }} [{{ $page['name'] }}]</h3>
 			</div>
 			<div class="panel-body">
 				<div class="row">

@@ -7,17 +7,17 @@
 <div class="tab-content">
 	<div class="tab-pane active" id="rt-help">
 		<fieldset>
-			<legend>{{  Lang::get('app.help') }}</legend>
+			<legend>{{  Lang::get('app.help') }}q</legend>
 		</fieldset>
 	</div>
 	<div class="tab-pane" id="rt-settings">
 		<fieldset>
-			<legend>{{  Lang::get('app.settings') }}</legend>
+			<legend>{{  Lang::get('app.settings') }}q</legend>
 		</fieldset>
 	</div>
 	<div class="tab-pane" id="rt-request">
 		<fieldset>
-			<legend>{{  Lang::get('app.add') }}</legend>
+			<legend>{{  Lang::get('app.add') }}q</legend>
 		</fieldset>
 	</div>
 </div>

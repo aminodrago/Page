@@ -4,7 +4,7 @@
 		<div class="col-md-4 col-xs-12 view-breadcrumb">
 			<ol class="breadcrumb">
 				<li><a href="{{ URL::to('admin') }}"> {{ Lang::get('app.home') }} </a></li>
-				<li class="active">{{ Lang::get('page::module.names') }}</li>
+				<li class="active">{{ Lang::get('page::package.names') }}</li>
 			</ol>
 		</div>
 		<div class="col-md-6 col-xs-8 view-search">
@@ -23,7 +23,7 @@
 		{{-- Buttons --}} 
 		<div class="col-md-2 col-xs-4 view-buttons">
 			<a class="btn btn-info pull-right {{ ($permissions['create']) ? '' : 'disabled' }} view-btn-create" href="{{ URL::to('admin/page/create') }}">
-				<i class="fa fa-plus-circle"></i> {{ Lang::get('app.new') }} {{ Lang::get('page::module.name') }}
+				<i class="fa fa-plus-circle"></i> {{ Lang::get('app.new') }} {{ Lang::get('page::package.name') }}
 			</a>
 		</div>
 	</div>
@@ -40,7 +40,7 @@
 	<div class='view-content'> 
 		<table class="table">
 			<thead>
-				<th>{{ Lang::get('page::module.name') }}</th>
+				<th>{{ Lang::get('page::package.name') }}</th>
 				<th>{{ Lang::get('page::label.title') }}</th>
 				<th>{{ Lang::get('page::label.slug') }}</th>
 				<th width="70">{{ Lang::get('app.options') }}</th>

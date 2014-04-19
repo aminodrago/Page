@@ -3,14 +3,16 @@
 use \LaravelBook\Ardent\Ardent;
 use \Venturecraft\Revisionable\RevisionableTrait;
 use \Conner\Tagging\Taggable;
-use \Lavalite\FileUp\FileUpTrait;
+use \Lavalite\File\FileTrait;
 use \Lavalite\Translatable\Translatable;
+
+use Config;
 
 class Page extends Ardent{
 
-	use RevisionableTrait, Taggable, FileUpTrait, Translatable{
+	use RevisionableTrait, Taggable, FileTrait, Translatable{
 		RevisionableTrait::boot as rtBoot;
-		FileUpTrait::boot as fuBoot;
+		FileTrait::boot as fuBoot;
 	}
 
 	protected $softDelete   = true;
@@ -29,17 +31,19 @@ class Page extends Ardent{
 	}
 
 	public static $sluggable = array(
-		'build_from' => 'name' );
+		'build_from' => 'name'
+		);
 
 	public static $rules = array(
 		'name'      => 'required'
-	);
+		);
 	/**
 	* Array with the fields translated in the Translation table
 	*
 	* @var array
 	*/
-	public $translatedAttributes = array('heading','content','title','keyword','description','abstract');
+	public $translatedAttributes = array('heading','content','title',
+									'keyword','description','image');
 
 	/**
 	* Set $translationModel if you want to overwrite the convention
@@ -64,7 +68,8 @@ class Page extends Ardent{
 	*
 	* @var array
 	*/
-	protected $fillable = ['name','slug','order','status', 'heading', 'content','title','keyword','description','abstract'];
+	protected $fillable = ['name','slug','order','status', 'heading', 
+	'content','title','keyword','description','abstract','image'];
 
 	/**
 	* The database field being used to define the locale parameter in the translation model.
@@ -72,11 +77,38 @@ class Page extends Ardent{
 	*
 	* @var string
 	*/
-	public $localeKey = 'lang';
+	public 	$localeKey = 'lang';
 
 	protected $keepRevisionOf = array(
 		'name', 'content','title','keyword','description','abstract');
 
 
-	protected $uploads          = array('single'        => array('banner'));
+	protected $uploads          = array(
+										'single' 	=> array('banner', 'image'),
+										'multiple' 	=> array('images'),
+										'nostore' 	=> array('files'),
+										);
+
+	public function setNameAttribute($name){
+		$this -> attributes['name'] 	= $name;
+		if (trim($this -> getAttribute('title')) == '')
+			$this -> setAttribute('title', $name);
+		if (trim($this -> getAttribute('heading')) == '')
+			$this -> setAttribute('heading', $name);
+	}
+
+    /**
+     * returns the current package
+     * 
+     * @return string
+     */
+    private function getPackage()
+    {
+        return Config::get('page::package');
+    }
+
+    public function getBannerAttribute($banner) {
+    	if ($banner != '') return $banner;
+    	return Config::get('page::banner');
+    }
 }

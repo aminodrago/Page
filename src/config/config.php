@@ -6,7 +6,7 @@ return array(
      * Module .
      */
 
-	'module' => 'pages',
+	'package' => 'lavalite/page',
 
 	/**
      * Model .
@@ -16,7 +16,7 @@ return array(
 
 	'model' => 'Lavalite\Page\Models\Page',
 
-	'permissions' => array('create', 'edit', 'show', 'delete'),
+     'permissions'  => array('create', 'edit', 'show', 'delete'),
 
-
+     'banner'       => 'path-to-banner-set-it-in-page-config',
 );

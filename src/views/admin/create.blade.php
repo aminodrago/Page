@@ -5,8 +5,8 @@
 		<div class="col-md-8 col-xs-8 view-breadcrumb" >
 			<ol class="breadcrumb">
 				<li><a href="{{ URL::to('admin') }}">{{  Lang::get('app.home') }}</a></li>
-				<li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::module.names') }}</a></li>
-				<li class="active">{{ Lang::get('app.new') }} {{ Lang::get('page::module.name') }}</li>
+				<li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::package.names') }}</a></li>
+				<li class="active">{{ Lang::get('app.new') }} {{ Lang::get('page::package.name') }}</li>
 			</ol>
 		</div>
 
@@ -20,7 +20,7 @@
 	{{-- Content --}} 
 	<div class='view-content'> 
 		<fieldset>
-			{{Former::legend( Lang::get('app.new')  . ' ' . Lang::get('page::module.name'))}}
+			{{Former::legend( Lang::get('app.new')  . ' ' . Lang::get('page::package.name'))}}
 			{{Former::vertical_open()
 			->id('page')
 			->method('POST')
@@ -57,7 +57,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					{{Former::actions()
-					->large_primary_submit(Lang::get('app.submit'))
+					->large_primary_submit(Lang::get('app.save'))
 					->large_default_reset(Lang::get('app.reset'))}}
 				</div>
 
@@ -72,7 +72,7 @@
 jQuery(function( $ ) {
 	$('.content').redactor({
 		minHeight: 200, 
-		direction: '{{ LaravelLocalization::getCurrentLocaleDirection() }}'
+		direction: '{{ Localization::getCurrentLocaleDirection() }}'
 		lang: '{{ App::getLocale()'
 	});
 });

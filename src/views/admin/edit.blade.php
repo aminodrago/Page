@@ -5,7 +5,7 @@
 		<div class="col-md-8 col-xs-7 view-breadcrumb">
 			<ol class="breadcrumb">
 				<li><a href="{{ URL::to('admin') }}">{{  Lang::get('app.home') }}</a></li>
-				<li><a href="{{ URL::to('admin/page')}}">{{ Lang::get('page::module.names') }}</a></li>
+				<li><a href="{{ URL::to('admin/page')}}">{{ Lang::get('page::package.names') }}</a></li>
 				<li class="active">{{ $page['name'] }}</li>
 			</ol>
 		</div>
@@ -20,7 +20,7 @@
 	{{-- Content --}}
 	<div class='view-content'> 
 		<fieldset>
-			{{Former::legend( Lang::get('app.edit') . ' ' . Lang::get('page::module.name') . ' [ ' . $page['name'] . ' ] ')}}
+			{{Former::legend( Lang::get('app.edit') . ' ' . Lang::get('page::package.name') . ' [ ' . $page['name'] . ' ] ')}}
 
 			{{Former::vertical_open()
 			->id('page')
@@ -49,7 +49,7 @@
 						<div class="col-md-12 ">
 							{{ Former::textarea('content')
 							-> label('page::label.content')
-							-> addClass('content')
+							-> addClass('html-editor')
 							-> placeholder('page::placeholder.content')}}
 						</div>
 
@@ -59,6 +59,14 @@
 							-> placeholder('page::placeholder.banner')
 							-> addClass('banner')	}}
 						</div>
+
+						<div class="col-md-12 ">
+							{{ Former::file('image')
+							-> label('page::label.image')
+							-> placeholder('page::placeholder.image')
+							-> addClass('image')	}}
+						</div>
+
 
 						<div class="col-md-12 ">
 							{{ Former::checkbox('status')
@@ -74,6 +82,11 @@
 							{{ Former::text('title')
 							-> label('page::label.title')
 							-> placeholder('page::placeholder.title')}}
+						</div>
+						<div class="col-md-12 ">
+							{{ Former::text('heading')
+							-> label('page::label.heading')
+							-> placeholder('page::placeholder.heading')}}
 						</div>
 						<div class="col-md-12 ">
 							{{ Former::textarea('keyword')
@@ -107,7 +120,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					{{Former::actions()
-					->large_primary_submit(Lang::get('app.submit'))
+					->large_primary_submit(Lang::get('app.save'))
 					->large_default_reset(Lang::get('app.reset'))}}
 				</div>
 			</div>
@@ -118,11 +131,6 @@
 
 <script>
 jQuery(function( $ ) {
-	$('.content').redactor({
-		minHeight: 200, // pixels }
-		imageUpload: '/upload/redactor-image/',
-	});
-
 	$('.banner').ezdz({
 		text: '{{Lang::get('page::placeholder.banner')}}',
 		validators: {
