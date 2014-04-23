@@ -1,7 +1,7 @@
 {
     "name": "lavalite/page",
     "description": "Page package for lavalite framework",
-    "keywords": ["lavalite", "framework", "page", "laravel"],
+    "keywords": ["lavalite", "page", "laravel"],
     "authors": [
         {
             "name": "Lava Lite",
