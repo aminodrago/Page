@@ -1,138 +1,136 @@
-<?php namespace Lavalite\Page;
+<?php namespace Lavalite\Page\Controllers;
 
 use Lavalite\Page\Models\Page as Page;
 
-use Lang, Sentry, App, Config, Input;
+use Lang;
+use Sentry;
+use App;
+use Config;
+use Input;
 
-class PageAdminController extends \AdminController{
+class PageAdminController extends \AdminController
+{
 
-	/**
-	 * Theme instance.
-	 *
-	 * @var \Teepluss\Theme\Theme
-	 */
-	protected $theme;
+    public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
+    {
+        $this->model 	= $page;
+        parent::__construct();
+    }
 
-	/**
-	 * Model instance.
-	 *
-	 * @var \Pages\Model\Pages
-	 */
-	protected $model;
+    protected function hasAccess()
+    {
+        if(!Sentry::getUser()->hasAnyAccess(array('menu', 'admin', 'developer')))
+            App::abort(401, Lang::get('messages.error.auth'));
 
-	public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
-	{
-		$this->model 	= $page;
-		parent::setupTheme();
-	}
+        return true;
+    }
 
-	protected function hasAccess() {
+    protected function permissions()
+    {
+        $p				= array();
 
-		if(!Sentry::getUser()->hasAnyAccess(array('menu', 'admin', 'developer')))
-			App::abort(401, Lang::get('messages.error.auth'));
+        $permissions 	= Config::get('page::permissions');
 
-		return true;
-	}
+        foreach ($permissions as $key => $value) {
+            $p[$value]	= Sentry::getUser()->hasAccess('page.'.$value);
+        }
 
-	protected function permissions() {
-		$p				= array();
+        return $p;
+    }
 
-		$permissions 	= Config::get('page::permissions');
+    public function index()
+    {
+        $data['q']		= Input::get('q');
+        $this->hasAccess();
+        $data[(str_plural('page'))]	= $this->model->paginate(15);
+        $data['permissions']		= $this->permissions();
+        $this->theme->prependTitle(Lang::get('page::package.names') . ' :: ');
 
-		foreach ($permissions as $key => $value) {
-			$p[$value]	= Sentry::getUser()->hasAccess('page.'.$value);
-		}
+        return $this->theme->of('page::admin.index', $data)->render();
+    }
 
-		return $p;
-	}
+    public function show($id)
+    {
+        $this->hasAccess('page.show');
+        $data['page']	= $this->model->find($id);
+        $data['permissions']	= $this->permissions();
+        $this->theme->prependTitle(Lang::get('app.view') . ' ' . Lang::get('page::package.name') . ' :: ');
 
-	public function index()
-	{
-		$data['q']		= Input::get('q');
-		$this->hasAccess();
-		$data[(str_plural('page'))]	= $this->model->paginate(15);
-		$data['permissions']		= $this->permissions();
-		$this->theme->prependTitle(Lang::get('page::package.names') . ' :: ');
-		return $this->theme->of('page::admin.index', $data)->render();
-	}
+        return $this->theme->of('page::admin.show', $data)->render();
+    }
 
-	public function show($id)
-	{
-		$this->hasAccess('page.show');
-		$data['page']	= $this->model->find($id);
-		$data['permissions']	= $this->permissions();
-		$this->theme->prependTitle(Lang::get('app.view') . ' ' . Lang::get('page::package.name') . ' :: ');
-		return $this->theme->of('page::admin.show', $data)->render();
-	}
+    public function create()
+    {
+        $this->hasAccess('page.create');
+        $data['page']	= new $this->model(new Page());
+        $this->theme->prependTitle(Lang::get('app.new') . ' ' . Lang::get('page::package.name') . ' :: ');
 
-	public function create()
-	{
-		$this->hasAccess('page.create');
-		$data['page']	= new $this->model(new Page());
-		$this->theme->prependTitle(Lang::get('app.new') . ' ' . Lang::get('page::package.name') . ' :: ');
-		return $this->theme->of('page::admin.create', $data)->render();
-	}
+        return $this->theme->of('page::admin.create', $data)->render();
+    }
 
-	public function store()
-	{
-		
-		$this->hasAccess('page.create');
-		$row = new $this->model(new Page());
-		if ($row->save()) {
+    public function store()
+    {
 
-			\Session::flash('success',  Lang::get('messages.success.create', array('Module' => Lang::get('page::package.name'))));
-			return \Redirect::to('/admin/page');
+        $this->hasAccess('page.create');
+        $row = new $this->model(new Page());
+        if ($row->save()) {
 
-		} else {
-			\Former::withErrors($row->errors());
-			\Former::populate(Input::all());
-			$data['page']	=  $this->model->find(0); 
-			$this->theme->prependTitle(Lang::get('app.new') . ' ' . Lang::get('page::package.name') . ' :: ');
-			return $this->theme->of('page::admin.create', $data)->render();
-		}
+            \Session::flash('success',  Lang::get('messages.success.create', array('Module' => Lang::get('page::package.name'))));
 
-	}
+            return \Redirect::to('/admin/page');
 
-	public function edit($id)
-	{
+        } else {
+            \Former::withErrors($row->errors());
+            \Former::populate(Input::all());
+            $data['page']	=  $this->model->find(0);
+            $this->theme->prependTitle(Lang::get('app.new') . ' ' . Lang::get('page::package.name') . ' :: ');
 
-		$this->hasAccess('page.edit');
-		$data['page']		= $this->model->find($id);
+            return $this->theme->of('page::admin.create', $data)->render();
+        }
 
+    }
 
-		\Former::populate($data['page']);
-		$this->theme->prependTitle(Lang::get('app.edit') . ' ' . Lang::get('page::package.name') . ' :: ');
-		return $this->theme->of('page::admin.edit', $data)->render();
+    public function edit($id)
+    {
 
-	}
+        $this->hasAccess('page.edit');
+        $data['page']		= $this->model->find($id);
 
-	public function update($id)
-	{
-		
-		$this->hasAccess('page.edit');
-		$row = $this->model->find($id);
+        \Former::populate($data['page']);
+        $this->theme->prependTitle(Lang::get('app.edit') . ' ' . Lang::get('page::package.name') . ' :: ');
 
-		if ($row->save()) {
-			\Session::flash('success',  Lang::get('messages.success.update', array('Module' => Lang::get('page::package.name'))));
-			return \Redirect::to('/admin/page');
-		}
-		else
-		{
-			\Former::withErrors($row->errors());
-			\Former::populate($this -> getInputs());
-			$data['page']		= $this->model->find($id);
-			return $this->theme->of('page::admin.edit', $data)->render();
-		}
+        return $this->theme->of('page::admin.edit', $data)->render();
 
-	}
+    }
 
-	public function destroy($id)
-	{
-		$this->hasAccess('page.delete');
-		$this->model->delete($id);
-		\Session::flash('success', Lang::get('messages.success.delete', array('Module' => Lang::get('page::package.name'))));
-		return \Redirect::to('/admin/page');
+    public function update($id)
+    {
 
-	}
+        $this->hasAccess('page.edit');
+        $row = $this->model->find($id);
+
+        if ($row->save()) {
+            \Session::flash('success',  Lang::get('messages.success.update', array('Module' => Lang::get('page::package.name'))));
+
+            return \Redirect::to('/admin/page');
+        } else {
+            \Former::withErrors($row->errors());
+            \Former::populate($this -> getInputs());
+            $data['page']		= $this->model->find($id);
+
+            return $this->theme->of('page::admin.edit', $data)->render();
+        }
+
+    }
+
+    public function destroy($id)
+    {
+        $this->hasAccess('page.delete');
+        $this->model->delete($id);
+        \Session::flash('success', Lang::get('messages.success.delete', array('Module' => Lang::get('page::package.name'))));
+
+        return \Redirect::to('/admin/page');
+
+    }
 
 }
