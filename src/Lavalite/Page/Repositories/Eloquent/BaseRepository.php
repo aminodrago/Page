@@ -62,6 +62,11 @@ abstract class BaseRepository implements BaseInterface
         $this->model->find($id)->delete();
     }
 
+    public function instance($data = array())
+    {
+        return new $this->model($data);
+    }
+
     /**
      * returns the current Model to Manager
      *
@@ -72,4 +77,9 @@ abstract class BaseRepository implements BaseInterface
         return $this->model;
     }
 
+    public function getErrors()
+    {
+        return $this -> model -> getErrors();
+
+    }
 }

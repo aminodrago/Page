@@ -34,12 +34,11 @@ class Page
     {
         $p              = array();
 
-        $permissions    = Config::get('page::permissions');
+        $permissions    = Config::get('page::page.permissions.admin');
 
         foreach ($permissions as $key => $value) {
-            $p[$value]  = Sentry::getUser()->hasAccess('page.'.$value);
+            $p[$value]  = Sentry::getUser()->hasAccess($value);
         }
-
         return $p;
     }
 

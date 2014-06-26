@@ -1,20 +1,19 @@
 <?php namespace Lavalite\Page\Models;
 
-use \LaravelBook\Ardent\Ardent;
-use \Venturecraft\Revisionable\RevisionableTrait;
-use \Lavalite\FileUp\FileUpTrait;
+use Config;
+use Str;
+use Eloquent;
+use Lavalite\Filer\FilerTrait;
 use Dimsav\Translatable\Translatable;
 
-use Config;
+class Page extends Model  {
 
-use Eloquent;
-
-class Page extends Eloquent  {
-
-    use Translatable, RevisionableTrait;
+    use Translatable;
+    use FilerTrait;
 
     protected $table        = 'pages';
 
+    protected $module       = 'page';
 
     protected $softDelete   = true;
 
@@ -25,7 +24,7 @@ class Page extends Eloquent  {
 
     public static $rules = array(
       'name'      => 'required'
-        );
+    );
 
     /**
      * Array with the fields translated in the Translation table
@@ -73,16 +72,16 @@ class Page extends Eloquent  {
         'name', 'content','title','keyword','description','abstract');
 
     protected $uploads          = array(
-                                        'single' 	=> array('banner', 'image'),
-                                        'multiple' 	=> array('images'),
-                                        'nostore' 	=> array('files'),
+                                        'single' 	=> array('banner', 'image')
                                         );
 
     public function setNameAttribute($name)
     {
         $this -> attributes['name'] 	= $name;
+dd($name);
         if (trim($this -> getAttribute('title')) == '')
             $this -> setAttribute('title', $name);
+
         if (trim($this -> getAttribute('heading')) == '')
             $this -> setAttribute('heading', $name);
     }
@@ -101,5 +100,22 @@ class Page extends Eloquent  {
     {
         if ($banner != '') return $banner;
         return Config::get('page::banner');
+    }
+   /**
+     * Listen for save and updating event
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+
+            if(!empty($model->id)) $model->upload();
+            $model->slug = !empty($model->slug) ? $model->slug : $model->getUniqueSlug($model->name);
+            return $model->validate();
+        });
+
     }
 }

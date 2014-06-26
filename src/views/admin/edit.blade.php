@@ -5,7 +5,7 @@
         <div class="col-md-8 col-xs-7 view-breadcrumb">
             <ol class="breadcrumb">
                 <li><a href="{{ URL::to('admin') }}">{{  Lang::get('app.home') }}</a></li>
-                <li><a href="{{ URL::to('admin/page')}}">{{ Lang::get('page::package.names') }}</a></li>
+                <li><a href="{{ URL::to('admin/page')}}">{{ Lang::get('page::page.names') }}</a></li>
                 <li class="active">{{ $page['name'] }}</li>
             </ol>
         </div>
@@ -19,7 +19,7 @@
     {{-- Content --}}
     <div class='view-content'>
         <fieldset>
-            {{Former::legend( Lang::get('app.edit') . ' ' . Lang::get('page::package.name') . ' [ ' . $page['name'] . ' ] ')}}
+            {{Former::legend( Lang::get('app.edit') . ' ' . Lang::get('page::page.name') . ' [ ' . $page['name'] . ' ] ')}}
 
             {{Former::vertical_open()
             ->id('page')
@@ -41,34 +41,34 @@
                     <div class="row">
                         <div class="col-md-12 ">
                             {{ Former::text('name')
-                            -> label('page::label.name')
-                            -> placeholder('page::placeholder.name')}}
+                            -> label('page::page.label.name')
+                            -> placeholder('page::page.placeholder.name')}}
                         </div>
 
                         <div class="col-md-12 ">
                             {{ Former::textarea('content')
-                            -> label('page::label.content')
+                            -> label('page::page.label.content')
                             -> addClass('html-editor')
-                            -> placeholder('page::placeholder.content')}}
+                            -> placeholder('page::page.placeholder.content')}}
                         </div>
 
                         <div class="col-md-12 ">
                             {{ Former::file('banner')
-                            -> label('page::label.banner')
-                            -> placeholder('page::placeholder.banner')
+                            -> label('page::page.label.banner')
+                            -> placeholder('page::page.placeholder.banner')
                             -> addClass('banner')	}}
                         </div>
 
                         <div class="col-md-12 ">
                             {{ Former::file('image')
-                            -> label('page::label.image')
-                            -> placeholder('page::placeholder.image')
+                            -> label('page::page.label.image')
+                            -> placeholder('page::page.placeholder.image')
                             -> addClass('image')	}}
                         </div>
 
                         <div class="col-md-12 ">
                             {{ Former::checkbox('status')
-                            -> label('page::label.status')
+                            -> label('page::page.label.status')
                             -> addClass('checkbox-status')}}
 
                         </div>
@@ -78,25 +78,25 @@
                     <div class="row">
                         <div class="col-md-12 ">
                             {{ Former::text('title')
-                            -> label('page::label.title')
-                            -> placeholder('page::placeholder.title')}}
+                            -> label('page::page.label.title')
+                            -> placeholder('page::page.placeholder.title')}}
                         </div>
                         <div class="col-md-12 ">
                             {{ Former::text('heading')
-                            -> label('page::label.heading')
-                            -> placeholder('page::placeholder.heading')}}
+                            -> label('page::page.label.heading')
+                            -> placeholder('page::page.placeholder.heading')}}
                         </div>
                         <div class="col-md-12 ">
                             {{ Former::textarea('keyword')
-                            -> label('page::label.keyword')
+                            -> label('page::page.label.keyword')
                             -> rows(9)
-                            -> placeholder('page::placeholder.keyword')}}
+                            -> placeholder('page::page.placeholder.keyword')}}
                         </div>
                         <div class="col-md-12 ">
                             {{ Former::textarea('description')
-                            -> label('page::label.description')
+                            -> label('page::page.label.description')
                             -> rows(9)
-                            -> placeholder('page::placeholder.description')}}
+                            -> placeholder('page::page.placeholder.description')}}
                         </div>
                     </div>
                 </div>
@@ -104,13 +104,13 @@
                     <div class="row">
                         <div class="col-md-6 ">
                             {{ Former::range('order')
-                            -> label('page::label.order')
-                            -> placeholder('page::placeholder.order')}}
+                            -> label('page::page.label.order')
+                            -> placeholder('page::page.placeholder.order')}}
                         </div>
                         <div class="col-md-6 ">
                             {{ Former::text('slug')
-                            -> label('page::label.slug')
-                            -> placeholder('page::placeholder.slug')}}
+                            -> label('page::page.label.slug')
+                            -> placeholder('page::page.placeholder.slug')}}
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
 <script>
 jQuery(function ($) {
     $('.banner').ezdz({
-        text: '{{Lang::get('page::placeholder.banner')}}',
+        text: '{{Lang::get('page::page.placeholder.banner')}}',
         validators: {
             maxWidth:  900,
             maxHeight: 900,

@@ -5,16 +5,16 @@
         </h3>
     </div>
     <table class="table">
-        <thead>
-            <th>{{ Lang::get('page::package.name') }}</th>
-            <th>{{ Lang::get('page::label.title') }}</th>
-            <th>{{ Lang::get('page::label.slug') }}</th>
+        <thead>d
+            <th>{{ Lang::get('page::page.name') }}</th>
+            <th>{{ Lang::get('page::page.label.title') }}</th>
+            <th>{{ Lang::get('page::page.label.slug') }}</th>
             <th width="70">{{ Lang::get('app.options') }}</th>
         </thead>
         <tbody>
             @foreach ($pages as $page)
             <tr>
-                <td><a href="{{ ($permissions['show']) ? (URL::to('admin/page/') . '/' . $page->id ) : '#' }}">{{ $page->name }}</a></td>
+                <td><a href="{{ ($permissions['view']) ? (URL::to('admin/page/') . '/' . $page->id ) : '#' }}">{{ $page->name }}</a></td>
                 <td>{{ $page->title }}</td>
                 <td>{{ $page->slug }}.html</td>
                 <td>

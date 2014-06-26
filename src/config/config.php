@@ -1,22 +1,19 @@
 <?php
 
 return array(
+/**
+* Provider .
+*/
+'provider'  => 'lavalite',
 
-    /**
-     * Module .
-     */
+/**
+* Package .
+*/
+'package'   => 'page',
 
-    'package' => 'lavalite/page',
+/**
+* Modules .
+*/
+'modules'   => ['page', 'category'],
 
-    /**
-     * Model .
-     *
-     * @var \Page\Models\Page
-     */
-
-    'model' => 'Lavalite\Page\Models\Page',
-
-     'permissions'  => array('create', 'edit', 'show', 'delete'),
-
-     'banner'       => 'path-to-banner-set-it-in-page-config',
 );

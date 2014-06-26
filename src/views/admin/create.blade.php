@@ -5,8 +5,8 @@
         <div class="col-md-8 col-xs-8 view-breadcrumb" >
             <ol class="breadcrumb">
                 <li><a href="{{ URL::to('admin') }}">{{  Lang::get('app.home') }}</a></li>
-                <li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::package.names') }}</a></li>
-                <li class="active">{{ Lang::get('app.new') }} {{ Lang::get('page::package.name') }}</li>
+                <li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::page.names') }}</a></li>
+                <li class="active">{{ Lang::get('app.new') }} {{ Lang::get('page::page.name') }}</li>
             </ol>
         </div>
 
@@ -19,7 +19,7 @@
     {{-- Content --}}
     <div class='view-content'>
         <fieldset>
-            {{Former::legend( Lang::get('app.new')  . ' ' . Lang::get('page::package.name'))}}
+            {{Former::legend( Lang::get('app.new')  . ' ' . Lang::get('page::page.name'))}}
             {{Former::vertical_open()
             ->id('page')
             ->method('POST')
@@ -30,8 +30,8 @@
 
                 <div class="col-md-12 ">
                     {{ Former::text('name')
-                    -> label('page::label.name')
-                    -> placeholder('page::placeholder.name')}}
+                    -> label('page::page.label.name')
+                    -> placeholder('page::page.placeholder.name')}}
 
                 </div>
 
@@ -39,14 +39,14 @@
             <div class="row">
                 <div class="col-md-12 ">
                     {{ Former::textarea('content')
-                    -> label('page::label.content')
+                    -> label('page::page.label.content')
                     -> addclass('content')
-                    -> placeholder('page::placeholder.content')}}
+                    -> placeholder('page::page.placeholder.content')}}
                 </div>
 
                 <div class="col-md-12 ">
                     {{ Former::checkbox('status')
-                    -> label('page::label.status')
+                    -> label('page::page.label.status')
                     -> addClass('checkbox-status')}}
                 </div>
 
