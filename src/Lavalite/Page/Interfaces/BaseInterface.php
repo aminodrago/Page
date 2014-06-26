@@ -24,4 +24,6 @@ interface BaseInterface
 
     public function delete($id);
 
+     public function instance();
+
 }
