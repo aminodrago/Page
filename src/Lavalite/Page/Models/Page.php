@@ -1,7 +1,7 @@
 <?php namespace Lavalite\Page\Models;
 
-use Config;
 use Str;
+use Config;
 use Eloquent;
 use Lavalite\Filer\FilerTrait;
 use Dimsav\Translatable\Translatable;
@@ -21,9 +21,8 @@ class Page extends Model  {
     public $autoHydrateEntityFromInput      = true;
     public $forceEntityHydrationFromInput   = true;
 
-
     public static $rules = array(
-      'name'      => 'required'
+      //'name'      => 'required'
     );
 
     /**
@@ -78,7 +77,7 @@ class Page extends Model  {
     public function setNameAttribute($name)
     {
         $this -> attributes['name'] 	= $name;
-dd($name);
+
         if (trim($this -> getAttribute('title')) == '')
             $this -> setAttribute('title', $name);
 

@@ -1,76 +1,87 @@
+@extends('admin.layouts.create')
 
-<div class="page-create">
-    <div class='row view-toolbar'>
-        {{-- Breadcrumbs --}}
-        <div class="col-md-8 col-xs-8 view-breadcrumb" >
-            <ol class="breadcrumb">
-                <li><a href="{{ URL::to('admin') }}">{{  Lang::get('app.home') }}</a></li>
-                <li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::page.names') }}</a></li>
-                <li class="active">{{ Lang::get('app.new') }} {{ Lang::get('page::page.name') }}</li>
-            </ol>
+@section('heading')
+<h1>
+    {{ Lang::get('page::package.name') }}
+    <small> {{ Lang::get('app.manage') }} {{ Lang::get('page::package.names') }}</small>
+</h1>
+@stop
+
+@section('title')
+{{Lang::get('app.new')}} {{Lang::get('page::page.name')}}
+@stop
+
+@section('breadcrumb')
+<ol class="breadcrumb">
+    <li><a href="{{ URL::to('admin') }}"><i class="fa fa-dashboard"></i> {{  Lang::get('app.home') }}</a></li>
+    <li><a href="{{ URL::to('admin/page') }}">{{ Lang::get('page::page.names') }}</a></li>
+    <li class="active">{{ Lang::get('app.new') }} {{ Lang::get('page::page.name') }}</li>
+</ol>
+@stop
+
+
+@section('buttons')
+<a class="btn btn-info pull-right   btn-xs" href="{{ URL::to('admin/page') }}"><i class="fa fa-angle-left"></i> {{  Lang::get('app.back') }}</a>
+@stop
+
+@section('content')
+
+{{Former::vertical_open()
+    ->id('page')
+    ->method('POST')
+    ->files('true')
+    ->action(URL::to('admin/page'))}}
+    <div class="box-body">
+
+        <div class="row">
+
+            <div class="col-md-12 ">
+                {{ Former::text('name')
+                -> label('page::page.label.name')
+                -> placeholder('page::page.placeholder.name')}}
+
+            </div>
+
         </div>
+        <div class="row">
+            <div class="col-md-12 ">
+                {{ Former::textarea('content')
+                -> label('page::page.label.content')
+                -> addclass('content')
+                -> placeholder('page::page.placeholder.content')}}
+            </div>
 
-        {{-- Buttons --}}
-        <div class="col-md-4 col-xs-4 view-buttons">
-            <a class="btn btn-info pull-right" href="{{ URL::to('admin/page') }}"><i class="fa fa-angle-left"></i> {{  Lang::get('app.back') }}</a>
+            <div class="col-md-12 ">
+                {{ Former::checkbox('status')
+                -> label('page::page.label.status')
+                -> addClass('checkbox-status')}}
+            </div>
+
+        </div>
+    </div>
+    <div class="box-footer">
+        <div class="row">
+            <div class="col-md-12">
+                {{Former::actions()
+                ->large_primary_submit(Lang::get('app.save'))
+                ->large_default_reset(Lang::get('app.reset'))}}
+            </div>
+
         </div>
     </div>
 
-    {{-- Content --}}
-    <div class='view-content'>
-        <fieldset>
-            {{Former::legend( Lang::get('app.new')  . ' ' . Lang::get('page::page.name'))}}
-            {{Former::vertical_open()
-            ->id('page')
-            ->method('POST')
-            ->files('true')
-            ->action(URL::to('admin/page'))}}
+    {{ Former::close() }}
+    @stop
 
-            <div class="row">
+    @section('script')
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('.content').redactor({
+                minHeight: 200,
+                direction: '{{ Localization::getCurrentLocaleDirection() }}'
+                lang: '{{ App::getLocale()'
+            });
+        });
+    </script>
 
-                <div class="col-md-12 ">
-                    {{ Former::text('name')
-                    -> label('page::page.label.name')
-                    -> placeholder('page::page.placeholder.name')}}
-
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-12 ">
-                    {{ Former::textarea('content')
-                    -> label('page::page.label.content')
-                    -> addclass('content')
-                    -> placeholder('page::page.placeholder.content')}}
-                </div>
-
-                <div class="col-md-12 ">
-                    {{ Former::checkbox('status')
-                    -> label('page::page.label.status')
-                    -> addClass('checkbox-status')}}
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{Former::actions()
-                    ->large_primary_submit(Lang::get('app.save'))
-                    ->large_default_reset(Lang::get('app.reset'))}}
-                </div>
-
-            </div>
-
-            {{ Former::close() }}
-        </fieldset>
-    </div>
-</div>
-
-<script type="text/javascript">
-jQuery(function ($) {
-    $('.content').redactor({
-        minHeight: 200,
-        direction: '{{ Localization::getCurrentLocaleDirection() }}'
-        lang: '{{ App::getLocale()'
-    });
-});
-</script>
+    @stop

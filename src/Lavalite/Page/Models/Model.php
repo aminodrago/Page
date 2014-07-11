@@ -29,6 +29,7 @@ class Model extends Eloquent
      */
     public function validate()
     {
+
         $validator = Validator::make($this->attributes, static::$rules);
 
         if ($validator->passes()) {

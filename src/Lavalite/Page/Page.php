@@ -1,6 +1,10 @@
 <?php namespace Lavalite\Page;
 
-use Config, App, URL, Sentry, View;
+use App;
+use URL;
+use View;
+use Sentry;
+use Config;
 
 class Page
 {

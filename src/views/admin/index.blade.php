@@ -1,50 +1,49 @@
-<div class="page-index">
-    <div class='row view-toolbar'>
-        {{-- Breadcrumbs --}}
-        <div class="col-md-4 col-xs-12 view-breadcrumb">
-            <ol class="breadcrumb">
-                <li><a href="{{ URL::to('admin') }}"> {{ Lang::get('app.home') }} </a></li>
-                <li class="active">{{ Lang::get('page::page.names') }}</li>
-            </ol>
-        </div>
-        <div class="col-md-6 col-xs-8 view-search">
-            <form class="form-horizontal" action="{{ URL::to('admin/page') }}" method="get">
+@extends('admin.layouts.index')
+@section('heading')
+        <h1>
+            {{ Lang::get('page::package.name') }}
+            <small> {{ Lang::get('app.manage') }} {{ Lang::get('page::package.names') }}</small>
+        </h1>
+@stop
+
+@section('title')
+            {{ Lang::get('page::page.names') }}
+@stop
+
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li><a href="{{ URL::to('admin') }}"><i class="fa fa-dashboard"></i> {{ Lang::get('app.home') }} </a></li>
+        <li class="active">{{ Lang::get('page::page.names') }}</li>
+    </ol>
+@stop
+
+@section('search')
+
+            <form class="form-horizontal pull-right" action="{{ URL::to('admin/page') }}" method="get" style="width:50%;margin-right:5px;">
                 {{ Form::token() }}
                 <div class="input-group">
-                    <input type="search" class="form-control" name="q" value="{{$q}}"  placeholder="{{  Lang::get('app.search') }}">
+                    <input type="search" class="form-control input-sm" name="q" value="{{$q}}"  placeholder="{{  Lang::get('app.search') }}">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                        <button class="btn  btn-sm btn-default" type="submit"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
             </form>
-        </div>
+@stop
 
-        {{-- Buttons --}}
-        <div class="col-md-2 col-xs-4 view-buttons">
-            <a class="btn btn-info pull-right {{ ($permissions['create']) ? '' : 'disabled' }} view-btn-create" href="{{ URL::to('admin/page/create') }}">
+@section('buttons')
+            <a class="btn   btn-sm btn-info pull-right {{ ($permissions['create']) ? '' : 'disabled' }} view-btn-create" href="{{ URL::to('admin/page/create') }}">
                 <i class="fa fa-plus-circle"></i> {{ Lang::get('app.new') }} {{ Lang::get('page::page.name') }}
             </a>
-        </div>
-    </div>
+@stop
 
-    {{-- Content --}}
-    <!-- Success-Messages -->
-    @if ($message = Session::get('success'))
-    <div class="alert alert-success alert-block view-message">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <h4>Success</h4>
-        {{{ $message }}}
-    </div>
-    @endif
-    <div class='view-content'>
-        <table class="table">
-            <thead>
+@section('content')
+        <table class="table table-condensed">
+            <tr>
                 <th>{{ Lang::get('page::page.name') }}</th>
                 <th>{{ Lang::get('page::page.label.title') }}</th>
                 <th>{{ Lang::get('page::page.label.slug') }}</th>
                 <th width="70">{{ Lang::get('app.options') }}</th>
-            </thead>
-            <tbody>
+            </tr>
                 @foreach ($pages as $page)
                 <tr>
                     <td><a href="{{ ($permissions['view']) ? (URL::to('admin/page/') . '/' . $page->id ) : '#' }}">{{ $page->name }}</a></td>
@@ -58,8 +57,6 @@
                     </td>
                 </tr>
                 @endforeach
-            </tbody>
         </table>
         {{ $pages->links()}}
-    </div>
-</div>
+@stop
