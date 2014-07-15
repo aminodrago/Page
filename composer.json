@@ -2,6 +2,7 @@
     "name": "lavalite/page",
     "description": "Page package for lavalite framework",
     "keywords": ["lavalite", "page", "laravel"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Lava Lite",
