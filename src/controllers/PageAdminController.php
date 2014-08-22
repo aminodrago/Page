@@ -113,7 +113,7 @@ class PageAdminController extends \AdminController
             Session::flash('success',  Lang::get('messages.success.update', array('Module' => Lang::get('page::page.name'))));
             return Redirect::to('/admin/page');
         } else {
-            dd(print_r($r));
+//            dd(print_r($r));
             Former::withErrors($this->model->getErrors());
             Former::populate(Input::all());
             $data['page']		= $this->model->find($id);

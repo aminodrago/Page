@@ -3,5 +3,4 @@
 interface PageInterface
 {
     public function getPage($slug);
-
 }

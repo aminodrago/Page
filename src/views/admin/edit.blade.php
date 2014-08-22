@@ -1,4 +1,4 @@
-@extends('admin.layouts.edit')
+@extends('Admin::views.edit')
 
 @section('heading')
 <h1>
@@ -81,12 +81,12 @@
                     -> addClass('image')	}}
                 </div>
 
-                <div class="col-md-12 ">
-                    {{ Former::checkbox('status')
-                    -> label('page::page.label.status')
-                    -> addClass('checkbox-status')}}
-
-                </div>
+               <div class='col-md-6'>{{ Former::hidden('status')
+                   -> forceValue('0')}}
+                   {{ Former::checkbox('status')
+                   -> label('page::page.label.status')
+                   -> addClass('js-switch')}}
+               </div>
             </div>
         </div>
         <div class="tab-pane" id="metatags">
@@ -125,8 +125,22 @@
                 <div class="col-md-6 ">
                     {{ Former::text('slug')
                     -> label('page::page.label.slug')
+                    -> append('.html')
                     -> placeholder('page::page.placeholder.slug')}}
                 </div>
+            </div>
+            <div class="row">
+               <div class='col-md-6'>{{ Former::select('view')
+                   -> options(Lang::get('page::page.options.view'))
+                   -> label('page::page.label.view')
+                   -> placeholder('page::page.placeholder.view')}}
+               </div>
+
+               <div class='col-md-6'>{{ Former::select('compiler')
+                   -> options(Lang::get('page::page.options.compiler'))
+                   -> label('page::page.label.compiler')
+                   -> placeholder('page::page.placeholder.compiler')}}
+               </div>
             </div>
         </div>
     </div>

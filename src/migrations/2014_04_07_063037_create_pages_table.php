@@ -19,6 +19,8 @@ class 2014_04_07_063037_create_pages_table extends Migration
             $table->integer('order');
             $table->string('banner', 100);
             $table->boolean('status');
+            $table->string('view', 20);
+            $table->enum('compiler', array('php', 'blade', 'twif', 'none'));
             $table->datetime('deleted_at')->nullable();
             $table->timestamps();
         });

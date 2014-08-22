@@ -36,7 +36,7 @@ class PageServiceProvider extends ServiceProvider
         $this->app->bind(
             'Lavalite\\Page\\Interfaces\\PageInterface',
             'Lavalite\\Page\\Repositories\\Eloquent\\PageRepository'
-            );
+        );
     }
 
     /**

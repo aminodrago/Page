@@ -57,7 +57,7 @@ class Page extends Model  {
     * @var array
     */
     protected $fillable = ['name','slug','order','status', 'heading',
-    'content','title','keyword','description','abstract','image'];
+    'content','title','keyword','description','abstract','compiler','view','image'];
 
     /**
     * The database field being used to define the locale parameter in the translation model.
@@ -110,11 +110,11 @@ class Page extends Model  {
         parent::boot();
 
         static::saving(function ($model) {
-
             if(!empty($model->id)) $model->upload();
             $model->slug = !empty($model->slug) ? $model->slug : $model->getUniqueSlug($model->name);
             return $model->validate();
         });
+
 
     }
 }

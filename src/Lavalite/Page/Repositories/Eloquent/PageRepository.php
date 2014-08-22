@@ -2,6 +2,7 @@
 
 use App;
 use Lang;
+use Theme;
 use Lavalite\Page\Models\Page as Page;
 use Lavalite\Page\Interfaces\PageInterface;
 
@@ -19,7 +20,7 @@ class PageRepository extends BaseRepository implements PageInterface
         if (!$page) {
             App::abort(404, Lang::get("page::messages.nopage"));
         }
-
+        $this -> compile($page);
         return $page;
     }
 
@@ -67,6 +68,17 @@ class PageRepository extends BaseRepository implements PageInterface
     public function errors()
     {
         return $this -> model -> errors();
+
+    }
+
+    public function compile(&$page)
+    {
+        $compiler = $page->compiler;
+
+        if ($compiler == 'blade')
+            $page->content = Theme::blader($page -> content, array());
+        elseif ($compiler == 'twig')
+            $page->content = Theme::twigy($page -> content, array());
 
     }
 }

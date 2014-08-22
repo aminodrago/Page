@@ -1,4 +1,4 @@
-@extends('admin.layouts.index')
+@extends('Admin::views.index')
 @section('heading')
         <h1>
             {{ Lang::get('page::package.name') }}

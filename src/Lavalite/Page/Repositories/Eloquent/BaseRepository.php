@@ -22,8 +22,7 @@ abstract class BaseRepository implements BaseInterface
     public function update($id, $array)
     {
         $row = $this->model->find($id);
-        $r = $row->update($array);
-
+        return $row->update($array);
     }
 
     public function find($id)
@@ -61,6 +60,7 @@ abstract class BaseRepository implements BaseInterface
 
     public function save()
     {
+        dd('sss');
         return $this->model->save();
     }
 

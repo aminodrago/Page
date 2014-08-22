@@ -22,7 +22,7 @@ class 2014_04_07_063037_create_page_langs_table extends Migration
             $table->string('description', 200);
             $table->string('image', 50)->nullable();
             $table->text('abstract');
-            $table->string('lang', 3);
+            $table->string('lang', 6);
             $table->timestamps();
         });
     }

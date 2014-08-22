@@ -1,14 +1,16 @@
 <?php namespace Lavalite\Page\Controllers;
 
+use Theme;
+use View;
 
 class PublicController extends \PublicController
 {
 
-
+    protected $layout   = 'page';
     public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
     {
         $this->model 	= $page;
-        $this->setupTheme('public', 'page');
+         parent::__construct();
 
     }
 
@@ -18,9 +20,10 @@ class PublicController extends \PublicController
         $this -> theme -> setTitle($data['page'] -> title);
         $this -> theme -> setKeywords($data['page'] -> keyword);
         $this -> theme -> setDescription($data['page'] -> description);
-//print_r($data);
-//        $data['content']	= Theme::blader($data['content'], array());
-        return $this->theme->of('page::public.page', $data)->render();
+
+        $view   = $data['page'] -> view;
+        $view   = View::exists('page::public.'.$view) ? $view : 'page';
+        return $this->theme->of('page::public.'.$view, $data)->render();
     }
 
 }
