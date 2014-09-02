@@ -18,8 +18,13 @@ class PageRepository extends BaseRepository implements PageInterface
         $page 	= $this -> model -> whereSlug($slug) -> first();
 
         if (!$page) {
+            $page   = $this -> model -> whereSlug('404') -> first();
+        }
+
+        if (!$page) {
             App::abort(404, Lang::get("page::messages.nopage"));
         }
+
         $this -> compile($page);
         return $page;
     }
