@@ -60,7 +60,6 @@ abstract class BaseRepository implements BaseInterface
 
     public function save()
     {
-        dd('sss');
         return $this->model->save();
     }
 

@@ -21,6 +21,8 @@ return array(
         "keyword"           => "Keyword",
         "banner"            => "Banner",
         "image"             => "Image",
+        "category"          => "Category",
+        "tags"              => "Tags",
         ),
 
     'placeholder'       => array(
@@ -37,8 +39,11 @@ return array(
         "title"             => "Enter Title",
         "keyword"           => "Enter Keyword",
         "slug"              => "Enter Url",
+        "category"          => "Select a category",
+        "tags"              => "Enter tags",
 
-        ),
+
+    ),
     'message'           => array(
 
         "nopage"            => "Page not found.",

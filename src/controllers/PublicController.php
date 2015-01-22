@@ -7,6 +7,7 @@ class PublicController extends \PublicController
 {
 
     protected $layout   = 'page';
+
     public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
     {
         $this->model 	= $page;
@@ -22,8 +23,8 @@ class PublicController extends \PublicController
         $this -> theme -> setDescription($data['page'] -> description);
 
         $view   = $data['page'] -> view;
-        $view   = View::exists('page::public.'.$view) ? $view : 'page';
-        return $this->theme->of('page::public.'.$view, $data)->render();
+        $view   = View::exists('page::'.$view) ? $view : 'page';
+        return $this->theme->of('page::'.$view, $data)->render();
     }
 
 }

@@ -19,7 +19,7 @@ class PageServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->package('lavalite/page');
-        include __DIR__.'/../../routes.php';
+        include __DIR__ . '/../../routes.php';
     }
 
     /**
@@ -36,6 +36,11 @@ class PageServiceProvider extends ServiceProvider
         $this->app->bind(
             'Lavalite\\Page\\Interfaces\\PageInterface',
             'Lavalite\\Page\\Repositories\\Eloquent\\PageRepository'
+        );
+
+        $this->app->bind(
+            'Lavalite\\Page\\Interfaces\\CategoryInterface',
+            'Lavalite\\Page\\Repositories\\Eloquent\\CategoryRepository'
         );
     }
 

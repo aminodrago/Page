@@ -71,21 +71,20 @@
                     {{ Former::file('banner')
                     -> label('page::page.label.banner')
                     -> placeholder('page::page.placeholder.banner')
-                    -> addClass('banner')	}}
+                    -> blockHelp(is_array($page->banner) && count($page->banner) ? "<a href='{$page->banner['folder']}/{$page->banner['file']}'>{$page->banner['file']} </a> &nbsp; <a href='".URL::to('admin/page')."/{$page->id}/banner/1' ><i class='fa fa-times'></i></a>" : '')}}
                 </div>
 
                 <div class="col-md-12 ">
-                    {{ Former::file('image')
+                    {{ Former::files('images[]')
                     -> label('page::page.label.image')
                     -> placeholder('page::page.placeholder.image')
-                    -> addClass('image')	}}
+                    -> blockHelp($images)}}
                 </div>
 
                <div class='col-md-6'>{{ Former::hidden('status')
                    -> forceValue('0')}}
                    {{ Former::checkbox('status')
-                   -> label('page::page.label.status')
-                   -> addClass('js-switch')}}
+                   -> label('page::page.label.status') }}
                </div>
             </div>
         </div>
@@ -141,6 +140,12 @@
                    -> label('page::page.label.compiler')
                    -> placeholder('page::page.placeholder.compiler')}}
                </div>
+               <div class='col-md-6'>{{ Former::select('category_id')
+                   -> options(Page::categories())
+                   -> label('page::page.label.category')
+                   -> placeholder('page::page.placeholder.category')}}
+               </div>
+
             </div>
         </div>
     </div>
@@ -157,34 +162,5 @@
     @stop
 
     @section('script')
-    <script>
-        jQuery(function ($) {
-            $('.banner').ezdz({
-                text: '{{Lang::get('page::page.placeholder.banner')}}',
-                validators: {
-                    maxWidth:  900,
-                    maxHeight: 900,
-                    maxSize: 1000000
-                },
-                reject: function (file, errors) {
-                    if (errors.mimeType) {
-                        alert(file.name + ' must be an image.');
-                    }
-
-                    if (errors.maxWidth) {
-                        alert(file.name + ' must be width:900px max.');
-                    }
-
-                    if (errors.maxHeight) {
-                        alert(file.name + ' must be height:900px max.');
-                    }
-                }
-            });
-            @if ($page->banner != '')
-            $('.banner').ezdz('preview', '{{URL::to($page->banner)}}');
-            @endif
-        });
-
-    </script>
     @stop
 

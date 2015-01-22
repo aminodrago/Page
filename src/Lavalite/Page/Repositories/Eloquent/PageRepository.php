@@ -59,6 +59,11 @@ class PageRepository extends BaseRepository implements PageInterface
         return $this -> pagePart($slug, 'banner');
     }
 
+    public function removeFile($id, $field, $no)
+    {
+        return $this -> model -> removeFile($id, $field, $no);
+    }
+
     public function pagePart($slug, $field)
     {
         $page 	= $this -> model -> whereSlug($slug) -> first();

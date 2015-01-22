@@ -9,4 +9,6 @@ class PageLang extends  Eloquent
     protected $table		= 'page_langs';
 
     public $timestamps = false;
+
+
 }

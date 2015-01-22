@@ -1,9 +1,9 @@
 <?php
 
 return array(
-        'name'          => 'Category',
-        'table'         => 'page_categories',
-        'model'         => 'Lavalite\Page\Models\Category',
+        'name'          => 'PageTag',
+        'table'         => 'page_page_tag',
+        'model'         => 'Lavalite\Page\Models\PageTag',
         'permissions'   => ['admin' => ['view', 'create', 'edit', 'delete', 'image']],
         'image'         =>
             [

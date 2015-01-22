@@ -1,16 +1,17 @@
-<?php namespace Lavalite\Page\Controllers;
+<?php namespace Lavalite\Page\Traits;
 
 use App;
 use Lang;
 use View;
 use Input;
 use Former;
-use User;
+use Sentry;
 use Config;
 use Session;
 use Redirect;
+use Lavalite\Page\Models\Page as Page;
 
-class PageAdminController extends \AdminController
+class PageAdmin extends \AdminController
 {
 
     public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
@@ -21,7 +22,7 @@ class PageAdminController extends \AdminController
 
     protected function hasAccess($permission = 'view')
     {
-        if(!User::hasAccess('page::page.permissions.admin.'.$permission))
+        if(!Sentry::getUser()->hasAccess('page::page.permissions.admin.'.$permission))
             App::abort(401, Lang::get('messages.error.auth'));
 
         return true;
@@ -34,7 +35,7 @@ class PageAdminController extends \AdminController
         $permissions 	= Config::get('page::page.permissions.admin');
 
         foreach ($permissions as $key => $value) {
-            $p[$value]	= User::hasAccess($value);
+            $p[$value]	= Sentry::getUser()->hasAccess($value);
         }
 
         return $p;
@@ -42,12 +43,12 @@ class PageAdminController extends \AdminController
 
     public function index()
     {
-        $data['q']		        = Input::get('q');
+        $q		        = Input::get('q');
         $this->hasAccess('view');
-        $data['pages']	        = $this->model->paginate(15);
-        $data['permissions']	= $this->permissions();
+        $pages	        = $this->model->paginate(15);
+        $permissions	= $this->permissions();
         $this->theme->prependTitle(Lang::get('page::page.names') . ' :: ');
-        return $this->theme->of('page::admin.page.index', $data)->render();
+        return $this->theme->of('page::admin.index', compact($q, $pages, $permissions)->render();
     }
 
     public function show($id)
@@ -57,7 +58,7 @@ class PageAdminController extends \AdminController
         $data['permissions']	= $this->permissions();
         $this->theme->prependTitle(Lang::get('app.view') . ' ' . Lang::get('page::page.name') . ' :: ');
 
-        return $this->theme->of('page::admin.page.show', $data)->render();
+        return $this->theme->of('page::admin.show', $data)->render();
     }
 
     public function create()
@@ -66,7 +67,7 @@ class PageAdminController extends \AdminController
         $data['page']	= $this->model->instance();
         $this->theme->prependTitle(Lang::get('app.new') . ' ' . Lang::get('page::page.name') . ' :: ');
 
-        return $this->theme->of('page::admin.page.create', $data)->render();
+        return $this->theme->of('page::admin.create', $data)->render();
     }
 
     public function store()
@@ -85,7 +86,7 @@ class PageAdminController extends \AdminController
             $data['page']	=  $this->model->instance();
             $this->theme->prependTitle(Lang::get('app.new') . ' ' . Lang::get('page::page.name') . ' :: ');
 
-            return $this->theme->of('page::admin.page.create', $data)->render();
+            return $this->theme->of('page::admin.create', $data)->render();
         }
 
     }
@@ -94,13 +95,12 @@ class PageAdminController extends \AdminController
     {
 
         $this->hasAccess('edit');
-        $page		= $this->model->find($id);
-        $images     = View::make('page::admin.page.images', compact('page'));
+        $data['page']		= $this->model->find($id);
 
-        Former::populate($page);
+        Former::populate($data['page']);
         $this->theme->prependTitle(Lang::get('app.edit') . ' ' . Lang::get('page::page.name') . ' :: ');
 
-        return $this->theme->of('page::admin.page.edit', compact('page', 'images'))->render();
+        return $this->theme->of('page::admin.edit', $data)->render();
 
     }
 
@@ -113,11 +113,12 @@ class PageAdminController extends \AdminController
             Session::flash('success',  Lang::get('messages.success.update', array('Module' => Lang::get('page::page.name'))));
             return Redirect::to('/admin/page');
         } else {
+//            dd(print_r($r));
             Former::withErrors($this->model->getErrors());
             Former::populate(Input::all());
             $data['page']		= $this->model->find($id);
 
-            return $this->theme->of('page::admin.page.edit', $data)->render();
+            return $this->theme->of('page::admin.edit', $data)->render();
         }
 
     }
@@ -129,16 +130,6 @@ class PageAdminController extends \AdminController
         Session::flash('success', Lang::get('messages.success.delete', array('Module' => Lang::get('page::page.name'))));
 
         return Redirect::to('/admin/page');
-
-    }
-
-    public function removeFile($id, $field, $no)
-    {
-        $this->hasAccess('edit');
-        $this->model->removeFile($id, $field, $no);
-        Session::flash('success', Lang::get('messages.success.delete', array('Module' => Lang::get('page::page.name'))));
-
-        return Redirect::back();
 
     }
 

@@ -10,7 +10,7 @@ class Model extends Eloquent
 {
     use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at']; 
+    protected $dates = ['deleted_at'];
     /**
      * Error message bag
      *
@@ -111,5 +111,10 @@ class Model extends Eloquent
     protected function getModule()
     {
         return $this->module;
+    }
+
+    public function scopeSearch($query)
+    {
+        return $query;
     }
 }
