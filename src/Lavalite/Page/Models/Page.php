@@ -11,17 +11,14 @@ class Page extends Model
     use Translatable;
     use FilerTrait;
 
-    public static $rules = array(//'name'      => 'required'
-    );
-    public $autoHydrateEntityFromInput = true;
-    public $forceEntityHydrationFromInput = true;
+    public static $rules = [];
+
     /**
      * Array with the fields translated in the Translation table
      *
      * @var array
      */
-    public $translatedAttributes = ['heading', 'content', 'title',
-        'keyword', 'description', 'images'];
+    public $translatedAttributes = [];
     /**
      * Set $translationModel if you want to overwrite the convention
      * for the name of the translation Model. Use full namespace if applied.
@@ -44,27 +41,13 @@ class Page extends Model
      * @var string
      */
     public $localeKey = 'lang';
-    protected $table = 'pages';
-    protected $module = 'page';
-    protected $softDelete = true;
-    /**
-     * Add your translated attributes here if you want
-     * fill them with mass assignment
-     *
-     * @var array
-     */
-    protected $fillable = ['name', 'category_id', 'slug', 'order', 'status', 'heading',
-        'content', 'title', 'keyword', 'description', 'abstract', 'compiler', 'view'];
 
-    protected $keepRevisionOf = array(
-        'name', 'content', 'title', 'keyword', 'description', 'abstract');
 
-    protected $uploads = array(
-        'single' => array('banner'),
-        'multiple' => array('images')
-    );
+    protected $keepRevisionOf =[];
 
-    protected $uploadFolder = '/packages/lavalite/page/page/';
+    protected $uploads = [];
+
+    protected $uploadFolder = '';
 
     /**
      * Listen for save and updating event
@@ -109,4 +92,14 @@ class Page extends Model
         $value  = $banner;
         return ($value == '') ? array() : unserialize($value);
     }
- }
+
+    public function initialize()
+    {
+        $this->fillable = Config::get('page::page.fillable');
+        $this->translatedAttributes = Config::get('page::page.translatable');
+        $this->uploads = Config::get('page::page.uploadable');
+        $this->uploadFolder = Config::get('page::page.upload-folder');
+        $this->table = Config::get('page::page.table');
+    }
+
+}

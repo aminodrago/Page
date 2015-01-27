@@ -25,6 +25,11 @@ class Model extends Eloquent
      */
     public static $rules = [];
 
+    public function __construct($attributes = array()) {
+        $this->initialize();
+        parent::__construct($attributes);
+    }
+
     /**
      * Validates current attributes against rules
      *
@@ -117,4 +122,9 @@ class Model extends Eloquent
     {
         return $query;
     }
+
+    public function initialize()
+    {
+    }
+
 }
