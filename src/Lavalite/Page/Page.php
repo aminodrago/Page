@@ -10,17 +10,13 @@ class Page
 {
 
     protected $model;
-    protected $category;
-    protected $tag;
 
     /**
      * @param Interfaces\PageInterface $page
      */
-    public function __construct(\Lavalite\Page\Interfaces\PageInterface $page,
-                                \Lavalite\Page\Interfaces\CategoryInterface $category)
+    public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
     {
         $this->model = $page;
-        $this->category = $category;
     }
 
     public function model()
@@ -58,17 +54,6 @@ class Page
             $p[$value] = User::hasAccess($value);
         }
         return $p;
-    }
-
-    /**
-     *
-     * @return array
-     */
-    public function categories()
-    {
-        $data   = $this->category->categories();
-        $data[0] = 'None';
-        return $data;
     }
 
 }

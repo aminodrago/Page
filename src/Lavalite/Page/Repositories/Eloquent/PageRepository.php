@@ -78,7 +78,6 @@ class PageRepository extends BaseRepository implements PageInterface
     public function errors()
     {
         return $this -> model -> errors();
-
     }
 
     public function compile(&$page)
