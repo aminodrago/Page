@@ -26,6 +26,7 @@
                 {!! Former::hidden('upload_folder')!!}
                 {!! Former::text('name')
                 -> label(trans(trans('page::page.label.name')))
+                -> required()
                 -> placeholder(trans(trans('page::page.placeholder.name')))!!}
 
                 {!! Former::textarea('content')
@@ -138,6 +139,12 @@
 
     $('#edit-page')
     .submit( function( e ) {
+
+        if($('#edit-page').valid() == false) {
+            toastr.warning('Unprocessable entry.', 'Warning');
+            return false;
+        }
+
         var url  = $(this).attr('action');
         var formData = new FormData( this );
         $.ajax( {
@@ -156,7 +163,6 @@
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
-                console.log('ddd');
             }
         });
         e.preventDefault();

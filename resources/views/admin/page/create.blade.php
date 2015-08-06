@@ -125,7 +125,7 @@
     .submit( function( e ) {
         if($('#create-page').valid() == false) {
             toastr.error('Please enter valid information.', 'Error');
-            return
+            return false;
         }
 
         var url  = $(this).attr('action');

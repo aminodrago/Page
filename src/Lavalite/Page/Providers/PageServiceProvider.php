@@ -1,5 +1,6 @@
 <?php namespace Lavalite\Page\Providers;
 
+use Lavalite\Page\Models\Page;
 use Illuminate\Support\ServiceProvider;
 
 class PageServiceProvider extends ServiceProvider
@@ -18,7 +19,17 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \Lavalite\Page\Models\Page::observe(new \Lavalite\Page\Observers\PageObserver);
+        Page::saving(function($model)
+        {
+            $model->upload($model);
+
+        });
+
+        Page::creating(function($model)
+        {
+            $model->slug = !empty($model->slug) ? $model->slug : $model->getUniqueSlug($model->name);
+        });
+
         $this->loadViewsFrom(__DIR__.'/../../../../resources/views', 'page');
         $this->loadTranslationsFrom(__DIR__.'/../../../../resources/lang', 'page');
 

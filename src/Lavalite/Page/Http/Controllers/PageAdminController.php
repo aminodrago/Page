@@ -45,6 +45,7 @@ class PageAdminController extends AdminController
 
         $page	= $this->model->find($id);
 
+
         Former::populate($page);
         return view('page::admin.page.show', compact('page'));
     }

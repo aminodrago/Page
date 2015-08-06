@@ -120,12 +120,12 @@
                 <div class="row">
                     <div class='col-md-12'>
                         <label for="order" class="control-label">Banner Image</label>
-                        {!! Filer::show($page['banner'], 1) !!}
+                        {!! Filer::show($page['banner'], 1) !!}<br/><br/>
                     </div>
                 </div>
                 <div class="row">
                     <div class='col-md-12'>
-                        <label for="order" class="control-label">Gallery Images</label>
+                        <label for="order" class="control-label">Gallery Images</label><br/>
                         {!! Filer::show($page['images']) !!}
                     </div>
                 </div>
