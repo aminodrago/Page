@@ -1,14 +1,13 @@
-<?php namespace Lavalite\Page;
+<?php
 
-use App;
+namespace Lavalite\Page;
+
 use Config;
 use User;
-use URL;
 use View;
 
 class Page
 {
-
     protected $model;
 
     /**
@@ -26,18 +25,19 @@ class Page
 
     public function __call($name, $arguments)
     {
-
         return $this->model->$name($arguments[0]);
     }
 
     /**
      * @param int $perpage
+     *
      * @return mixed
      */
     public function gadget($perpage = 10)
     {
         $data['pages'] = $this->model->paginate($perpage);
         $data['permissions'] = $this->permissions();
+
         return View::make('page::admin.page.gadget', $data);
     }
 
@@ -53,7 +53,7 @@ class Page
         foreach ($permissions as $key => $value) {
             $p[$value] = User::hasAccess($value);
         }
+
         return $p;
     }
-
 }

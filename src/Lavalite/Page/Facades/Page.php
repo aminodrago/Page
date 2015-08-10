@@ -1,4 +1,6 @@
-<?php namespace Lavalite\Page\Facades;
+<?php
+
+namespace Lavalite\Page\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -9,6 +11,8 @@ class Page extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'page'; }
-
+    protected static function getFacadeAccessor()
+    {
+        return 'page';
+    }
 }

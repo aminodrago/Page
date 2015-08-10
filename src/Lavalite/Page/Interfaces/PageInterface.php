@@ -1,4 +1,6 @@
-<?php namespace Lavalite\Page\Interfaces;
+<?php
+
+namespace Lavalite\Page\Interfaces;
 
 interface PageInterface
 {

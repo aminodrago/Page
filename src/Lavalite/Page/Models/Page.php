@@ -1,15 +1,16 @@
-<?php namespace Lavalite\Page\Models;
+<?php
+
+namespace Lavalite\Page\Models;
 
 use Lavalite\Filer\FilerTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
 {
-
     use FilerTrait;
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
+    public $dates = ['deleted_at'];
 
     /**
      * The attributes that should be casted to native types.
@@ -21,7 +22,6 @@ class Page extends Model
         'images' => 'array',
     ];
 
-
     /**
      * @param $name
      */
@@ -29,19 +29,20 @@ class Page extends Model
     {
         $this->attributes['name'] = $name;
 
-        if (trim($this->getAttribute('title')) == '')
+        if (trim($this->getAttribute('title')) == '') {
             $this->setAttribute('title', $name);
+        }
 
-        if (trim($this->getAttribute('heading')) == '')
+        if (trim($this->getAttribute('heading')) == '') {
             $this->setAttribute('heading', $name);
+        }
     }
 
     public function initialize()
     {
-        $this->fillable             = config('pages.page.fillable');
-        $this->uploads              = config('pages.page.uploadable');
-        $this->uploadRootFolder     = config('pages.page.upload-folder');
-        $this->table                = config('pages.page.table');
+        $this->fillable = config('pages.page.fillable');
+        $this->uploads = config('pages.page.uploadable');
+        $this->uploadRootFolder = config('pages.page.upload-folder');
+        $this->table = config('pages.page.table');
     }
-
 }

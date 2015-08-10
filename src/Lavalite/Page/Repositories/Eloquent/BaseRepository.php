@@ -43,15 +43,17 @@ abstract class BaseRepository implements BaseInterface
                     -> first();
     }
 
-    public function delete($id)
-    {
-        $this -> model -> find($id) -> delete();
-    }
-
 
     public function destroy($id)
     {
-        $this -> model -> destroy($ids);
+        try
+        {
+            $this -> model -> destroy($id);
+        }
+        catch(Exception $e)
+        {
+            throw $e;
+        }
     }
 
     public function instance($data = array())

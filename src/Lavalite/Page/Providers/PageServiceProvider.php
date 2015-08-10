@@ -1,4 +1,6 @@
-<?php namespace Lavalite\Page\Providers;
+<?php
+
+namespace Lavalite\Page\Providers;
 
 use Lavalite\Page\Models\Page;
 use Illuminate\Support\ServiceProvider;
@@ -14,19 +16,15 @@ class PageServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
-        Page::saving(function($model)
-        {
+        Page::saving(function ($model) {
             $model->upload($model);
 
         });
 
-        Page::creating(function($model)
-        {
+        Page::creating(function ($model) {
             $model->slug = !empty($model->slug) ? $model->slug : $model->getUniqueSlug($model->name);
         });
 
@@ -34,16 +32,14 @@ class PageServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../../../resources/lang', 'page');
 
         $this->publishes([
-            __DIR__.'/../../../config/config.php' => config_path('/pages.php')
+            __DIR__.'/../../../config/config.php' => config_path('/pages.php'),
         ], 'config');
 
-        include __DIR__ . '/../Http/routes.php';
+        include __DIR__.'/../Http/routes.php';
     }
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -66,5 +62,4 @@ class PageServiceProvider extends ServiceProvider
     {
         return array();
     }
-
 }

@@ -4,7 +4,7 @@
         <button type="button" class="btn btn-primary btn-sm" id="btn-new-page"><i class="fa fa-plus-circle"></i> New</button>
         @if($page->id)
         <button type="button" class="btn btn-primary btn-sm" id="btn-edit-page"><i class="fa fa-pencil-square"></i> Edit</button>
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="btnDelete"><i class="fa fa-times-circle"></i> Delete</button>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="btn-delete-page"><i class="fa fa-times-circle"></i> Delete</button>
         @endif
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
@@ -151,6 +151,33 @@ $(document).ready(function(){
     @if($page->id)
     $('#btn-edit-page').click(function(){
         $('#entry-page').load('{{URL::to('admin/page')}}/{{$page->id}}/edit');
+    });
+
+    $('#btn-delete-page').click(function(){
+        smoke.confirm("Are you sure?", function(e){
+            if (e){
+                var data = new FormData();
+                $.ajax({
+                    url: '{{URL::to('admin')}}/page/{{$page->id}}',
+                    type: 'DELETE',
+                    processData: false,
+                    contentType: false,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('#entry-page').load('{{URL::to('admin/page/0')}}');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    }
+                });
+            }else{
+            }
+        }, {
+            ok: "Yes",
+            cancel: "No",
+            classname: "custom-class",
+            reverseButtons: true
+        });
     });
     @endif
 });

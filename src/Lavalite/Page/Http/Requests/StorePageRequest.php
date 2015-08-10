@@ -1,30 +1,31 @@
-<?php namespace Lavalite\Page\Http\Requests;
+<?php
+
+namespace Lavalite\Page\Http\Requests;
 
 use App\Http\Requests\Request;
 use User;
 
-class StorePageRequest extends Request {
+class StorePageRequest extends Request
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return User::hasAnyAccess(['page.create']);
+    }
 
-	/**
-	 * Determine if the user is authorized to make this request.
-	 *
-	 * @return bool
-	 */
-	public function authorize()
-	{
-		return User::hasAnyAccess(['page.create']);
-	}
-
-	/**
-	 * Get the validation rules that apply to the request.
-	 *
-	 * @return array
-	 */
-	public function rules()
-	{
-		return [
-			//
-		];
-	}
-
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            //
+        ];
+    }
 }

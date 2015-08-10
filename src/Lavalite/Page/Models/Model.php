@@ -1,19 +1,20 @@
-<?php namespace Lavalite\Page\Models;
+<?php
+
+namespace Lavalite\Page\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Model extends Eloquent
 {
-
-    function __construct() {
+    public function __construct()
+    {
         $this->initialize();
     }
     /**
-     * Create a unique slug
+     * Create a unique slug.
      *
-     * @param  string $title
-     * @return void
+     * @param string $title
      */
     public function getUniqueSlug($title)
     {
@@ -24,10 +25,10 @@ class Model extends Eloquent
         if ($row) {
             $num = 2;
             while ($row) {
-                $newSlug = $slug .'-'. $num;
+                $newSlug = $slug.'-'.$num;
 
                 $row = DB::table($this->table)->where('slug', $newSlug)->first();
-                $num++;
+                ++$num;
             }
 
             $slug = $newSlug;
@@ -36,10 +37,7 @@ class Model extends Eloquent
         return $slug;
     }
 
-
     public function initialize()
     {
-
     }
-
 }
