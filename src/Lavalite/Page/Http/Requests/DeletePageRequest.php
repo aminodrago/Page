@@ -14,7 +14,7 @@ class DeletePageRequest extends Request
      */
     public function authorize()
     {
-        return User::hasAnyAccess(['page.delete']);
+        return User::can(['page.delete']);
     }
 
     /**

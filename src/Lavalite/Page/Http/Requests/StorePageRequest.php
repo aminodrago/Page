@@ -14,7 +14,7 @@ class StorePageRequest extends Request
      */
     public function authorize()
     {
-        return User::hasAnyAccess(['page.create']);
+        return User::can(['page.create']);
     }
 
     /**

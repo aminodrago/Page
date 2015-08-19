@@ -6,22 +6,36 @@ use Config;
 use User;
 use View;
 
+/**
+ *
+ * @package Page facade
+ */
 class Page
 {
+
+    // Page modal
     protected $model;
 
     /**
-     * @param Interfaces\PageInterface $page
+     * Initialize page facade.
+     *
+     * @param type \Lavalite\Page\Interfaces\PageRepositoryInterface $page
+     * @return none
+     *
      */
-    public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
+    public function __construct(\Lavalite\Page\Interfaces\PageRepositoryInterface $page)
     {
         $this->model = $page;
     }
 
-    public function model()
-    {
-        return $this->model->getModel();
-    }
+    /**
+     * Calls page repository function
+     *
+     * @param string $name
+     * @param array $arguments
+     *
+     * @return mixed
+     */
 
     public function __call($name, $arguments)
     {
@@ -36,24 +50,34 @@ class Page
     public function gadget($perpage = 10)
     {
         $data['pages'] = $this->model->paginate($perpage);
-        $data['permissions'] = $this->permissions();
-
         return View::make('page::admin.page.gadget', $data);
     }
 
     /**
-     * @return array
+     * Return return field value of a page
+     *
+     * @param mixed $idslug
+     * @param string $field
+     *
+     * @return string
      */
-    protected function permissions()
+    public function pages($idslug, $field)
     {
-        $p = array();
-
-        $permissions = Config::get('page::page.permissions.admin');
-
-        foreach ($permissions as $key => $value) {
-            $p[$value] = User::hasAccess($value);
-        }
-
-        return $p;
+        $page = $this->model->getPage($idslug);
+        return $page[$field];
     }
+
+    /**
+     * Returns page object
+     *
+     * @param mixed $idslug
+     * @param string $field
+     *
+     * @return mixed
+     */
+    public function page($idslug)
+    {
+        return  $this->model->getPage($idslug);
+    }
+
 }

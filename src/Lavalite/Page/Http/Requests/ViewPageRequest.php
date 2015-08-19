@@ -14,7 +14,7 @@ class ViewPageRequest extends Request
      */
     public function authorize()
     {
-        return User::hasAnyAccess(['page.view']);
+        return User::can(['page.view']);
     }
 
     /**

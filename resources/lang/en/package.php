@@ -1,4 +1,5 @@
 <?php
+
 return array(
 
     /*
@@ -11,6 +12,6 @@ return array(
     |
     */
 
-    "name" 			=> "Page",
-    "names" 		=> "Pages",
+    'name' => 'Page',
+    'names' => 'Pages',
 );

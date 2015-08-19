@@ -14,7 +14,7 @@ class UpdatePageRequest extends Request
      */
     public function authorize()
     {
-        return User::hasAnyAccess(['page.edit']);
+        return User::can(['page.edit']);
     }
 
     /**

@@ -165,6 +165,7 @@ $(document).ready(function(){
                     success:function(data, textStatus, jqXHR)
                     {
                         $('#entry-page').load('{{URL::to('admin/page/0')}}');
+                        $('#main-list').DataTable().ajax.reload( null, false );
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
