@@ -29,11 +29,12 @@ class PageServiceProvider extends ServiceProvider
         });
 
         $this->loadViewsFrom(__DIR__.'/../../../../resources/views', 'page');
+
         $this->loadTranslationsFrom(__DIR__.'/../../../../resources/lang', 'page');
 
-        $this->publishes([
-            __DIR__.'/../../../config/config.php' => config_path('/pages.php'),
-        ], 'config');
+        $this->publishResources();
+        $this->publishMigrations();
+
 
         include __DIR__.'/../Http/routes.php';
     }
@@ -53,6 +54,7 @@ class PageServiceProvider extends ServiceProvider
         );
     }
 
+
     /**
      * Get the services provided by the provider.
      *
@@ -60,6 +62,23 @@ class PageServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array();
+        return array('page');
     }
+
+    /**
+     * Publish configuration file.
+     */
+    private function publishResources()
+    {
+        $this->publishes([__DIR__.'/../../../../config/config.php' => config_path('page.php')], 'config');
+    }
+
+    /**
+     * Publish migration file.
+     */
+    private function publishMigrations()
+    {
+        $this->publishes([__DIR__.'/../../../../migrations/' => base_path('database/migrations')], 'migrations');
+    }
+
 }
