@@ -2,10 +2,6 @@
 
 namespace Lavalite\Page\Repositories\Eloquent;
 
-use App;
-use Lang;
-use Theme;
-use Lavalite\Page\Models\Page as Page;
 use Lavalite\Page\Interfaces\PageRepositoryInterface;
 
 class PageRepository extends BaseRepository implements PageRepositoryInterface
@@ -42,7 +38,7 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
     }
 
     /**
-     * Get page by id
+     * Get page by id or slug
      *
      * @return void
      */
