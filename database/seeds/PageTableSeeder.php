@@ -2,7 +2,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class PagesTableSeeder extends Seeder
+class PageTableSeeder extends Seeder
 {
 
     public function run()
