@@ -79,7 +79,7 @@ class PageServiceProvider extends ServiceProvider
     private function publishMigrations()
     {
         $this->publishes([__DIR__.'/../../../../database/migrations/' => base_path('database/migrations')], 'migrations');
-        $this->publishes([__DIR__.'/../../../../databases/seeds/' => base_path('database/seeds')], 'seeds');
+        $this->publishes([__DIR__.'/../../../../database/seeds/' => base_path('database/seeds')], 'seeds');
     }
 
 }
