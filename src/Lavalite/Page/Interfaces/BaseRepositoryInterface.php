@@ -3,20 +3,12 @@ namespace Lavalite\Page\Interfaces;
 
 use Illuminate\Container\Container as Application;
 
-/**
- * Interface RepositoryInterface
- * @package Prettus\Repository\Contracts
- */
+
 interface BaseRepositoryInterface
 {
 
     /**
-     * @param Application $app
-     */
-    public function __construct(Application $app);
-
-    /**
-     * Retrieve all data of repository
+     * Retrieve all data of modal
      *
      * @param array $columns
      * @return mixed
@@ -24,7 +16,7 @@ interface BaseRepositoryInterface
     public function all($columns = array('*'));
 
     /**
-     * Retrieve all data of repository
+     * Retrieve all data of modal
      *
      * @param array $columns
      * @return mixed
@@ -32,12 +24,20 @@ interface BaseRepositoryInterface
     public function json($columns = array('*'));
 
     /**
-     * Retrieve all data of repository, paginated
+     * Retrieve all data of modal, paginated
      * @param null $limit
      * @param array $columns
      * @return mixed
      */
     public function paginate($limit = null, $columns = array('*'));
+
+    /**
+     * Retrieve data of modal, as key value
+     * @param null $limit
+     * @param array $columns
+     * @return mixed
+     */
+    public function lists($val, $key = null);
 
     /**
      * Find data by id
@@ -49,7 +49,7 @@ interface BaseRepositoryInterface
     public function find($id, $columns = array('*'));
 
     /**
-     * Find data by id and return new instance if not found
+     * Find data by id and return new instance if not found.
      *
      * @param $id
      * @param array $columns
@@ -65,8 +65,7 @@ interface BaseRepositoryInterface
      * @param array $columns
      * @return mixed
      */
-    public function findByField($field, $value, $columns = array('*'));
-
+    public function findByField($field, $value = null, $columns = array('*'));
     /**
      * Find data by multiple fields
      *
@@ -77,16 +76,38 @@ interface BaseRepositoryInterface
     public function findWhere( array $where , $columns = array('*'));
 
     /**
-     * Save a new entity in repository
+     * Find data by multiple values in one field
      *
+     * @param $field
+     * @param array $values
+     * @param array $columns
+     * @return mixed
+     */
+    public function findWhereIn( $field, array $values, $columns = array('*'));
+
+    /**
+     * Find data by excluding multiple values in one field
+     *
+     * @param $field
+     * @param array $values
+     * @param array $columns
+     * @return mixed
+     */
+    public function findWhereNotIn( $field, array $values, $columns = array('*'));
+
+    /**
+     * Save a new entity in modal
+     *
+     * @throws ValidatorException
      * @param array $attributes
      * @return mixed
      */
     public function create(array $attributes);
 
     /**
-     * Update a entity in repository by id
+     * Update a entity in modal by id
      *
+     * @throws ValidatorException
      * @param array $attributes
      * @param $id
      * @return mixed
@@ -94,7 +115,7 @@ interface BaseRepositoryInterface
     public function update(array $attributes, $id);
 
     /**
-     * Delete a entity in repository by id
+     * Delete a entity in modal by id
      *
      * @param $id
      * @return int
@@ -102,13 +123,102 @@ interface BaseRepositoryInterface
     public function delete($id);
 
     /**
+     * Sets the order of the next query.
+     *
+     * @param string $column
+     * @param string $order
+     *
+     * @return void
+     */
+    public function orderBy($column, $order = 'ASC');
+
+    /**
+     * Add where condition for next query.
+     *
+     * @param string $column
+     * @param string $operator
+     * @param string $value
+     *
+     * @return void
+     */
+    public function where($column, $operator, $value);
+
+    /**
+     * Add orWhere condition for next query.
+     *
+     * @param string $column
+     * @param string $operator
+     * @param string $value
+     *
+     * @return void
+     */
+    public function orWhere($column, $operator, $value);
+
+    /**
+     * Add whereBetween condition for next query.
+     *
+     * @param string $column
+     * @param array $value
+     *
+     * @return void
+     */
+    public function whereBetween($column, array $value);
+
+    /**
+     * Add whereNotBetween condition for next query.
+     *
+     * @param string $column
+     * @param array $value
+     *
+     * @return void
+     */
+    public function whereNotBetween($column, array $value);
+
+    /**
+     * Add whereIn condition for next query.
+     *
+     * @param string $column
+     * @param array $value
+     *
+     * @return void
+     */
+    public function whereIn($column, array $value);
+
+    /**
+     * Add whereNotIn condition for next query.
+     *
+     * @param string $column
+     * @param array $value
+     *
+     * @return void
+     */
+    public function whereNotIn($column, array $value);
+
+    /**
+     * Add whereNull condition for next query.
+     *
+     * @param string $column
+     *
+     * @return void
+     */
+    public function whereNull($column);
+
+    /**
+     * Add whereNotNull condition for next query.
+     *
+     * @param string $column
+     *
+     * @return void
+     */
+    public function whereNotNull($column);
+
+    /**
      * Load relations
      *
-     * @param $relations
+     * @param array|string $relations
      * @return $this
      */
     public function with($relations);
-
     /**
      * Set hidden fields
      *
@@ -117,6 +227,7 @@ interface BaseRepositoryInterface
      */
     public function hidden(array $fields);
 
+
     /**
      * Set visible fields
      *
@@ -124,13 +235,5 @@ interface BaseRepositoryInterface
      * @return $this
      */
     public function visible(array $fields);
-
-    /**
-     * Query Scope
-     *
-     * @param \Closure $scope
-     * @return $this
-     */
-    public function scopeQuery(\Closure $scope);
 
 }

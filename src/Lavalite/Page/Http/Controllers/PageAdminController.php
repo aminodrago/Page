@@ -5,6 +5,7 @@ namespace Lavalite\Page\Http\Controllers;
 use Former;
 use Response;
 use App\Http\Controllers\AdminController as AdminController;
+
 use Lavalite\Page\Http\Requests\ViewPageRequest;
 use Lavalite\Page\Http\Requests\UpdatePageRequest;
 use Lavalite\Page\Http\Requests\StorePageRequest;
@@ -15,6 +16,7 @@ use Lavalite\Page\Interfaces\PageRepositoryInterface;
  *
  * @package Pages
  */
+
 class PageAdminController extends AdminController
 {
 
