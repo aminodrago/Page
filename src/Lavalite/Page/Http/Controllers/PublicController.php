@@ -12,7 +12,7 @@ class PublicController extends CmsPublicController
      *
      * @return type
      */
-    public function __construct(\Lavalite\Page\Interfaces\PageInterface $page)
+    public function __construct(\Lavalite\Page\Interfaces\PageRepositoryInterface $page)
     {
         $this->model = $page;
         parent::__construct();
