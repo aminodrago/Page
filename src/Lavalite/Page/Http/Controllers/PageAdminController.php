@@ -6,10 +6,7 @@ use Former;
 use Response;
 use App\Http\Controllers\AdminController as AdminController;
 
-use Lavalite\Page\Http\Requests\ViewPageRequest;
-use Lavalite\Page\Http\Requests\UpdatePageRequest;
-use Lavalite\Page\Http\Requests\StorePageRequest;
-use Lavalite\Page\Http\Requests\DeletePageRequest;
+use Lavalite\Page\Http\Requests\PageRequest;
 use Lavalite\Page\Interfaces\PageRepositoryInterface;
 
 /**
@@ -36,7 +33,7 @@ class PageAdminController extends AdminController
      *
      * @return Response
      */
-    public function index(ViewPageRequest $request)
+    public function index(PageRequest $request)
     {
         $this->theme->prependTitle(trans('page::page.names').' :: ');
 
@@ -50,7 +47,7 @@ class PageAdminController extends AdminController
      *
      * @return Response
      */
-    public function lists(ViewPageRequest $request)
+    public function lists(PageRequest $request)
     {
         $array = $this->model->json();
 
@@ -70,7 +67,7 @@ class PageAdminController extends AdminController
      *
      * @return Response
      */
-    public function show(ViewPageRequest $request, $id)
+    public function show(PageRequest $request, $id)
     {
         $page = $this->model->findOrNew($id);
 
@@ -85,7 +82,7 @@ class PageAdminController extends AdminController
      * @param  Request  $request
      * @return Response
      */
-    public function create(StorePageRequest $request)
+    public function create(PageRequest $request)
     {
         $page = $this->model->findOrNew(0);
         Former::populate($page);
@@ -99,7 +96,7 @@ class PageAdminController extends AdminController
      * @param  Request  $request
      * @return Response
      */
-    public function store(StorePageRequest $request)
+    public function store(PageRequest $request)
     {
         if ($row = $this->model->create($request->all())) {
             return Response::json(['message' => 'Page created sucessfully', 'type' => 'success', 'title' => 'Success'], 201);
@@ -115,7 +112,7 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function edit(UpdatePageRequest $request, $id)
+    public function edit(PageRequest $request, $id)
     {
         $page = $this->model->find($id);
 
@@ -131,7 +128,7 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function update(UpdatePageRequest $request, $id)
+    public function update(PageRequest $request, $id)
     {
         if ($row = $this->model->update($request->all(), $id)) {
             return Response::json(['message' => 'Page updated sucessfully', 'type' => 'success', 'title' => 'Success'], 201);
@@ -146,7 +143,7 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function destroy(DeletePageRequest $request, $id)
+    public function destroy(PageRequest $request, $id)
     {
         try {
             $this->model->delete($id);

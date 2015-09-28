@@ -10,33 +10,40 @@ Next, update Composer from the Terminal:
 
     composer update
 
-Once this operation completes, the final step is to add the service provider and menu alias. Open `app/config/app.php`, and add a new item to the providers array.
+Once this operation completes, the final step is to add the service provider and page alias. Open `app/config/app.php`, and add a new item to the providers array.
 
-    'Lavalite\Page\PageServiceProvider'
+```php
+'Lavalite\Page\PageServiceProvider'
+```
 
-Add the following to the alias array.
+And also add it to alias
 
-    'Page' => 'Lavalite\Page\Facades\Page',
+```php
+'Page'  => 'Lavalite\Page\Facades\Page',
+```
 
-Publishing Configuration file
+Use the below commands for publishing
 
-    php artisan config:publish lavalite/page
+Migration and seeds
 
-publish the view for customization
+    php artisan vendor:publish --provider="Lavalite\Page\Providers\PageServiceProvider" --tag="migrate"
+    php artisan vendor:publish --provider="Lavalite\Page\Providers\PageServiceProvider" --tag="seeds"
 
-    php artisan view:publish lavalite/page
+Configuration
 
-The last thing to do is to migrate to create the pages table:
+    php artisan vendor:publish --provider="Lavalite\Page\Providers\PageServiceProvider" --tag="config"
 
-    php artisan migrate --package="lavalite/page"
+Views
+
+    php artisan vendor:publish --provider="Lavalite\Page\Providers\PageServiceProvider" --tag="view-public"
+    php artisan vendor:publish --provider="Lavalite\Page\Providers\PageServiceProvider" --tag="view-admin"
+
 
 You are done!
 
-### Usage
+## Usage
 
 Add pages through `admin/pages`
-
-You can add this to menu in admin through [menu](https://github.com/LavaLite/Menu) Package
 
 Browser to get page browse `/{slug}.html`
 
@@ -50,4 +57,4 @@ Calling other pages inside a view or function
 {{Page::banner('slug')}}
 ```
 
- 
+

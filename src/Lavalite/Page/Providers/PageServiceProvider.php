@@ -33,8 +33,6 @@ class PageServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../../../resources/lang', 'page');
 
         $this->publishResources();
-        $this->publishMigrations();
-
 
         include __DIR__.'/../Http/routes.php';
     }
@@ -70,16 +68,28 @@ class PageServiceProvider extends ServiceProvider
      */
     private function publishResources()
     {
-        $this->publishes([__DIR__.'/../../../../config/config.php' => config_path('page.php')], 'config');
-    }
+        // Publish configuration file
+        $this->publishes([__DIR__.'/../../../../config/config.php'
+                        => config_path('page.php')], 'config');
 
-    /**
-     * Publish migration file.
-     */
-    private function publishMigrations()
-    {
-        $this->publishes([__DIR__.'/../../../../database/migrations/' => base_path('database/migrations')], 'migrations');
-        $this->publishes([__DIR__.'/../../../../database/seeds/' => base_path('database/seeds')], 'seeds');
-    }
+        // Publish public view
+        $this->publishes([__DIR__.'/../../../../resources/views/public'
+                        => base_path('resources/views/vendor/page/public')], 'view-public');
 
+        // Publish admin view
+        $this->publishes([__DIR__.'/../../../../resources/views/admin'
+                        => base_path('resources/views/vendor/page/admin')], 'view-admin');
+
+        // Publish language files
+        $this->publishes([__DIR__.'/path/to/translations'
+                        => base_path('resources/lang/vendor/page')], 'lang');
+
+        // Publish migrations
+        $this->publishes([__DIR__.'/../../../../database/migrations/'
+                        => base_path('database/migrations')], 'migrations');
+
+        // Publish seeds
+        $this->publishes([__DIR__.'/../../../../database/seeds/'
+                        => base_path('database/seeds')], 'seeds');
+    }
 }
