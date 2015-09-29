@@ -27,18 +27,18 @@ class PublicController extends CmsPublicController
     protected function getPage($slug)
     {
         // get page by slug
-        $data['page'] = $this->model->getPage($slug);
+        $page = $this->model->getPage($slug);
 
         //Set theme variables
-        $this->theme->setTitle($data['page']->title);
-        $this->theme->setKeywords($data['page']->keyword);
-        $this->theme->setDescription($data['page']->description);
+        $this->theme->setTitle($page->title);
+        $this->theme->setKeywords($page->keyword);
+        $this->theme->setDescription($page->description);
 
         // Get view
-        $view = $data['page']->view;
-        $view = view()->exists('page::'.$view) ? $view : 'page';
+        $view = $page->view;
+        $view = view()->exists('page::public.'.$view) ? $view : 'page';
 
         // display page
-        return $this->theme->of('page::'.$view, $data)->render();
+        return $this->theme->of('page::public.'.$view, compact('page'))->render();
     }
 }

@@ -83,10 +83,10 @@ class Page extends Model
      */
     public function initialize()
     {
-        $this->fillable             = config('pages.page.fillable');
-        $this->uploads              = config('pages.page.uploadable');
-        $this->uploadRootFolder     = config('pages.page.upload_root_folder');
-        $this->table                = config('pages.page.table');
+        $this->fillable             = config('page.page.fillable');
+        $this->uploads              = config('page.page.uploadable');
+        $this->uploadRootFolder     = config('page.page.upload_root_folder');
+        $this->table                = config('page.page.table');
     }
 
 }

@@ -53,7 +53,7 @@ class PageAdminController extends AdminController
 
         foreach ($array as $key => $row) {
             $row['slug'] = $row['slug'].'.htm';
-            $array[$key] = array_only($row, config('pages.page.listfields'));
+            $array[$key] = array_only($row, config('page.page.listfields'));
         }
 
         return array('data' => $array);
