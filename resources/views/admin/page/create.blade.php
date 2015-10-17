@@ -1,8 +1,8 @@
 <div class="box-header with-border">
-    <h3 class="box-title"> New Page </h3>
+    <h3 class="box-title"> {{ trans('cms.new') }} {{ trans('page::page.name') }} </h3>
     <div class="box-tools pull-right">
-        <button type="button" class="btn btn-primary btn-sm" id="btn-save"><i class="fa fa-floppy-o"></i> Save</button>
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="btn-cancel"><i class="fa fa-times-circle"></i> Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-save"><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="btn-cancel"><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
 </div>
@@ -10,10 +10,10 @@
     <div class="nav-tabs-custom">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs primary">
-            <li class="active"><a href="#details" data-toggle="tab">Page</a></li>
-            <li><a href="#metatags" data-toggle="tab">Meta</a></li>
-            <li><a href="#settings" data-toggle="tab">Settings</a></li>
-            <li><a href="#images" data-toggle="tab">Images</a></li>
+            <li class="active"><a href="#details" data-toggle="tab">{{ trans('page::page.tab.page') }}</a></li>
+            <li><a href="#metatags" data-toggle="tab">{{ trans('page::page.tab.meta') }}</a></li>
+            <li><a href="#settings" data-toggle="tab">{{ trans('page::page.tab.setting') }}</a></li>
+            <li><a href="#images" data-toggle="tab">{{ trans('page::page.tab.image') }}</a></li>
         </ul>
         {!!Former::vertical_open()
         ->id('create-page')
@@ -27,8 +27,7 @@
                 {!! Former::hidden('upload_folder')!!}
                 {!! Former::text('name')
                 -> label(trans(trans('page::page.label.name')))
-                -> placeholder(trans(trans('page::page.placeholder.name')))
-                -> required()!!}
+                -> placeholder(trans(trans('page::page.placeholder.name')))!!}
 
                 {!! Former::textarea('content')
                 -> label(trans('page::page.label.content'))
@@ -124,7 +123,7 @@
     $('#create-page')
     .submit( function( e ) {
         if($('#create-page').valid() == false) {
-            toastr.error('Please enter valid information.', 'Error');
+            toastr.warming('{!!trans('messages.unprocessable')!!}', '{!!trans('messages.type.error')!!}');
             return false;
         }
         console.log(FormData);
@@ -139,8 +138,6 @@
             contentType: false,
             beforeSend: function() {
                 formData.append('content', $("#content").code());
-                console.log(url);
-                console.log(formData);
             },
             success:function(data, textStatus, jqXHR)
             {

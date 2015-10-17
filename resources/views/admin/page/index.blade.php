@@ -35,6 +35,7 @@
     </thead>
 </table>
 @stop
+
 @section('script')
 <script type="text/javascript">
 var oTable;
@@ -54,9 +55,8 @@ $(document).ready(function(){
 
     $('#main-list tbody').on( 'click', 'tr', function () {
         $(this).toggleClass('selected');
-            var d = $('#main-list').DataTable().row( this ).data();
-            $('#entry-page').load('{{URL::to('admin/page')}}' + '/' + d.id, function( response, status, xhr ) {
-        });
+        var d = $('#main-list').DataTable().row( this ).data();
+        $('#entry-page').load('{{URL::to('admin/page')}}' + '/' + d.id);
     });
 });
 </script>

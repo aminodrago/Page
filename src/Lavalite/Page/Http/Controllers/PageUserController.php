@@ -2,9 +2,9 @@
 namespace Lavalite\Page\Http\Controllers;
 
 use Former;
-use App\Http\Controllers\AdminController as AdminController;
+use App\Http\Controllers\UserController as UserController;
 
-use Lavalite\Page\Http\Requests\PageAdminRequest;
+use Lavalite\Page\Http\Requests\PageUserRequest;
 use Lavalite\Page\Interfaces\PageRepositoryInterface;
 
 /**
@@ -12,7 +12,7 @@ use Lavalite\Page\Interfaces\PageRepositoryInterface;
  * @package Page
  */
 
-class PageAdminController extends AdminController
+class PageUserController extends UserController
 {
 
     /**
@@ -31,30 +31,13 @@ class PageAdminController extends AdminController
      *
      * @return Response
      */
-    public function index(PageAdminRequest $request)
+    public function index(PageUserRequest $request)
     {
         $this->theme->prependTitle(trans('page::page.names').' :: ');
 
         return $this->theme->of('page::admin.page.index')->render();
     }
 
-    /**
-     * Return list of page as json.
-     *
-     * @param  Request  $request
-     *
-     * @return Response
-     */
-    public function lists(PageAdminRequest $request)
-    {
-        $array = $this->model->json();
-
-        foreach ($array as $key => $row) {
-            $array[$key] = array_only($row, config('page.page.listfields'));
-        }
-
-        return array('data' => $array);
-    }
 
     /**
      * Display the specified resource.
@@ -64,7 +47,7 @@ class PageAdminController extends AdminController
      *
      * @return Response
      */
-    public function show(PageAdminRequest $request, $id)
+    public function show(PageUserRequest $request, $id)
     {
         $page = $this->model->find($id);
 
@@ -91,7 +74,7 @@ class PageAdminController extends AdminController
      * @param  Request  $request
      * @return Response
      */
-    public function create(PageAdminRequest $request)
+    public function create(PageUserRequest $request)
     {
         $page = $this->model->findOrNew(0);
 
@@ -106,13 +89,13 @@ class PageAdminController extends AdminController
      * @param  Request  $request
      * @return Response
      */
-    public function store(PageAdminRequest $request)
+    public function store(PageUserRequest $request)
     {
 
         try {
             $attributes     = $request->all();
             $page           = $this->model->create($attributes);
-            return $this->success(trans('messages.success.created', ['Module' => 'Page']), 201);
+            return $this->success(trans('messages.success.created', ['Module' => 'Page']));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -125,7 +108,7 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function edit(PageAdminRequest $request, $id)
+    public function edit(PageUserRequest $request, $id)
     {
         $page = $this->model->find($id);
 
@@ -141,12 +124,12 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function update(PageAdminRequest $request, $id)
+    public function update(PageUserRequest $request, $id)
     {
         try {
             $attributes     = $request->all();
             $page           = $this->model->update($attributes, $id);
-            return $this->success(trans('messages.success.updated', ['Module' => 'Page']), 201);
+            return $this->success(trans('messages.success.updated', ['Module' => 'Page']));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -158,11 +141,11 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function destroy(PageAdminRequest $request, $id)
+    public function destroy(PageUserRequest $request, $id)
     {
         try {
             $this->model->delete($id);
-            return $this->success(trans('messages.success.deleted', ['Module' => 'Page']), 201);
+            return $this->success(trans('messages.success.deleted', ['Module' => 'Page']));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }

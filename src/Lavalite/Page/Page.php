@@ -80,4 +80,16 @@ class Page
         return  $this->model->getPage($idslug);
     }
 
+    /**
+     * Returns count of pages
+     *
+     * @param array $filter
+     *
+     * @return integer
+     */
+    public function count(array $filters = NULL)
+    {
+        return  $this->model->count();
+    }
+
 }

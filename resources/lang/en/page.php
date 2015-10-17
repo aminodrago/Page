@@ -1,13 +1,13 @@
 <?php
-
-return array(
+return [
     'name' => 'Page',
     'names' => 'Pages',
-    'options' => array(
-        'view' => array('page' => 'Default', 'gallery' => 'Gallery'),
-        'compiler' => array('' => 'none', 'php' => 'Php','blade' => 'Blade','twif' => 'Twig'), ),
-    'label' => array(
-
+    'options' => [
+        'view' => ['page' => 'Default', 'gallery' => 'Gallery'],
+        'compiler' => [
+        '' => 'none', 'php' => 'Php','blade' => 'Blade','twif' => 'Twig'], ]
+        ,
+    'label' => [
         'id' => 'ID',
         'order' => 'Order',
         'banner' => 'Banner',
@@ -25,10 +25,8 @@ return array(
         'image' => 'Image',
         'category' => 'Category',
         'tags' => 'Tags',
-        ),
-
-    'placeholder' => array(
-
+        ],
+    'placeholder' => [
         'parent' => 'Select',
         'order' => 'Enter Order',
         'banner' => 'Upload banner image',
@@ -44,11 +42,17 @@ return array(
         'slug' => 'Enter Url',
         'category' => 'Select a category',
         'tags' => 'Enter tags',
-
-    ),
-    'message' => array(
-
+    ],
+    'message' => [
         'nopage' => 'Page not found.',
-
-        ),
-    );
+    ],
+    'tab' => [
+        'page' => 'Page',
+        'setting' => 'Setting',
+        'meta' => 'Meta',
+        'image' => 'Image',
+    ],
+    'text' => [
+        'preview' => 'Click on the below list for preview'
+    ],
+];

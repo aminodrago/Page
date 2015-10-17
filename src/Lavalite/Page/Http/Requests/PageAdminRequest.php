@@ -5,7 +5,7 @@ namespace Lavalite\Page\Http\Requests;
 use App\Http\Requests\Request;
 use User;
 
-class PageRequest extends Request
+class PageAdminRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -40,7 +40,8 @@ class PageRequest extends Request
         // validation rule for create request.
         if($request->isMethod('POST'))
             return [
-                'name' => 'required'
+                'name' => 'required',
+                'content' => 'required'
             ];
 
         // Validation rule for update request.

@@ -163,6 +163,18 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
+     * Retrieve the count of row in the table
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $results = $this->model->count();
+        $this->resetModel();
+        return $results;
+    }
+
+    /**
      * Find data by id
      *
      * @param $id
@@ -171,7 +183,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function find($id, $columns = array('*'))
     {
-        $model = $this->model->findOrFail($id, $columns);
+        $model = $this->model->find($id, $columns);
         $this->resetModel();
         return $model;
     }

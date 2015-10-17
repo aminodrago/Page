@@ -1,10 +1,10 @@
 <div class="box-header with-border">
-    <h3 class="box-title"> View page [{{$page->name or 'New page'}}]</h3>
+    <h3 class="box-title"> {{ trans('cms.view') }}   {{ trans('page::page.name') }} [{{$page->name}}]</h3>
     <div class="box-tools pull-right">
-        <button type="button" class="btn btn-primary btn-sm" id="btn-new-page"><i class="fa fa-plus-circle"></i> New</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-new-page"><i class="fa fa-plus-circle"></i> {{ trans('cms.new') }}</button>
         @if($page->id)
-        <button type="button" class="btn btn-primary btn-sm" id="btn-edit-page"><i class="fa fa-pencil-square"></i> Edit</button>
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="btn-delete-page"><i class="fa fa-times-circle"></i> Delete</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-edit-page"><i class="fa fa-pencil-square"></i> {{ trans('cms.edit') }}</button>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="btn-delete-page"><i class="fa fa-times-circle"></i> {{ trans('cms.delete') }}</button>
         @endif
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
@@ -13,10 +13,10 @@
     <div class="nav-tabs-custom">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs primary">
-            <li class="active"><a href="#details" data-toggle="tab">Page</a></li>
-            <li><a href="#metatags" data-toggle="tab">Meta</a></li>
-            <li><a href="#settings" data-toggle="tab">Settings</a></li>
-            <li><a href="#images" data-toggle="tab">Images</a></li>
+            <li class="active"><a href="#details" data-toggle="tab">{{ trans('page::page.tab.page') }}</a></li>
+            <li><a href="#metatags" data-toggle="tab">{{ trans('page::page.tab.meta') }}</a></li>
+            <li><a href="#settings" data-toggle="tab">{{ trans('page::page.tab.setting') }}</a></li>
+            <li><a href="#images" data-toggle="tab">{{ trans('page::page.tab.image') }}</a></li>
         </ul>
         {!!Former::vertical_open()
         ->id('show-page')
@@ -154,8 +154,15 @@ $(document).ready(function(){
     });
 
     $('#btn-delete-page').click(function(){
-        smoke.confirm("Are you sure?", function(e){
-            if (e){
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this data!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function(){
                 var data = new FormData();
                 $.ajax({
                     url: '{{URL::to('admin')}}/page/{{$page->id}}',
@@ -164,21 +171,13 @@ $(document).ready(function(){
                     contentType: false,
                     success:function(data, textStatus, jqXHR)
                     {
+                        swal("Deleted!", "The page has been deleted.", "success");
                         $('#entry-page').load('{{URL::to('admin/page/0')}}');
                         $('#main-list').DataTable().ajax.reload( null, false );
                     },
-                    error: function(jqXHR, textStatus, errorThrown)
-                    {
-                    }
                 });
-            }else{
-            }
-        }, {
-            ok: "Yes",
-            cancel: "No",
-            classname: "custom-class",
-            reverseButtons: true
         });
+
     });
     @endif
 });
