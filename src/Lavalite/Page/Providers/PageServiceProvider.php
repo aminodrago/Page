@@ -81,15 +81,15 @@ class PageServiceProvider extends ServiceProvider
                         => base_path('resources/views/vendor/page/admin')], 'view-admin');
 
         // Publish language files
-        $this->publishes([__DIR__.'/path/to/translations'
+        $this->publishes([__DIR__.'/../../../../resources/lang'
                         => base_path('resources/lang/vendor/page')], 'lang');
 
         // Publish migrations
-        $this->publishes([__DIR__.'/../../../../database/migrations/'
+        $this->publishes([__DIR__.'/../../../../database/migrations'
                         => base_path('database/migrations')], 'migrations');
 
         // Publish seeds
-        $this->publishes([__DIR__.'/../../../../database/seeds/'
+        $this->publishes([__DIR__.'/../../../../database/seeds'
                         => base_path('database/seeds')], 'seeds');
     }
 }
