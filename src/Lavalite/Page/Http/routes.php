@@ -1,6 +1,6 @@
 <?php
 
-Route::group(array('prefix' => 'admin/page'), function () {
+Route::group(['prefix' => 'admin/page'], function () {
     Route::resource('page', 'PageAdminController');
 });
 

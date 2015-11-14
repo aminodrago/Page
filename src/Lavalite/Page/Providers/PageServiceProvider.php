@@ -2,8 +2,8 @@
 
 namespace Lavalite\Page\Providers;
 
-use Lavalite\Page\Models\Page;
 use Illuminate\Support\ServiceProvider;
+use Lavalite\Page\Models\Page;
 
 class PageServiceProvider extends ServiceProvider
 {
@@ -45,9 +45,7 @@ class PageServiceProvider extends ServiceProvider
         $this->app->register(\Lavalite\Page\Providers\AuthServiceProvider::class);
         $this->app->register(\Lavalite\Page\Providers\EventServiceProvider::class);
         $this->app->register(\Lavalite\Page\Providers\RouteServiceProvider::class);
-
     }
-
 
     /**
      * Get the services provided by the provider.
@@ -56,7 +54,7 @@ class PageServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('page');
+        return ['page'];
     }
 
     /**
@@ -65,28 +63,22 @@ class PageServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__.'/../../../../config/config.php'
-                        => config_path('package/page.php')], 'config');
+        $this->publishes([__DIR__.'/../../../../config/config.php' => config_path('package/page.php')], 'config');
 
         // Publish public view
-        $this->publishes([__DIR__.'/../../../../resources/views/public'
-                        => base_path('resources/views/vendor/page/public')], 'view-public');
+        $this->publishes([__DIR__.'/../../../../resources/views/public' => base_path('resources/views/vendor/page/public')], 'view-public');
 
         // Publish admin view
-        $this->publishes([__DIR__.'/../../../../resources/views/admin'
-                        => base_path('resources/views/vendor/page/admin')], 'view-admin');
+        $this->publishes([__DIR__.'/../../../../resources/views/admin' => base_path('resources/views/vendor/page/admin')], 'view-admin');
 
         // Publish language files
-        $this->publishes([__DIR__.'/../../../../resources/lang'
-                        => base_path('resources/lang/vendor/page')], 'lang');
+        $this->publishes([__DIR__.'/../../../../resources/lang' => base_path('resources/lang/vendor/page')], 'lang');
 
         // Publish migrations
-        $this->publishes([__DIR__.'/../../../../database/migrations'
-                        => base_path('database/migrations')], 'migrations');
+        $this->publishes([__DIR__.'/../../../../database/migrations' => base_path('database/migrations')], 'migrations');
 
         // Publish seeds
-        $this->publishes([__DIR__.'/../../../../database/seeds'
-                        => base_path('database/seeds')], 'seeds');
+        $this->publishes([__DIR__.'/../../../../database/seeds' => base_path('database/seeds')], 'seeds');
     }
 
     /**
@@ -102,6 +94,5 @@ class PageServiceProvider extends ServiceProvider
         Page::creating(function ($model) {
             $model->slug = !empty($model->slug) ? $model->slug : $model->getUniqueSlug($model->name);
         });
-
     }
 }

@@ -1,21 +1,16 @@
 <?php
+
 namespace Lavalite\Page\Repositories\Eloquent;
 
-use Closure;
-use Exception;
-use Lavalite\Page\Interfaces\BaseRepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Container\Container as Application;
+use Illuminate\Database\Eloquent\Model;
+use Lavalite\Page\Interfaces\BaseRepositoryInterface;
 
 /**
- * Class BaseRepository
- *
- * @package Lavalite\Page\Repositories\Eloquent
+ * Class BaseRepository.
  */
-
 abstract class BaseRepository implements BaseRepositoryInterface
 {
-
     /**
      * @var Application
      */
@@ -29,7 +24,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * @var array
      */
-    protected $fieldSearchable = array();
+    protected $fieldSearchable = [];
 
     /**
      * @var \Closure
@@ -51,7 +46,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function boot()
     {
-
     }
 
     /**
@@ -63,15 +57,16 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
     abstract public function model();
 
     /**
-     * @return Model
      * @throws RepositoryException
+     *
+     * @return Model
      */
     public function makeModel()
     {
@@ -85,26 +80,29 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Query Scope
+     * Query Scope.
      *
      * @param \Closure $scope
+     *
      * @return $this
      */
-    public function scopeQuery(\Closure $scope){
+    public function scopeQuery(\Closure $scope)
+    {
         $this->scopeQuery = $scope;
+
         return $this;
     }
 
     /**
-     * Retrieve all data of modal
+     * Retrieve all data of modal.
      *
      * @param array $columns
+     *
      * @return mixed
      */
-    public function all($columns = array('*'))
+    public function all($columns = ['*'])
     {
-
-        if ( $this->model instanceof \Illuminate\Database\Eloquent\Builder ){
+        if ($this->model instanceof \Illuminate\Database\Eloquent\Builder) {
             $results = $this->model->get($columns);
         } else {
             $results = $this->model->all($columns);
@@ -116,15 +114,15 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Retrieve all data of modal
+     * Retrieve all data of modal.
      *
      * @param array $columns
+     *
      * @return mixed
      */
-    public function json($columns = array('*'))
+    public function json($columns = ['*'])
     {
-
-        if ( $this->model instanceof \Illuminate\Database\Eloquent\Builder ){
+        if ($this->model instanceof \Illuminate\Database\Eloquent\Builder) {
             $results = $this->model->get($columns)->toArray();
         } else {
             $results = $this->model->all($columns)->toArray();
@@ -136,34 +134,40 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Retrieve all data of modal, paginated
-     * @param null $limit
+     * Retrieve all data of modal, paginated.
+     *
+     * @param null  $limit
      * @param array $columns
+     *
      * @return mixed
      */
-    public function paginate($limit = null, $columns = array('*'))
+    public function paginate($limit = null, $columns = ['*'])
     {
         $limit = is_null($limit) ? config('modal.pagination.limit', 15) : $limit;
         $results = $this->model->paginate($limit, $columns);
         $this->resetModel();
+
         return $results;
     }
 
     /**
-     * Retrieve data of modal, as key value
-     * @param null $limit
+     * Retrieve data of modal, as key value.
+     *
+     * @param null  $limit
      * @param array $columns
+     *
      * @return mixed
      */
     public function lists($val, $key = null)
     {
         $results = $this->model->lists($val, $key);
         $this->resetModel();
+
         return $results;
     }
 
     /**
-     * Retrieve the count of row in the table
+     * Retrieve the count of row in the table.
      *
      * @return int
      */
@@ -171,20 +175,23 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         $results = $this->model->count();
         $this->resetModel();
+
         return $results;
     }
 
     /**
-     * Find data by id
+     * Find data by id.
      *
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
-    public function find($id, $columns = array('*'))
+    public function find($id, $columns = ['*'])
     {
         $model = $this->model->find($id, $columns);
         $this->resetModel();
+
         return $model;
     }
 
@@ -193,46 +200,50 @@ abstract class BaseRepository implements BaseRepositoryInterface
      *
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findOrNew($id, $columns = array('*'))
+    public function findOrNew($id, $columns = ['*'])
     {
         $model = $this->model->findOrNew($id, $columns);
         $this->resetModel();
+
         return $model;
     }
 
     /**
-     * Find data by field and value
+     * Find data by field and value.
      *
      * @param $field
      * @param $value
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findByField($field, $value = null, $columns = array('*'))
+    public function findByField($field, $value = null, $columns = ['*'])
     {
-        $model = $this->model->where($field,'=',$value)->get($columns);
+        $model = $this->model->where($field, '=', $value)->get($columns);
         $this->resetModel();
+
         return $model;
     }
 
     /**
-     * Find data by multiple fields
+     * Find data by multiple fields.
      *
      * @param array $where
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findWhere( array $where , $columns = array('*'))
+    public function findWhere(array $where, $columns = ['*'])
     {
-
         foreach ($where as $field => $value) {
-            if ( is_array($value) ) {
+            if (is_array($value)) {
                 list($field, $condition, $val) = $value;
-                $this->model = $this->model->where($field,$condition,$val);
+                $this->model = $this->model->where($field, $condition, $val);
             } else {
-                $this->model = $this->model->where($field,'=',$value);
+                $this->model = $this->model->where($field, '=', $value);
             }
         }
 
@@ -243,45 +254,50 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Find data by multiple values in one field
+     * Find data by multiple values in one field.
      *
      * @param $field
      * @param array $values
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findWhereIn( $field, array $values, $columns = array('*'))
+    public function findWhereIn($field, array $values, $columns = ['*'])
     {
         $model = $this->model->whereIn($field, $values)->get($columns);
         $this->resetModel();
+
         return $model;
     }
 
     /**
-     * Find data by excluding multiple values in one field
+     * Find data by excluding multiple values in one field.
      *
      * @param $field
      * @param array $values
      * @param array $columns
+     *
      * @return mixed
      */
-    public function findWhereNotIn( $field, array $values, $columns = array('*'))
+    public function findWhereNotIn($field, array $values, $columns = ['*'])
     {
         $model = $this->model->whereNotIn($field, $values)->get($columns);
         $this->resetModel();
+
         return $model;
     }
 
     /**
-     * Save a new entity in modal
+     * Save a new entity in modal.
+     *
+     * @param array $attributes
      *
      * @throws ValidatorException
-     * @param array $attributes
+     *
      * @return mixed
      */
     public function create(array $attributes)
     {
-
         $model = $this->model->newInstance($attributes);
         $model->fill($attributes);
         $model->save();
@@ -291,16 +307,17 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Update a entity in modal by id
+     * Update a entity in modal by id.
      *
-     * @throws ValidatorException
      * @param array $attributes
      * @param $id
+     *
+     * @throws ValidatorException
+     *
      * @return mixed
      */
     public function update(array $attributes, $id)
     {
-
         $model = $this->model->findOrFail($id);
         $model->fill($attributes);
         $model->save();
@@ -311,14 +328,14 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Delete a entity in modal by id
+     * Delete a entity in modal by id.
      *
      * @param $id
+     *
      * @return int
      */
     public function delete($id)
     {
-
         return $this->model->destroy($id);
 
         $this->resetModel();
@@ -336,7 +353,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function orderBy($column, $order = 'ASC')
     {
-        $this->model = $this->model -> orderBy($column, $order);
+        $this->model = $this->model->orderBy($column, $order);
+
         return $this;
     }
 
@@ -351,8 +369,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function where($column, $operator, $value)
     {
+        $this->model = $this->model->where($column, $operator, $value);
 
-        $this->model = $this->model -> where($column, $operator, $value);
         return $this;
     }
 
@@ -367,8 +385,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function orWhere($column, $operator, $value)
     {
+        $this->model = $this->model->orWhere($column, $operator, $value);
 
-        $this->model = $this->model -> orWhere($column, $operator, $value);
         return $this;
     }
 
@@ -376,14 +394,14 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Add whereBetween condition for next query.
      *
      * @param string $column
-     * @param array $value
+     * @param array  $value
      *
      * @return void
      */
     public function whereBetween($column, array $value)
     {
+        $this->model = $this->model->whereBetween($column, $value);
 
-        $this->model = $this->model -> whereBetween($column, $value);
         return $this;
     }
 
@@ -391,14 +409,14 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Add whereNotBetween condition for next query.
      *
      * @param string $column
-     * @param array $value
+     * @param array  $value
      *
      * @return void
      */
     public function whereNotBetween($column, array $value)
     {
+        $this->model = $this->model->whereNotBetween($column, $value);
 
-        $this->model = $this->model -> whereNotBetween($column, $value);
         return $this;
     }
 
@@ -406,14 +424,14 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Add whereIn condition for next query.
      *
      * @param string $column
-     * @param array $value
+     * @param array  $value
      *
      * @return void
      */
     public function whereIn($column, array $value)
     {
+        $this->model = $this->model->whereIn($column, $value);
 
-        $this->model = $this->model -> whereIn($column, $value);
         return $this;
     }
 
@@ -421,14 +439,14 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Add whereNotIn condition for next query.
      *
      * @param string $column
-     * @param array $value
+     * @param array  $value
      *
      * @return void
      */
     public function whereNotIn($column, array $value)
     {
+        $this->model = $this->model->whereNotIn($column, $value);
 
-        $this->model = $this->model -> whereNotIn($column, $value);
         return $this;
     }
 
@@ -441,8 +459,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function whereNull($column)
     {
+        $this->model = $this->model->whereNull($column);
 
-        $this->model = $this->model -> whereNull($column);
         return $this;
     }
 
@@ -455,45 +473,50 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function whereNotNull($column)
     {
+        $this->model = $this->model->whereNotNull($column);
 
-        $this->model = $this->model -> whereNotNull($column);
         return $this;
     }
 
     /**
-     * Load relations
+     * Load relations.
      *
      * @param array|string $relations
+     *
      * @return $this
      */
     public function with($relations)
     {
         $this->model = $this->model->with($relations);
+
         return $this;
     }
 
     /**
-     * Set hidden fields
+     * Set hidden fields.
      *
      * @param array $fields
+     *
      * @return $this
      */
     public function hidden(array $fields)
     {
         $this->model->setHidden($fields);
+
         return $this;
     }
 
     /**
-     * Set visible fields
+     * Set visible fields.
      *
      * @param array $fields
+     *
      * @return $this
      */
     public function visible(array $fields)
     {
         $this->model->setVisible($fields);
+
         return $this;
     }
-
 }

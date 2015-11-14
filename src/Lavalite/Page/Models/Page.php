@@ -2,8 +2,8 @@
 
 namespace Lavalite\Page\Models;
 
-use Lavalite\Filer\FilerTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Lavalite\Filer\FilerTrait;
 
 class Page extends Model
 {
@@ -22,9 +22,8 @@ class Page extends Model
         'images' => 'array',
     ];
 
-
     /**
-     * Initialiaze page modal
+     * Initialiaze page modal.
      *
      * @param $name
      */
@@ -40,10 +39,10 @@ class Page extends Model
      */
     public function initialize()
     {
-        $this->fillable             = config('package.page.page.fillable');
-        $this->uploads              = config('package.page.page.uploadable');
-        $this->uploadRootFolder     = config('package.page.page.upload_root_folder');
-        $this->table                = config('package.page.page.table');
+        $this->fillable = config('package.page.page.fillable');
+        $this->uploads = config('package.page.page.uploadable');
+        $this->uploadRootFolder = config('package.page.page.upload_root_folder');
+        $this->table = config('package.page.page.table');
     }
 
     /**
@@ -63,6 +62,4 @@ class Page extends Model
             $this->setAttribute('heading', $name);
         }
     }
-
-
 }
