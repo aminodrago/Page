@@ -1,6 +1,8 @@
 <?php
 namespace Lavalite\Page\Http\Controllers;
 
+use Lavalite\Page\Models\Page;
+
 use Former;
 use App\Http\Controllers\AdminController as AdminController;
 
@@ -33,28 +35,21 @@ class PageAdminController extends AdminController
      */
     public function index(PageAdminRequest $request)
     {
+        if($request->wantsJson()){
+            $array = $this->model->json();
+
+            foreach ($array as $key => $row) {
+                $array[$key] = array_only($row, config('package.page.page.listfields'));
+            }
+
+            return array('data' => $array);
+        }
+
         $this->theme->prependTitle(trans('page::page.names').' :: ');
 
         return $this->theme->of('page::admin.page.index')->render();
     }
 
-    /**
-     * Return list of page as json.
-     *
-     * @param  Request  $request
-     *
-     * @return Response
-     */
-    public function lists(PageAdminRequest $request)
-    {
-        $array = $this->model->json();
-
-        foreach ($array as $key => $row) {
-            $array[$key] = array_only($row, config('page.page.listfields'));
-        }
-
-        return array('data' => $array);
-    }
 
     /**
      * Display the specified resource.
@@ -64,11 +59,10 @@ class PageAdminController extends AdminController
      *
      * @return Response
      */
-    public function show(PageAdminRequest $request, $id)
+    public function show(PageAdminRequest $request, Page $page)
     {
-        $page = $this->model->find($id);
 
-        if (empty($page)) {
+        if (!$page->exists) {
 
             if($request->wantsJson())
                 return [];
@@ -125,9 +119,8 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function edit(PageAdminRequest $request, $id)
+    public function edit(PageAdminRequest $request, Page $page)
     {
-        $page = $this->model->find($id);
 
         Former::populate($page);
 
@@ -141,11 +134,11 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function update(PageAdminRequest $request, $id)
+    public function update(PageAdminRequest $request, Page $page)
     {
         try {
             $attributes     = $request->all();
-            $page           = $this->model->update($attributes, $id);
+            $page->update($attributes);
             return $this->success(trans('messages.success.updated', ['Module' => 'Page']), 201);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
@@ -158,10 +151,10 @@ class PageAdminController extends AdminController
      * @param  int  $id
      * @return Response
      */
-    public function destroy(PageAdminRequest $request, $id)
+    public function destroy(PageAdminRequest $request, Page $page)
     {
         try {
-            $this->model->delete($id);
+            $page -> delete();
             return $this->success(trans('messages.success.deleted', ['Module' => 'Page']), 201);
         } catch (Exception $e) {
             return $this->error($e->getMessage());

@@ -21,7 +21,7 @@
         {!!Former::vertical_open()
         ->id('show-page')
         ->method('PUT')
-        ->action(URL::to('admin/page/'. $page['id']))!!}
+        ->action(URL::to('admin/page/page/'. $page['id']))!!}
         {!!Former::token()!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
@@ -141,7 +141,7 @@
 $(document).ready(function(){
 
     $('#btn-new-page').click(function(){
-        $('#entry-page').load('{{URL::to('admin/page/create')}}', function( response, status, xhr ) {
+        $('#entry-page').load('{{URL::to('admin/page/page/create')}}', function( response, status, xhr ) {
           if ( status == "error" ) {
             toastr.error(xhr.status + " " + xhr.statusText, 'Error');
           }
@@ -150,7 +150,7 @@ $(document).ready(function(){
 
     @if($page->id)
     $('#btn-edit-page').click(function(){
-        $('#entry-page').load('{{URL::to('admin/page')}}/{{$page->id}}/edit');
+        $('#entry-page').load('/admin/page/page/{{$page->id}}/edit');
     });
 
     $('#btn-delete-page').click(function(){
@@ -165,14 +165,14 @@ $(document).ready(function(){
         }, function(){
                 var data = new FormData();
                 $.ajax({
-                    url: '{{URL::to('admin')}}/page/{{$page->id}}',
+                    url: '/admin/page/page/{{$page->id}}',
                     type: 'DELETE',
                     processData: false,
                     contentType: false,
                     success:function(data, textStatus, jqXHR)
                     {
                         swal("Deleted!", "The page has been deleted.", "success");
-                        $('#entry-page').load('{{URL::to('admin/page/0')}}');
+                        $('#entry-page').load('{{URL::to('admin/page/page/0')}}');
                         $('#main-list').DataTable().ajax.reload( null, false );
                     },
                 });

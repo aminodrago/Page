@@ -2,11 +2,8 @@
 
 namespace Lavalite\Page\Models;
 
-use DB;
-use Lavalite\Page\Interfaces\ModalInterface;
 use Lavalite\Filer\FilerTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
@@ -34,7 +31,19 @@ class Page extends Model
     public function __construct()
     {
         parent::__construct();
-        $this->initialize();
+    }
+
+    /**
+     * Initialize the modal variables.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        $this->fillable             = config('package.page.page.fillable');
+        $this->uploads              = config('package.page.page.uploadable');
+        $this->uploadRootFolder     = config('package.page.page.upload_root_folder');
+        $this->table                = config('package.page.page.table');
     }
 
     /**
@@ -55,39 +64,5 @@ class Page extends Model
         }
     }
 
-    /**
-     * Create a unique slug.
-     *
-     * @param string $title
-     */
-    public function getUniqueSlug($title)
-    {
-        $slug = str_slug($title);
-        $row = DB::table($this->table)->where('slug', $slug)->first();
-        if ($row) {
-            $num = 2;
-            while ($row) {
-                $newSlug = $slug.'-'.$num;
-                $row = DB::table($this->table)->where('slug', $newSlug)->first();
-                ++$num;
-            }
-            $slug = $newSlug;
-        }
-        return $slug;
-    }
-
-    /**
-     * Boots the user repository
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        $this->fillable             = config('page.page.fillable');
-        $this->uploads              = config('page.page.uploadable');
-        $this->uploadRootFolder     = config('page.page.upload_root_folder');
-        $this->table                = config('page.page.table');
-    }
 
 }
-

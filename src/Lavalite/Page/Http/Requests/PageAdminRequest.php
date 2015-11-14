@@ -3,7 +3,8 @@
 namespace Lavalite\Page\Http\Requests;
 
 use App\Http\Requests\Request;
-use User;
+use Gate;
+
 
 class PageAdminRequest extends Request
 {
@@ -14,20 +15,26 @@ class PageAdminRequest extends Request
      */
     public function authorize(\Illuminate\Http\Request $request)
     {
+        $page = $this->route('page');
+
+        // Determine if the user is authorized to access page module,
+        if (is_null($page))
+            return $request->user()->canDo('page.page.view');
+
         // Determine if the user is authorized to create an entry,
         if($request->isMethod('POST') || $request->is('*/create'))
-            return User::can('page.page.create');
+            return Gate::allows('create', $page);
 
         // Determine if the user is authorized to update an entry,
         if($request->isMethod('PUT') || $request->isMethod('PATCH') || $request->is('*/edit'))
-            return User::can('page.page.edit');
+            return Gate::allows('update', $page);
 
         // Determine if the user is authorized to delete an entry,
         if($request->isMethod('DELETE'))
-            return User::can('page.page.delete');
+            return Gate::allows('delete', $page);
 
         // Determine if the user is authorized to view the module.
-        return User::can('page.page.view');
+        return Gate::allows('view', $page);
     }
 
     /**

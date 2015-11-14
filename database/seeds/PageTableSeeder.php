@@ -82,5 +82,25 @@ class PageTableSeeder extends Seeder
             ),
 
         ));
+
+        DB::table('permissions')->insert(array(
+            array(
+                'name' => 'page.page.view',
+                'readable_name' => 'View Page'
+            ),
+            array(
+                'name' => 'page.page.create',
+                'readable_name' => 'Create Page'
+            ),
+            array(
+                'name' => 'page.page.edit',
+                'readable_name' => 'Update Page'
+            ),
+            array(
+                'name' => 'page.page.delete',
+                'readable_name' => 'Delete Page'
+            )
+        ));
+
     }
 }

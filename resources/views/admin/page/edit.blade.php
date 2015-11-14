@@ -19,7 +19,7 @@
         ->id('edit-page')
         ->method('PUT')
         ->enctype('multipart/form-data')
-        ->action(URL::to('admin/page/'. $page['id']))!!}
+        ->action(URL::to('admin/page/page/'. $page['id']))!!}
         {!!Former::token()!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
@@ -130,7 +130,7 @@
 <script type="text/javascript">
 (function ($) {
     $('#btn-close-page').click(function(){
-        $('#entry-page').load('{{URL::to('admin/page')}}/{{$page->id}}');
+        $('#entry-page').load('{{URL::to('admin/page/page')}}/{{$page->id}}');
     });
 
     $('#btn-save-page').click(function(){
@@ -158,7 +158,7 @@
             },
             success:function(data, textStatus, jqXHR)
             {
-                $('#entry-page').load('{{URL::to('admin/page')}}/{{$page->id}}');
+                $('#entry-page').load('{{URL::to('admin/page/page')}}/{{$page->id}}');
                 $('#main-list').DataTable().ajax.reload( null, false );
             },
             error: function(jqXHR, textStatus, errorThrown)

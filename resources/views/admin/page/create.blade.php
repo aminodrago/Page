@@ -20,7 +20,7 @@
         ->method('POST')
         ->files('true')
         ->enctype('multipart/form-data')
-        ->action(URL::to('admin/page'))!!}
+        ->action(URL::to('admin/page/page'))!!}
         {!!Former::token()!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
@@ -117,7 +117,7 @@
     });
 
     $('#btn-cancel').click(function(){
-        $('#entry-page').load('{{URL::to('admin/page/0')}}');
+        $('#entry-page').load('{{URL::to('admin/page/page/0')}}');
     });
 
     $('#create-page')
@@ -142,7 +142,7 @@
             success:function(data, textStatus, jqXHR)
             {
                 $('#main-list').DataTable().ajax.reload( null, false );
-                $('#entry-page').load('{{URL::to('admin/page')}}/' + data.id);
+                $('#entry-page').load('{{URL::to('admin/page/page')}}/' + data.id);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

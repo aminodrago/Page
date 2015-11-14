@@ -19,22 +19,13 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Page::saving(function ($model) {
-            $model->upload($model);
-
-        });
-
-        Page::creating(function ($model) {
-            $model->slug = !empty($model->slug) ? $model->slug : $model->getUniqueSlug($model->name);
-        });
+        $this->modelevents();
 
         $this->loadViewsFrom(__DIR__.'/../../../../resources/views', 'page');
 
         $this->loadTranslationsFrom(__DIR__.'/../../../../resources/lang', 'page');
 
         $this->publishResources();
-
-        include __DIR__.'/../Http/routes.php';
     }
 
     /**
@@ -47,9 +38,14 @@ class PageServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(
-            'Lavalite\\Page\\Interfaces\\PageRepositoryInterface',
-            'Lavalite\\Page\\Repositories\\Eloquent\\PageRepository'
+            \Lavalite\Page\Interfaces\PageRepositoryInterface::class,
+            \Lavalite\Page\Repositories\Eloquent\PageRepository::class
         );
+
+        $this->app->register(\Lavalite\Page\Providers\AuthServiceProvider::class);
+        $this->app->register(\Lavalite\Page\Providers\EventServiceProvider::class);
+        $this->app->register(\Lavalite\Page\Providers\RouteServiceProvider::class);
+
     }
 
 
@@ -70,7 +66,7 @@ class PageServiceProvider extends ServiceProvider
     {
         // Publish configuration file
         $this->publishes([__DIR__.'/../../../../config/config.php'
-                        => config_path('page.php')], 'config');
+                        => config_path('package/page.php')], 'config');
 
         // Publish public view
         $this->publishes([__DIR__.'/../../../../resources/views/public'
@@ -91,5 +87,21 @@ class PageServiceProvider extends ServiceProvider
         // Publish seeds
         $this->publishes([__DIR__.'/../../../../database/seeds'
                         => base_path('database/seeds')], 'seeds');
+    }
+
+    /**
+     * Call model events.
+     */
+    private function modelevents()
+    {
+        Page::saving(function ($model) {
+            $model->upload($model);
+
+        });
+
+        Page::creating(function ($model) {
+            $model->slug = !empty($model->slug) ? $model->slug : $model->getUniqueSlug($model->name);
+        });
+
     }
 }
