@@ -1,23 +1,22 @@
 <?php
+
 namespace Lavalite\Page\Http\Controllers;
 
-use Former;
 use App\Http\Controllers\UserController as UserController;
-
+use Former;
 use Lavalite\Page\Http\Requests\PageUserRequest;
 use Lavalite\Page\Interfaces\PageRepositoryInterface;
 
 /**
  *
- * @package Page
  */
-
 class PageUserController extends UserController
 {
-
     /**
-     * Initialize page controller
+     * Initialize page controller.
+     *
      * @param type PageRepositoryInterface $page
+     *
      * @return type
      */
     public function __construct(PageRepositoryInterface $page)
@@ -38,12 +37,11 @@ class PageUserController extends UserController
         return $this->theme->of('page::admin.page.index')->render();
     }
 
-
     /**
      * Display the specified resource.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
      *
      * @return Response
      */
@@ -52,26 +50,27 @@ class PageUserController extends UserController
         $page = $this->model->find($id);
 
         if (empty($page)) {
-
-            if($request->wantsJson())
+            if ($request->wantsJson()) {
                 return [];
+            }
 
             return view('page::admin.page.new');
         }
 
-        if($request->wantsJson())
+        if ($request->wantsJson()) {
             return $page;
+        }
 
         Former::populate($page);
 
         return view('page::admin.page.show', compact('page'));
-
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function create(PageUserRequest $request)
@@ -86,15 +85,16 @@ class PageUserController extends UserController
     /**
      * Display the specified resource.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(PageUserRequest $request)
     {
-
         try {
-            $attributes     = $request->all();
-            $page           = $this->model->create($attributes);
+            $attributes = $request->all();
+            $page = $this->model->create($attributes);
+
             return $this->success(trans('messages.success.created', ['Module' => 'Page']));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
@@ -104,8 +104,9 @@ class PageUserController extends UserController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
+     *
      * @return Response
      */
     public function edit(PageUserRequest $request, $id)
@@ -120,15 +121,17 @@ class PageUserController extends UserController
     /**
      * Update the specified resource.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
+     *
      * @return Response
      */
     public function update(PageUserRequest $request, $id)
     {
         try {
-            $attributes     = $request->all();
-            $page           = $this->model->update($attributes, $id);
+            $attributes = $request->all();
+            $page = $this->model->update($attributes, $id);
+
             return $this->success(trans('messages.success.updated', ['Module' => 'Page']));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
@@ -138,17 +141,18 @@ class PageUserController extends UserController
     /**
      * Remove the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function destroy(PageUserRequest $request, $id)
     {
         try {
             $this->model->delete($id);
+
             return $this->success(trans('messages.success.deleted', ['Module' => 'Page']));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
     }
-
 }

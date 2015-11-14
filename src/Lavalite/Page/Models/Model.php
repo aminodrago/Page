@@ -2,25 +2,26 @@
 
 namespace Lavalite\Page\Models;
 
-use DB;
 use Crypt;
+use DB;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Model extends Eloquent
 {
-
     /**
-     * Constructor
+     * Constructor.
      */
-    function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->initialize();
     }
 
     /**
-     * Create a unique slug
+     * Create a unique slug.
      *
-     * @param  string $title
+     * @param string $title
+     *
      * @return void
      */
     public function getUniqueSlug($title)
@@ -32,7 +33,7 @@ class Model extends Eloquent
         if ($row) {
             $num = 2;
             while ($row) {
-                $newSlug = $slug .'-'. $num;
+                $newSlug = $slug.'-'.$num;
 
                 $row = DB::table($this->table)->where('slug', $newSlug)->first();
                 $num++;
@@ -45,22 +46,21 @@ class Model extends Eloquent
     }
 
     /**
-     * Initialize modal variables form config
+     * Initialize modal variables form config.
      */
     public function initialize()
     {
-
     }
 
     /**
-     * Get the encrypted Id of
+     * Get the encrypted Id of.
      *
-     * @param  string $title
+     * @param string $title
+     *
      * @return void
      */
     public function getEidAttribute()
     {
         return Crypt::encrypt($this->id);
     }
-
 }

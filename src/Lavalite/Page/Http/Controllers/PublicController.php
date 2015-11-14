@@ -7,7 +7,8 @@ use App\Http\Controllers\PublicController as CmsPublicController;
 class PublicController extends CmsPublicController
 {
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param type \Lavalite\Page\Interfaces\PageInterface $page
      *
      * @return type
@@ -19,7 +20,8 @@ class PublicController extends CmsPublicController
     }
 
     /**
-     * Show page
+     * Show page.
+     *
      * @param string $slug
      *
      * @return response

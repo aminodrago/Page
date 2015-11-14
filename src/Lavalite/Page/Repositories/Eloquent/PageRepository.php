@@ -6,19 +6,18 @@ use Lavalite\Page\Interfaces\PageRepositoryInterface;
 
 class PageRepository extends BaseRepository implements PageRepositoryInterface
 {
-
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
-    function model()
+    public function model()
     {
-        return "Lavalite\\Page\\Models\\Page";
+        return 'Lavalite\\Page\\Models\\Page';
     }
 
     /**
-     * Get page by slug
+     * Get page by slug.
      *
      * @return void
      */
@@ -28,7 +27,7 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
     }
 
     /**
-     * Get page by id
+     * Get page by id.
      *
      * @return void
      */
@@ -38,17 +37,18 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
     }
 
     /**
-     * Get page by id or slug
+     * Get page by id or slug.
      *
      * @return void
      */
     public function getPage($var)
     {
-        if (is_numeric($var))
+        if (is_numeric($var)) {
             return $this->getPageById($var);
+        }
 
-        if (is_string($var))
+        if (is_string($var)) {
             return $this->getPageBySlug($var);
+        }
     }
-
 }

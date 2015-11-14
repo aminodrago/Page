@@ -2,17 +2,13 @@
 
 namespace Lavalite\Page;
 
-use Config;
-use User;
 use View;
 
 /**
  *
- * @package Page facade
  */
 class Page
 {
-
     // Page modal
     protected $model;
 
@@ -20,8 +16,8 @@ class Page
      * Initialize page facade.
      *
      * @param type \Lavalite\Page\Interfaces\PageRepositoryInterface $page
-     * @return none
      *
+     * @return none
      */
     public function __construct(\Lavalite\Page\Interfaces\PageRepositoryInterface $page)
     {
@@ -29,14 +25,13 @@ class Page
     }
 
     /**
-     * Calls page repository function
+     * Calls page repository function.
      *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return mixed
      */
-
     public function __call($name, $arguments)
     {
         return $this->model->$name($arguments[0]);
@@ -50,13 +45,14 @@ class Page
     public function gadget($perpage = 10)
     {
         $data['pages'] = $this->model->paginate($perpage);
+
         return View::make('page::admin.page.gadget', $data);
     }
 
     /**
-     * Return return field value of a page
+     * Return return field value of a page.
      *
-     * @param mixed $idslug
+     * @param mixed  $idslug
      * @param string $field
      *
      * @return string
@@ -64,13 +60,14 @@ class Page
     public function pages($idslug, $field)
     {
         $page = $this->model->getPage($idslug);
+
         return $page[$field];
     }
 
     /**
-     * Returns page object
+     * Returns page object.
      *
-     * @param mixed $idslug
+     * @param mixed  $idslug
      * @param string $field
      *
      * @return mixed
@@ -81,15 +78,14 @@ class Page
     }
 
     /**
-     * Returns count of pages
+     * Returns count of pages.
      *
      * @param array $filter
      *
-     * @return integer
+     * @return int
      */
-    public function count(array $filters = NULL)
+    public function count(array $filters = null)
     {
         return  $this->model->count();
     }
-
 }
