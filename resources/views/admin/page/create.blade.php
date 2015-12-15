@@ -20,7 +20,7 @@
         ->method('POST')
         ->files('true')
         ->enctype('multipart/form-data')
-        ->action(URL::to('admin/page/page'))!!}
+        ->action(Trans::to('admin/page/page'))!!}
         {!!Former::token()!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
@@ -32,7 +32,7 @@
                 {!! Former::textarea('content')
                 -> label(trans('page::page.label.content'))
                 -> value(e($page['content']))
-                -> dataUpload(URL::to($page->getUploadURL('content')))
+                -> dataUpload(Trans::to($page->getUploadURL('content')))
                 -> addClass('html-editor')
                 -> placeholder(trans('page::page.placeholder.content'))!!}
 
@@ -117,7 +117,7 @@
     });
 
     $('#btn-cancel').click(function(){
-        $('#entry-page').load('{{URL::to('admin/page/page/0')}}');
+        $('#entry-page').load('{{Trans::to('admin/page/page/0')}}');
     });
 
     $('#create-page')
@@ -142,7 +142,7 @@
             success:function(data, textStatus, jqXHR)
             {
                 $('#main-list').DataTable().ajax.reload( null, false );
-                $('#entry-page').load('{{URL::to('admin/page/page')}}/' + data.id);
+                $('#entry-page').load('{{Trans::to('admin/page/page')}}/' + data.id);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

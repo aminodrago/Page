@@ -9,13 +9,13 @@
 
     @foreach ($pages as $page)
     <tr>
-        <td><a href="{{ ($permissions['view']) ? (URL::to('admin/page/page/') . '/' . $page->id ) : '#' }}">{{ $page->name }}</a></td>
+        <td><a href="{{ ($permissions['view']) ? (Trans::to('admin/page/page/') . '/' . $page->id ) : '#' }}">{{ $page->name }}</a></td>
         <td>{{ $page->title }}</td>
         <td>{{ $page->slug }}.html</td>
         <td>
             <div class="btn-group  btn-group-xs">
-                <a type="button" class="btn btn-info  {{ ($permissions['edit']) ? '' : 'disabled' }} view-btn-edit" href="{{ URL::to('admin/page/page')}}/{{$page->id}}/edit" title="{{ Lang::get('app.update') }} Page"><i class="fa fa-pencil-square-o"></i></a>
-                <a type="button" class="btn btn-danger action_confirm  {{ ($permissions['delete']) ? '' : 'disabled' }} view-btn-delete" data-method="delete" href="{{ URL::to('admin/page/page') }}/{{ $page->id }}" title="{{ Lang::get('app.delete') }} Page"><i class="fa fa-times-circle-o"></i></a>
+                <a type="button" class="btn btn-info  {{ ($permissions['edit']) ? '' : 'disabled' }} view-btn-edit" href="{{ Trans::to('admin/page/page')}}/{{$page->id}}/edit" title="{{ Lang::get('app.update') }} Page"><i class="fa fa-pencil-square-o"></i></a>
+                <a type="button" class="btn btn-danger action_confirm  {{ ($permissions['delete']) ? '' : 'disabled' }} view-btn-delete" data-method="delete" href="{{ Trans::to('admin/page/page') }}/{{ $page->id }}" title="{{ Lang::get('app.delete') }} Page"><i class="fa fa-times-circle-o"></i></a>
             </div>
         </td>
     </tr>

@@ -4,13 +4,28 @@ namespace Lavalite\Page\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Lavalite\Filer\FilerTrait;
+use Lavalite\Database\Traits\Hashids;
+use Lavalite\Database\Traits\Slugger;
+use Lavalite\Database\Traits\Translator;
+use Lavalite\Database\Model;
 
 class Page extends Model
 {
-    use FilerTrait;
-    use SoftDeletes;
+    use FilerTrait, SoftDeletes, Hashids, Slugger, Translator;
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Attributes from which slugs to be generated.
+     *
+     * @var array
+     */
+    protected $slugs = ['slug' => 'name'];
 
     /**
      * The attributes that should be casted to native types.
@@ -23,13 +38,29 @@ class Page extends Model
     ];
 
     /**
+     * List of attributes to encrypt.
+     *
+     * @var array
+     */
+    protected $encryptable = ['id'];
+
+    /**
+     * List of attribute names which should be translated.
+     *
+     * @var array
+     */
+     protected $translate = ['name', 'content'];
+
+
+    /**
      * Initialiaze page modal.
      *
      * @param $name
      */
     public function __construct()
     {
-        parent::__construct();
+        $this->initialize();
+        return parent::__construct();
     }
 
     /**

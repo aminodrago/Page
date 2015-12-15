@@ -27,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        if (Request::is('admin/page/*')) {
+        if (Request::is('*/admin/page/*')) {
             $router->bind('page', function ($id) {
                 $page = $this->app->make(\Lavalite\Page\Interfaces\PageRepositoryInterface::class);
 

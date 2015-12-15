@@ -19,7 +19,7 @@
         ->id('edit-page')
         ->method('PUT')
         ->enctype('multipart/form-data')
-        ->action(URL::to('admin/page/page/'. $page['id']))!!}
+        ->action(Trans::to('admin/page/page/'. $page['id']))!!}
         {!!Former::token()!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
@@ -32,7 +32,7 @@
                 {!! Former::textarea('content')
                 -> label(trans('page::page.label.content'))
                 -> value(e($page['content']))
-                -> dataUpload(URL::to($page->getUploadURL('content')))
+                -> dataUpload(Trans::to($page->getUploadURL('content')))
                 -> addClass('html-editor')
                 -> placeholder(trans('page::page.placeholder.content'))!!}
             </div>
@@ -130,7 +130,7 @@
 <script type="text/javascript">
 (function ($) {
     $('#btn-close-page').click(function(){
-        $('#entry-page').load('{{URL::to('admin/page/page')}}/{{$page->id}}');
+        $('#entry-page').load('{{Trans::to('admin/page/page')}}/{{$page->id}}');
     });
 
     $('#btn-save-page').click(function(){
@@ -158,7 +158,7 @@
             },
             success:function(data, textStatus, jqXHR)
             {
-                $('#entry-page').load('{{URL::to('admin/page/page')}}/{{$page->id}}');
+                $('#entry-page').load('{{Trans::to('admin/page/page')}}/{{$page->id}}');
                 $('#main-list').DataTable().ajax.reload( null, false );
             },
             error: function(jqXHR, textStatus, errorThrown)

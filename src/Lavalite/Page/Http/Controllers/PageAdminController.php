@@ -39,7 +39,6 @@ class PageAdminController extends AdminController
             foreach ($array as $key => $row) {
                 $array[$key] = array_only($row, config('package.page.page.listfields'));
             }
-
             return ['data' => $array];
         }
 
@@ -155,8 +154,8 @@ class PageAdminController extends AdminController
     public function destroy(PageAdminRequest $request, Page $page)
     {
         try {
-            $page->delete();
-
+            $t = $page->delete();
+dd($t);
             return $this->success(trans('messages.success.deleted', ['Module' => 'Page']), 201);
         } catch (Exception $e) {
             return $this->error($e->getMessage());

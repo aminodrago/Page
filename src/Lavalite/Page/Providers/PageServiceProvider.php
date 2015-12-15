@@ -19,7 +19,6 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->modelevents();
 
         $this->loadViewsFrom(__DIR__.'/../../../../resources/views', 'page');
 
@@ -81,18 +80,4 @@ class PageServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../../../../database/seeds' => base_path('database/seeds')], 'seeds');
     }
 
-    /**
-     * Call model events.
-     */
-    private function modelevents()
-    {
-        Page::saving(function ($model) {
-            $model->upload($model);
-
-        });
-
-        Page::creating(function ($model) {
-            $model->slug = !empty($model->slug) ? $model->slug : $model->getUniqueSlug($model->name);
-        });
-    }
 }

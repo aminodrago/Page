@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! URL::to('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
+    <li><a href="{!! Trans::to('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
     <li class="active">{!! trans('page::page.names') !!}</li>
 </ol>
 @stop
@@ -26,7 +26,6 @@
 <table id="main-list" class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th width="20">{!! trans('page::page.label.id') !!}</th>
             <th>{!! trans('page::page.name') !!}</th>
             <th>{!! trans('page::page.label.title') !!}</th>
             <th>{!! trans('page::page.label.slug') !!}</th>
@@ -40,11 +39,10 @@
 <script type="text/javascript">
 var oTable;
 $(document).ready(function(){
-    $('#entry-page').load('{{URL::to('admin/page/page/0')}}');
+    $('#entry-page').load('{{Trans::to('/admin/page/page/0')}}');
     oTable = $('#main-list').DataTable( {
-        "ajax": '{{ URL::to('/admin/page/page') }}',
+        "ajax": '{{ Trans::to('/admin/page/page') }}',
         "columns": [
-        { "data": "id" },
         { "data": "name" },
         { "data": "title" },
         { "data": "slug" },
@@ -56,7 +54,7 @@ $(document).ready(function(){
     $('#main-list tbody').on( 'click', 'tr', function () {
         $(this).toggleClass('selected');
         var d = $('#main-list').DataTable().row( this ).data();
-        $('#entry-page').load('{{URL::to('admin/page/page')}}' + '/' + d.id);
+        $('#entry-page').load('{{Trans::to('/admin/page/page')}}' + '/' + d.id);
     });
 });
 </script>

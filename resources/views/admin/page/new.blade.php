@@ -27,7 +27,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('#btn-new-page, #btn-new-page-icn').click(function(){
-        $('#entry-page').load('{{URL::to('admin/page/page/create')}}');
+        $('#entry-page').load('{{Trans::to('admin/page/page/create')}}');
     });
 });
 </script>

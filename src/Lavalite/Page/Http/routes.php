@@ -1,6 +1,10 @@
 <?php
 
-Route::group(['prefix' => 'admin/page'], function () {
+Route::group(
+[
+'prefix' => Trans::setLocale().'/admin/page'
+],
+function () {
     Route::resource('page', 'PageAdminController');
 });
 
