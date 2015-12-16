@@ -32,7 +32,7 @@
                 {!! Former::textarea('content')
                 -> label(trans('page::page.label.content'))
                 -> value(e($page['content']))
-                -> dataUpload(Trans::to($page->getUploadURL('content')))
+                -> dataUpload(URL::to($page->getUploadURL('content')))
                 -> addClass('html-editor')
                 -> placeholder(trans('page::page.placeholder.content'))!!}
             </div>
