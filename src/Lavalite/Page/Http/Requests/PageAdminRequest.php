@@ -15,7 +15,6 @@ class PageAdminRequest extends Request
     public function authorize(\Illuminate\Http\Request $request)
     {
         $page = $this->route('page');
-
         // Determine if the user is authorized to access page module,
         if (is_null($page)) {
             return $request->user()->canDo('page.page.view');

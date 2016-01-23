@@ -15,21 +15,21 @@
             <li><a href="#settings" data-toggle="tab">{{ trans('page::page.tab.setting') }}</a></li>
             <li><a href="#images" data-toggle="tab">{{ trans('page::page.tab.image') }}</a></li>
         </ul>
-        {!!Former::vertical_open()
+        {!!Form::vertical_open()
         ->id('edit-page')
         ->method('PUT')
         ->enctype('multipart/form-data')
-        ->action(Trans::to('admin/page/page/'. $page['id']))!!}
-        {!!Former::token()!!}
+        ->action(Trans::to('admin/page/page/'. $page->getRouteKey()))!!}
+        {!!Form::token()!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
-                {!! Former::hidden('upload_folder')!!}
-                {!! Former::text('name')
+                {!! Form::hidden('upload_folder')!!}
+                {!! Form::text('name')
                 -> label(trans(trans('page::page.label.name')))
                 -> required()
                 -> placeholder(trans(trans('page::page.placeholder.name')))!!}
 
-                {!! Former::textarea('content')
+                {!! Form::textarea('content')
                 -> label(trans('page::page.label.content'))
                 -> value(e($page['content']))
                 -> dataUpload(URL::to($page->getUploadURL('content')))
@@ -39,25 +39,25 @@
             <div class="tab-pane" id="metatags">
                 <div class="row">
                     <div class="col-md-6 col-lg-6">
-                        {!! Former::text('title')
+                        {!! Form::text('title')
                         -> label(trans('page::page.label.title'))
                         -> placeholder(trans('page::page.placeholder.title'))!!}
                     </div>
                     <div class="col-md-6 col-lg-6">
-                        {!! Former::text('heading')
+                        {!! Form::text('heading')
                         -> label(trans('page::page.label.heading'))
                         -> placeholder(trans('page::page.placeholder.heading'))!!}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-lg-6">
-                        {!! Former::textarea('keyword')
+                        {!! Form::textarea('keyword')
                         -> label(trans('page::page.label.keyword'))
                         -> rows(4)
                         -> placeholder(trans('page::page.placeholder.keyword'))!!}
                     </div>
                     <div class="col-md-6 col-lg-6">
-                        {!! Former::textarea('description')
+                        {!! Form::textarea('description')
                         -> label(trans('page::page.label.description'))
                         -> rows(4)
                         -> placeholder(trans('page::page.placeholder.description'))!!}
@@ -67,34 +67,34 @@
             <div class="tab-pane" id="settings">
                 <div class="row">
                     <div class="col-md-6 ">
-                        {!! Former::range('order')
+                        {!! Form::range('order')
                         -> label(trans('page::page.label.order'))
                         -> placeholder(trans('page::page.placeholder.order'))!!}
 
-                        {!! Former::text('slug')
+                        {!! Form::text('slug')
                         -> label(trans('page::page.label.slug'))
                         -> append('.html')
                         -> placeholder(trans('page::page.placeholder.slug'))!!}
 
-                        {!! Former::select('view')
+                        {!! Form::select('view')
                         -> options(trans('page::page.options.view'))
                         -> label(trans('page::page.label.view'))
                         -> placeholder(trans('page::page.placeholder.view'))!!}
                     </div>
                     <div class='col-md-6'>
-                        {!! Former::select('compiler')
+                        {!! Form::select('compiler')
                         -> options(trans('page::page.options.compiler'))
                         -> label(trans('page::page.label.compiler'))
                         -> placeholder(trans('page::page.placeholder.compiler'))!!}
 
-                        {!! Former::select('category_id')
+                        {!! Form::select('category_id')
                         -> options([])
                         -> label(trans('page::page.label.category'))
                         -> placeholder(trans('page::page.placeholder.category'))!!}
 
-                        {!! Former::hidden('status')
+                        {!! Form::hidden('status')
                         -> forceValue('0')!!}
-                        {!! Former::checkbox('status')
+                        {!! Form::checkbox('status')
                         -> label(trans('page::page.label.status'))
                         ->inline()!!}
                     </div>
@@ -122,7 +122,7 @@
             </div>
         </div>
     </div>
-    {!!Former::close()!!}
+    {!!Form::close()!!}
 </div>
 <div class="box-footer" >
     &nbsp;
@@ -130,7 +130,7 @@
 <script type="text/javascript">
 (function ($) {
     $('#btn-close-page').click(function(){
-        $('#entry-page').load('{{Trans::to('admin/page/page')}}/{{$page->id}}');
+        $('#entry-page').load('{{Trans::to('admin/page/page')}}/{{$page->getRouteKey()}}');
     });
 
     $('#btn-save-page').click(function(){
@@ -158,7 +158,7 @@
             },
             success:function(data, textStatus, jqXHR)
             {
-                $('#entry-page').load('{{Trans::to('admin/page/page')}}/{{$page->id}}');
+                $('#entry-page').load('{{Trans::to('admin/page/page')}}/{{$page->getRouteKey()}}');
                 $('#main-list').DataTable().ajax.reload( null, false );
             },
             error: function(jqXHR, textStatus, errorThrown)

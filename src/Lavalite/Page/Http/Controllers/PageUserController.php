@@ -22,6 +22,7 @@ class PageUserController extends UserController
     public function __construct(PageRepositoryInterface $page)
     {
         $this->model = $page;
+        $this->model->pushCriteria(new \Lavalite\Page\Repositories\Presenter\UserCriteria());
         parent::__construct();
     }
 
@@ -32,6 +33,7 @@ class PageUserController extends UserController
      */
     public function index(PageUserRequest $request)
     {
+        dd($this->model->paginate());
         $this->theme->prependTitle(trans('page::page.names').' :: ');
 
         return $this->theme->of('page::admin.page.index')->render();
@@ -61,7 +63,7 @@ class PageUserController extends UserController
             return $page;
         }
 
-        Former::populate($page);
+        Form::populate($page);
 
         return view('page::admin.page.show', compact('page'));
     }
@@ -77,7 +79,7 @@ class PageUserController extends UserController
     {
         $page = $this->model->findOrNew(0);
 
-        Former::populate($page);
+        Form::populate($page);
 
         return view('page::admin.page.create', compact('page'));
     }
@@ -113,7 +115,7 @@ class PageUserController extends UserController
     {
         $page = $this->model->find($id);
 
-        Former::populate($page);
+        Form::populate($page);
 
         return view('page::admin.page.edit', compact('page'));
     }

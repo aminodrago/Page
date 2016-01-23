@@ -45,7 +45,7 @@ $(document).ready(function(){
         "columns": [
         { "data": "name" },
         { "data": "title" },
-        { "data": "slug" },
+        { "data": "url" },
         { "data": "order" }],
         "order": [[ 1, "asc" ]],
         "pageLength": 50

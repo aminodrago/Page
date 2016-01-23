@@ -1,11 +1,11 @@
 <?php
 
-namespace {!!Provider!!}\{!!Package!!}\Http\Requests;
+namespace Lavalite\Page\Http\Requests;
 
 use App\Http\Requests\Request;
 use User;
 
-class {!!Module!!}UserRequest extends Request {
+class PageUserRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -26,17 +26,20 @@ class {!!Module!!}UserRequest extends Request {
 	public function rules(\Illuminate\Http\Request $request)
 	{
 		// validation rule for create request.
-		if($request->isMethod('POST'))
-			return [
-				{!!required!!}
-			];
+		if($request->isMethod('POST')){
+            return [
+                'name'    => 'required',
+                'content' => 'required',
+            ];
+		}
 
 		// Validation rule for update request.
-		if($request->isMethod('PUT') || $request->isMethod('PATCH'))
-			return [
-				{!!required!!}
-			];
-
+		if($request->isMethod('PUT') || $request->isMethod('PATCH')){
+            return [
+                'name'    => 'required',
+                'content' => 'required',
+            ];
+		 }
 		// Default validation rule.
 		return [
 

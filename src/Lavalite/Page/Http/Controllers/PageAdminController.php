@@ -3,7 +3,7 @@
 namespace Lavalite\Page\Http\Controllers;
 
 use App\Http\Controllers\AdminController as AdminController;
-use Former;
+use Form;
 use Lavalite\Page\Http\Requests\PageAdminRequest;
 use Lavalite\Page\Interfaces\PageRepositoryInterface;
 use Lavalite\Page\Models\Page;
@@ -22,8 +22,8 @@ class PageAdminController extends AdminController
      */
     public function __construct(PageRepositoryInterface $page)
     {
-        $this->model = $page;
         parent::__construct();
+        $this->model = $page;
     }
 
     /**
@@ -33,13 +33,11 @@ class PageAdminController extends AdminController
      */
     public function index(PageAdminRequest $request)
     {
-        if ($request->wantsJson()) {
-            $array = $this->model->json();
 
-            foreach ($array as $key => $row) {
-                $array[$key] = array_only($row, config('package.page.page.listfields'));
-            }
-            return ['data' => $array];
+        if ($request->wantsJson()) {
+            $array = $this->model->setPresenter('\\Lavalite\\Page\\Repositories\\Presenter\\PageListPresenter')->all(['*']);
+
+            return $array;
         }
 
         $this->theme->prependTitle(trans('page::page.names').' :: ');
@@ -57,6 +55,7 @@ class PageAdminController extends AdminController
      */
     public function show(PageAdminRequest $request, Page $page)
     {
+
         if (!$page->exists) {
             if ($request->wantsJson()) {
                 return [];
@@ -69,7 +68,7 @@ class PageAdminController extends AdminController
             return $page;
         }
 
-        Former::populate($page);
+        Form::populate($page);
 
         return view('page::admin.page.show', compact('page'));
     }
@@ -83,9 +82,10 @@ class PageAdminController extends AdminController
      */
     public function create(PageAdminRequest $request)
     {
-        $page = $this->model->findOrNew(0);
 
-        Former::populate($page);
+        $page = $this->model->find(0);
+
+        Form::populate($page);
 
         return view('page::admin.page.create', compact('page'));
     }
@@ -119,7 +119,7 @@ class PageAdminController extends AdminController
      */
     public function edit(PageAdminRequest $request, Page $page)
     {
-        Former::populate($page);
+        Form::populate($page);
 
         return view('page::admin.page.edit', compact('page'));
     }
@@ -153,9 +153,10 @@ class PageAdminController extends AdminController
      */
     public function destroy(PageAdminRequest $request, Page $page)
     {
+
         try {
             $t = $page->delete();
-dd($t);
+
             return $this->success(trans('messages.success.deleted', ['Module' => 'Page']), 201);
         } catch (Exception $e) {
             return $this->error($e->getMessage());

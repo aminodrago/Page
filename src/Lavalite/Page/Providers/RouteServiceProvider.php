@@ -4,8 +4,8 @@ namespace Lavalite\Page\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
-use Lavalite\Page\Models\Page;
 use Request;
+use Lavalite\Page\Models\Page;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -21,19 +21,17 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
+     * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
     public function boot(Router $router)
     {
         if (Request::is('*/admin/page/*')) {
             $router->bind('page', function ($id) {
-                $page = $this->app->make(\Lavalite\Page\Interfaces\PageRepositoryInterface::class);
-
-                return  $page->find($id);
+                $page = $this->app->make('\Lavalite\Page\Interfaces\PageRepositoryInterface');
+                return $page->find($id);
             });
-        };
+        }
 
         parent::boot($router);
     }

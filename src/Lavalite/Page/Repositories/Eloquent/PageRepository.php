@@ -3,6 +3,7 @@
 namespace Lavalite\Page\Repositories\Eloquent;
 
 use Lavalite\Page\Interfaces\PageRepositoryInterface;
+use Litepie\Database\Eloquent\BaseRepository;
 
 class PageRepository extends BaseRepository implements PageRepositoryInterface
 {
@@ -13,27 +14,7 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
      */
     public function model()
     {
-        return 'Lavalite\\Page\\Models\\Page';
-    }
-
-    /**
-     * Get page by slug.
-     *
-     * @return void
-     */
-    public function getPageBySlug($slug)
-    {
-        return $this->model->where('slug', $slug)->first();
-    }
-
-    /**
-     * Get page by id.
-     *
-     * @return void
-     */
-    public function getPageById($id)
-    {
-        return $this->model->find($id);
+        return config('package.page.page.model');
     }
 
     /**
@@ -44,11 +25,11 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
     public function getPage($var)
     {
         if (is_numeric($var)) {
-            return $this->getPageById($var);
+            return $this->find($var);
         }
 
         if (is_string($var)) {
-            return $this->getPageBySlug($var);
+            return $this->findBySlug($var);
         }
     }
 }
