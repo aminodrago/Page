@@ -22,7 +22,7 @@ class PageUserController extends UserController
     public function __construct(PageRepositoryInterface $page)
     {
         $this->model = $page;
-        $this->model->pushCriteria(new \Lavalite\Page\Repositories\Presenter\UserCriteria());
+        $this->model->pushCriteria(new \Lavalite\Page\Repositories\Criteria\UserCriteria());
         parent::__construct();
     }
 

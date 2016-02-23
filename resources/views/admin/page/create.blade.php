@@ -1,8 +1,8 @@
 <div class="box-header with-border">
     <h3 class="box-title"> {{ trans('cms.new') }} {{ trans('page::page.name') }} </h3>
     <div class="box-tools pull-right">
-        <button type="button" class="btn btn-primary btn-sm" id="btn-save"><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="btn-cancel"><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
+        <button type="button" class="btn btn-primary btn-sm" data-action='CREATE' data-form='#create-page'  data-load-to='#entry-page' data-datatable='#main-list'><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
+        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#entry-page' data-href='{{Trans::to('admin/page/page/0')}}'><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
 </div>
@@ -108,45 +108,3 @@
 <div class="box-footer" >
 &nbsp;
 </div>
-<script type="text/javascript">
-(function ($) {
-    $('#btn-save').click(function(){
-        $('#create-page').submit();
-    });
-
-    $('#btn-cancel').click(function(){
-        $('#entry-page').load('{{Trans::to('admin/page/page/0')}}');
-    });
-
-    $('#create-page')
-    .submit( function( e ) {
-        if($('#create-page').valid() == false) {
-            toastr.warning('{!!trans('messages.unprocessable')!!}', '{!!trans('messages.type.error')!!}');
-            return false;
-        }
-        console.log(FormData);
-
-        var url  = $(this).attr('action');
-        var formData = new FormData( this );
-        $.ajax( {
-            url: url,
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function() {
-                formData.append('content', $("#content").code());
-            },
-            success:function(data, textStatus, jqXHR)
-            {
-                $('#main-list').DataTable().ajax.reload( null, false );
-                $('#entry-page').load('{{Trans::to('admin/page/page/0')}}');
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-            }
-        });
-        e.preventDefault();
-    });
-}(jQuery));
-</script>

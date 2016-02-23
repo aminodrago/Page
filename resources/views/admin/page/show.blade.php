@@ -1,10 +1,12 @@
 <div class="box-header with-border">
     <h3 class="box-title"> {{ trans('cms.view') }}   {{ trans('page::page.name') }} [{{$page->name}}]</h3>
     <div class="box-tools pull-right">
-        <button type="button" class="btn btn-primary btn-sm" id="btn-new-page"><i class="fa fa-plus-circle"></i> {{ trans('cms.new') }}</button>
-        @if($page->getRouteKey())
-        <button type="button" class="btn btn-primary btn-sm" id="btn-edit-page"><i class="fa fa-pencil-square"></i> {{ trans('cms.edit') }}</button>
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="btn-delete-page"><i class="fa fa-times-circle"></i> {{ trans('cms.delete') }}</button>
+        <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#entry-page' data-href='{{Trans::to('admin/page/page/create')}}'><i class="fa fa-times-circle"></i> {{ trans('cms.new') }}</button>
+        @if($page->id)
+        <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#entry-page' data-href='{{ trans_url('/admin/page/page') }}/{{$page->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> {{ trans('cms.edit') }}</button>
+        <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#entry-page' data-datatable='#main-list' data-href='{{ trans_url('/admin/page/page') }}/{{$page->getRouteKey()}}' >
+        <i class="fa fa-times-circle"></i> {{ trans('cms.delete') }}
+        </button>
         @endif
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
@@ -21,7 +23,7 @@
         {!!Form::vertical_open()
         ->id('show-page')
         ->method('PUT')
-        ->action(Trans::to('admin/page/page/'. $page->getRouteKey()))!!}
+        ->action(trans_url('admin/page/page/'. $page->getRouteKey()))!!}
         {!!Form::token()!!}
         <div class="tab-content">
             <div class="tab-pane active" id="details">
@@ -137,48 +139,3 @@
 <div class="box-footer" >
 &nbsp;
 </div>
-<script type="text/javascript">
-$(document).ready(function(){
-
-    $('#btn-new-page').click(function(){
-        $('#entry-page').load('{{Trans::to('admin/page/page/create')}}', function( response, status, xhr ) {
-          if ( status == "error" ) {
-            toastr.error(xhr.status + " " + xhr.statusText, 'Error');
-          }
-        });
-    });
-
-    @if($page->getRouteKey())
-    $('#btn-edit-page').click(function(){
-        $('#entry-page').load('{{ Trans::to('/admin/page/page') }}/{{$page->getRouteKey()}}/edit');
-    });
-
-    $('#btn-delete-page').click(function(){
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this data!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        }, function(){
-                var data = new FormData();
-                $.ajax({
-                    url: '{{ Trans::to('/admin/page/page') }}/{{$page->getRouteKey()}}',
-                    type: 'DELETE',
-                    processData: false,
-                    contentType: false,
-                    success:function(data, textStatus, jqXHR)
-                    {
-                        swal("Deleted!", "The page has been deleted.", "success");
-                        $('#entry-page').load('{{Trans::to('admin/page/page/0')}}');
-                        $('#main-list').DataTable().ajax.reload( null, false );
-                    },
-                });
-        });
-
-    });
-    @endif
-});
-</script>

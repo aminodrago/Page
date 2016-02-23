@@ -22,8 +22,8 @@ class PageAdminController extends AdminController
      */
     public function __construct(PageRepositoryInterface $page)
     {
-        parent::__construct();
         $this->model = $page;
+        parent::__construct();
     }
 
     /**
@@ -33,16 +33,17 @@ class PageAdminController extends AdminController
      */
     public function index(PageAdminRequest $request)
     {
+        $pages  = $this->model->setPresenter('\\Lavalite\\Page\\Repositories\\Presenter\\PageListPresenter')->paginate(NULL, ['*']);
+        $this   ->theme->prependTitle(trans('page::page.names').' :: ');
+        $view   = $this->theme->of('page::admin.page.index')->render();
 
-        if ($request->wantsJson()) {
-            $array = $this->model->setPresenter('\\Lavalite\\Page\\Repositories\\Presenter\\PageListPresenter')->all(['*']);
-
-            return $array;
-        }
-
-        $this->theme->prependTitle(trans('page::page.names').' :: ');
-
-        return $this->theme->of('page::admin.page.index')->render();
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Page']);
+        $this->responseData = $pages['data'];
+        $this->responseMeta = $pages['meta'];
+        $this->responseView = $view;
+        $this->responseRedirect = '';
+        return $this->respond($request);
     }
 
     /**
@@ -55,22 +56,20 @@ class PageAdminController extends AdminController
      */
     public function show(PageAdminRequest $request, Page $page)
     {
-
         if (!$page->exists) {
-            if ($request->wantsJson()) {
-                return [];
-            }
-
-            return view('page::admin.page.new');
-        }
-
-        if ($request->wantsJson()) {
-            return $page;
+            $this->responseCode = 404;
+            $this->responseMessage = trans('messages.success.notfound', ['Module' => 'Page']);
+            $this->responseData = $page;
+            $this->responseView = view('page::admin.page.new');
+            return $this -> respond($request);
         }
 
         Form::populate($page);
-
-        return view('page::admin.page.show', compact('page'));
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Page']);
+        $this->responseData = $page;
+        $this->responseView = view('page::admin.page.show', compact('page'));
+        return $this -> respond($request);
     }
 
     /**
@@ -83,11 +82,16 @@ class PageAdminController extends AdminController
     public function create(PageAdminRequest $request)
     {
 
-        $page = $this->model->find(0);
+        $page = $this->model->newInstance([]);
 
         Form::populate($page);
 
-        return view('page::admin.page.create', compact('page'));
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Page']);
+        $this->responseData = $page;
+        $this->responseView = view('page::admin.page.create', compact('page'));
+        return $this -> respond($request);
+
     }
 
     /**
@@ -103,9 +107,19 @@ class PageAdminController extends AdminController
             $attributes = $request->all();
             $page = $this->model->create($attributes);
 
-            return $this->success(trans('messages.success.created', ['Module' => 'Page']), 201);
+            $this->responseCode = 201;
+            $this->responseMessage = trans('messages.success.created', ['Module' => 'Page']);
+            $this->responseData = $page;
+            $this->responseMeta = '';
+            $this->responseRedirect = trans_url('/admin/page/page/'.$page->getRouteKey());
+            $this->responseView = view('page::admin.page.create', compact('page'));
+
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            return $this -> respond($request);
         }
     }
 
@@ -120,8 +134,12 @@ class PageAdminController extends AdminController
     public function edit(PageAdminRequest $request, Page $page)
     {
         Form::populate($page);
+        $this->responseCode = 200;
+        $this->responseMessage = trans('messages.success.loaded', ['Module' => 'Page']);
+        $this->responseData = $page;
+        $this->responseView = view('page::admin.page.edit', compact('page'));
 
-        return view('page::admin.page.edit', compact('page'));
+        return $this -> respond($request);
     }
 
     /**
@@ -135,12 +153,25 @@ class PageAdminController extends AdminController
     public function update(PageAdminRequest $request, Page $page)
     {
         try {
+
             $attributes = $request->all();
+
             $page->update($attributes);
 
-            return $this->success(trans('messages.success.updated', ['Module' => 'Page']), 201);
+            $this->responseCode = 204;
+            $this->responseMessage = trans('messages.success.updated', ['Module' => 'Page']);
+            $this->responseData = $page;
+            $this->responseRedirect = trans_url('/admin/page/page/'.$page->getRouteKey());
+
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/page/page/'.$page->getRouteKey());
+
+            return $this -> respond($request);
         }
     }
 
@@ -155,11 +186,25 @@ class PageAdminController extends AdminController
     {
 
         try {
+
             $t = $page->delete();
 
-            return $this->success(trans('messages.success.deleted', ['Module' => 'Page']), 201);
+            $this->responseCode = 202;
+            $this->responseMessage = trans('messages.success.deleted', ['Module' => 'Page']);
+            $this->responseData = $page;
+            $this->responseMeta = '';
+            $this->responseRedirect = trans_url('/admin/page/page/0');
+
+            return $this -> respond($request);
+
         } catch (Exception $e) {
-            return $this->error($e->getMessage());
+
+            $this->responseCode = 400;
+            $this->responseMessage = $e->getMessage();
+            $this->responseRedirect = trans_url('/admin/page/page/'.$page->getRouteKey());
+
+            return $this -> respond($request);
+
         }
     }
 }

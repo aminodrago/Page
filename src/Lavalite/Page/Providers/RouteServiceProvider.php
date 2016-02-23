@@ -26,14 +26,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        if (Request::is('*/admin/page/*')) {
+        parent::boot($router);
+        if (Request::is('*/page/page/*')) {
             $router->bind('page', function ($id) {
                 $page = $this->app->make('\Lavalite\Page\Interfaces\PageRepositoryInterface');
-                return $page->find($id);
+                return $page->findOrNew($id);
             });
         }
-
-        parent::boot($router);
     }
 
     /**

@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li><a href="{!! Trans::to('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
+    <li><a href="{!! trans_url('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('cms.home') !!} </a></li>
     <li class="active">{!! trans('page::page.names') !!}</li>
 </ol>
 @stop
@@ -39,31 +39,34 @@
 <script type="text/javascript">
 var oTable;
 $(document).ready(function(){
-    $('#entry-page').load('{{Trans::to('/admin/page/page/0')}}');
+    app.load('#entry-page','{{trans_url('/admin/page/page/0')}}');
+
     oTable = $('#main-list').DataTable( {
-        "ajax": '{{ Trans::to('/admin/page/page') }}',
+        "ajax": '{{ trans_url('/admin/page/page') }}',
         "columns": [
         { "data": "name" },
         { "data": "title" },
         { "data": "url" },
         { "data": "order" }],
         "order": [[ 1, "asc" ]],
-        "pageLength": 50
+        "pageLength": 50,
+        "sPaginationType": "full_numbers"
     });
 
     $('#main-list tbody').on( 'click', 'tr', function () {
-        $(this).toggleClass('selected');
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        } else {
+            oTable.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
         var d = $('#main-list').DataTable().row( this ).data();
-        $('#entry-page').load('{{Trans::to('/admin/page/page')}}' + '/' + d.id);
+        app.load('#entry-page', '{{trans_url('/admin/page/page')}}' + '/' + d.id);
     });
 });
 </script>
 @stop
 
 @section('style')
-<style type="text/css">
-.box-body{
-    min-height: 420px;
-}
-</style>
+
 @stop

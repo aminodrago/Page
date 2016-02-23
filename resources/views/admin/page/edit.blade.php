@@ -1,8 +1,8 @@
 <div class="box-header with-border">
     <h3 class="box-title"> {{ trans('cms.edit') }}  {{ trans('page::page.name') }} [{{$page->name}}] </h3>
     <div class="box-tools pull-right">
-        <button type="button" class="btn btn-primary btn-sm" id="btn-save-page"><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
-        <button type="button" class="btn btn-default btn-sm" id="btn-close-page"><i class="fa fa-times-circle"></i> {{ trans('cms.close') }}</button>
+        <button type="button" class="btn btn-primary btn-sm" data-action='UPDATE' data-form='#edit-page'  data-load-to='#entry-page' data-datatable='#main-list'><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
+        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#entry-page' data-href='{{Trans::to('admin/page/page')}}/{{$page->getRouteKey()}}'><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
 </div>
@@ -127,45 +127,3 @@
 <div class="box-footer" >
     &nbsp;
 </div>
-<script type="text/javascript">
-(function ($) {
-    $('#btn-close-page').click(function(){
-        $('#entry-page').load('{{Trans::to('admin/page/page')}}/{{$page->getRouteKey()}}');
-    });
-
-    $('#btn-save-page').click(function(){
-        $('#edit-page').submit();
-    });
-
-    $('#edit-page')
-    .submit( function( e ) {
-
-        if($('#edit-page').valid() == false) {
-            toastr.warning('Unprocessable entry.', 'Warning');
-            return false;
-        }
-
-        var url  = $(this).attr('action');
-        var formData = new FormData( this );
-        $.ajax( {
-            url: url,
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function() {
-                formData.append('content', $("#content").code());
-            },
-            success:function(data, textStatus, jqXHR)
-            {
-                $('#entry-page').load('{{Trans::to('admin/page/page')}}/{{$page->getRouteKey()}}');
-                $('#main-list').DataTable().ajax.reload( null, false );
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-            }
-        });
-        e.preventDefault();
-    });
-}(jQuery));
-</script>
