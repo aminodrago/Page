@@ -13,9 +13,7 @@
         "php": ">=5.5.9"
     },
     "autoload": {
-        "classmap": [
-            "src"
-        ],
+
         "psr-4": {
             "Lavalite\\Page\\": "src/"
         }
