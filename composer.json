@@ -15,7 +15,7 @@
     "autoload": {
 
         "psr-4": {
-            "Lavalite\\Page\\": "src/"
+            "Lavalite\\Page\\": "src/Lavalite/Page"
         }
     },
     "minimum-stability": "dev"
