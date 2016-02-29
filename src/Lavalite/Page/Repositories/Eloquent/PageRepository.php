@@ -24,12 +24,6 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
      */
     public function getPage($var)
     {
-        if (is_numeric($var)) {
-            return $this->find($var);
-        }
-
-        if (is_string($var)) {
-            return $this->findBySlug($var);
-        }
+        return $this->findBySlug($var);
     }
 }
