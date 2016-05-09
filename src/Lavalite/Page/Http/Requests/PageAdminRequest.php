@@ -3,7 +3,6 @@
 namespace Lavalite\Page\Http\Requests;
 
 use App\Http\Requests\Request;
-use Gate;
 
 class PageAdminRequest extends Request
 {
@@ -15,28 +14,29 @@ class PageAdminRequest extends Request
     public function authorize(\Illuminate\Http\Request $request)
     {
         $page = $this->route('page');
-        // Determine if the user is authorized to access page module,
+
+// Determine if the user is authorized to access page module,
         if (is_null($page)) {
-            return $request->user()->canDo('page.page.view');
+            return $request->user('admin.web')->canDo('page.page.view');
         }
 
-        // Determine if the user is authorized to create an entry,
+// Determine if the user is authorized to create an entry,
         if ($request->isMethod('POST') || $request->is('*/create')) {
-            return Gate::allows('create', $page);
+            return $request->user('admin.web')->can('create', $page);
         }
 
-        // Determine if the user is authorized to update an entry,
+// Determine if the user is authorized to update an entry,
         if ($request->isMethod('PUT') || $request->isMethod('PATCH') || $request->is('*/edit')) {
-            return Gate::allows('update', $page);
+            return $request->user('admin.web')->can('update', $page);
         }
 
-        // Determine if the user is authorized to delete an entry,
+// Determine if the user is authorized to delete an entry,
         if ($request->isMethod('DELETE')) {
-            return Gate::allows('delete', $page);
+            return $request->user('admin.web')->can('delete', $page);
         }
 
         // Determine if the user is authorized to view the module.
-        return Gate::allows('view', $page);
+        return $request->user('admin.web')->can('view', $page);
     }
 
     /**
@@ -46,7 +46,8 @@ class PageAdminRequest extends Request
      */
     public function rules(\Illuminate\Http\Request $request)
     {
-        // validation rule for create request.
+
+// validation rule for create request.
         if ($request->isMethod('POST')) {
             return [
                 'name'    => 'required',
@@ -54,7 +55,7 @@ class PageAdminRequest extends Request
             ];
         }
 
-        // Validation rule for update request.
+// Validation rule for update request.
         if ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
             return [
                 'name' => 'required',
@@ -66,4 +67,5 @@ class PageAdminRequest extends Request
 
         ];
     }
+
 }

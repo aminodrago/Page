@@ -26,11 +26,13 @@
             <div class="tab-pane active" id="details">
                 {!! Form::hidden('upload_folder')!!}
                 {!! Form::text('name')
+                -> required()
                 -> label(trans(trans('page::page.label.name')))
                 -> placeholder(trans(trans('page::page.placeholder.name')))!!}
 
                 {!! Form::textarea('content')
                 -> label(trans('page::page.label.content'))
+                -> required()
                 -> value(e($page['content']))
                 -> dataUpload(URL::to($page->getUploadURL('content')))
                 -> addClass('html-editor')

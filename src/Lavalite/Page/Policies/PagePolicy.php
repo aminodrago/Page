@@ -20,6 +20,7 @@ class PagePolicy
      */
     public function view(User $user, Page $page)
     {
+
         if ($user->canDo('page.page.view')) {
             return true;
         }
@@ -37,7 +38,7 @@ class PagePolicy
      */
     public function create(User $user)
     {
-        return  $user->canDo('page.page.create');
+        return $user->canDo('page.page.create');
     }
 
     /**
@@ -50,6 +51,7 @@ class PagePolicy
      */
     public function update(User $user, Page $page)
     {
+
         if ($user->canDo('page.page.update')) {
             return true;
         }
@@ -67,6 +69,7 @@ class PagePolicy
      */
     public function destroy(User $user, Page $page)
     {
+
         if ($user->canDo('page.page.delete')) {
             return true;
         }
@@ -84,8 +87,11 @@ class PagePolicy
      */
     public function before($user, $ability)
     {
+
         if ($user->isSuperUser()) {
             return true;
         }
+
     }
+
 }
