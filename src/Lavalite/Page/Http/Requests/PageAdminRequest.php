@@ -15,23 +15,23 @@ class PageAdminRequest extends Request
     {
         $page = $this->route('page');
 
-// Determine if the user is authorized to access page module,
         if (is_null($page)) {
+            // Determine if the user is authorized to access page module,
             return $request->user('admin.web')->canDo('page.page.view');
         }
 
-// Determine if the user is authorized to create an entry,
         if ($request->isMethod('POST') || $request->is('*/create')) {
+            // Determine if the user is authorized to create an entry,
             return $request->user('admin.web')->can('create', $page);
         }
 
-// Determine if the user is authorized to update an entry,
         if ($request->isMethod('PUT') || $request->isMethod('PATCH') || $request->is('*/edit')) {
+            // Determine if the user is authorized to update an entry,
             return $request->user('admin.web')->can('update', $page);
         }
 
-// Determine if the user is authorized to delete an entry,
         if ($request->isMethod('DELETE')) {
+            // Determine if the user is authorized to delete an entry,
             return $request->user('admin.web')->can('delete', $page);
         }
 
@@ -47,16 +47,16 @@ class PageAdminRequest extends Request
     public function rules(\Illuminate\Http\Request $request)
     {
 
-// validation rule for create request.
         if ($request->isMethod('POST')) {
+            // validation rule for create request.
             return [
                 'name'    => 'required',
                 'content' => 'required',
             ];
         }
 
-// Validation rule for update request.
         if ($request->isMethod('PUT') || $request->isMethod('PATCH')) {
+            // Validation rule for update request.
             return [
                 'name' => 'required',
             ];
