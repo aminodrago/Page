@@ -19,6 +19,7 @@
         ->id('create-page')
         ->method('POST')
         ->files('true')
+        ->class('form-compact')
         ->enctype('multipart/form-data')
         ->action(Trans::to('admin/page/page'))!!}
         {!!Form::token()!!}

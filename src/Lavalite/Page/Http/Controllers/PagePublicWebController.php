@@ -2,9 +2,9 @@
 
 namespace Lavalite\Page\Http\Controllers;
 
-use App\Http\Controllers\PublicController as CmsPublicController;
+use App\Http\Controllers\PublicWebController as PublicController;
 
-class PublicController extends CmsPublicController
+class PagePublicWebController extends PublicController
 {
     /**
      * Constructor.
@@ -38,9 +38,9 @@ class PublicController extends CmsPublicController
 
         // Get view
         $view = $page->view;
-        $view = view()->exists('page::public.'.$view) ? $view : 'page';
+        $view = view()->exists('page::public.' . $view) ? $view : 'page';
 
         // display page
-        return $this->theme->of('page::public.'.$view, compact('page'))->render();
+        return $this->theme->of('page::public.' . $view, compact('page'))->render();
     }
 }

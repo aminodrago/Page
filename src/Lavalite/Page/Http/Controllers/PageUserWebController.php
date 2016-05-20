@@ -2,15 +2,14 @@
 
 namespace Lavalite\Page\Http\Controllers;
 
-use App\Http\Controllers\UserController as UserController;
-use Former;
+use App\Http\Controllers\UserWebController as UserController;
 use Lavalite\Page\Http\Requests\PageUserRequest;
 use Lavalite\Page\Interfaces\PageRepositoryInterface;
 
 /**
  *
  */
-class PageUserController extends UserController
+class PageUserWebController extends UserController
 {
     /**
      * Initialize page controller.
@@ -34,7 +33,7 @@ class PageUserController extends UserController
     public function index(PageUserRequest $request)
     {
         dd($this->model->paginate());
-        $this->theme->prependTitle(trans('page::page.names').' :: ');
+        $this->theme->prependTitle(trans('page::page.names') . ' :: ');
 
         return $this->theme->of('page::admin.page.index')->render();
     }
@@ -52,6 +51,7 @@ class PageUserController extends UserController
         $page = $this->model->find($id);
 
         if (empty($page)) {
+
             if ($request->wantsJson()) {
                 return [];
             }
@@ -95,12 +95,13 @@ class PageUserController extends UserController
     {
         try {
             $attributes = $request->all();
-            $page = $this->model->create($attributes);
+            $page       = $this->model->create($attributes);
 
             return $this->success(trans('messages.success.created', ['Module' => 'Page']));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
+
     }
 
     /**
@@ -132,12 +133,13 @@ class PageUserController extends UserController
     {
         try {
             $attributes = $request->all();
-            $page = $this->model->update($attributes, $id);
+            $page       = $this->model->update($attributes, $id);
 
             return $this->success(trans('messages.success.updated', ['Module' => 'Page']));
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
+
     }
 
     /**
@@ -156,5 +158,7 @@ class PageUserController extends UserController
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
+
     }
+
 }

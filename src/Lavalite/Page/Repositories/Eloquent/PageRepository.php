@@ -3,7 +3,7 @@
 namespace Lavalite\Page\Repositories\Eloquent;
 
 use Lavalite\Page\Interfaces\PageRepositoryInterface;
-use Litepie\Database\Eloquent\BaseRepository;
+use Litepie\Repository\Eloquent\BaseRepository;
 
 class PageRepository extends BaseRepository implements PageRepositoryInterface
 {
