@@ -2,53 +2,57 @@
 
 return [
 
-/*
- * Provider .
- */
-    'provider'    => 'lavalite',
+    /*
+     * Provider .
+     */
+    'provider' => 'lavalite',
 
-/*
- * Package .
- */
-    'package'     => 'page',
+    /*
+     * Package.
+     */
+    'package'  => 'page',
 
-/*
- * Modules .
- */
-    'modules'     => ['page', 'category'],
+    /*
+     * Modules.
+     */
+    'modules'  => ['page', 'category'],
 
-/*
- * Compilers .
- */
-    'compiler'    => ['none' => 'None', 'php' => 'Php', 'blade' => 'Blade', 'twig' => 'Twig'],
+    /*
+     * Compilers .
+     */
+    'compiler' => ['none' => 'None', 'php' => 'Php', 'blade' => 'Blade', 'twig' => 'Twig'],
 
-/*
- * Views for the page  .
- */
-    'views'       => ['page' => 'Default', 'page' => 'Default'],
+    /*
+     * Views for the page  .
+     */
+    'views'    => ['page' => 'Default', 'left' => 'Left side menu'],
 
-    'permissions' => ['page.view' => 'View', 'page.create' => 'Create', 'page.edit' => 'Edit', 'page.delete' => 'Delete'],
+    /*
+     * Modale variables for page module.
+     */
+    'page'     => [
+        'model'        => 'Lavalite\Page\Models\Page',
+        'table'        => 'pages',
+        'primaryKey'   => 'id',
+        'hidden'       => [],
+        'visible'      => [],
+        'guarded'      => ['*'],
+        'slugs'        => ['slug' => 'name'],
+        'dates'        => ['deleted_at'],
+        'appends'      => ['eid'],
+        'fillable'     => ['name', 'title', 'heading', 'sub_heading', 'abstract', 'content', 'meta_title', 'meta_keyword', 'meta_description', 'banner', 'images', 'compiler', 'view', 'order', 'status'],
+        'translate'    => ['name', 'title', 'heading', 'sub_heading', 'abstract', 'content', 'meta_title', 'meta_keyword', 'meta_description'],
 
-    'image'       => [
-        'xs' => ['width' => '60', 'height' => '45'],
-        'sm' => ['width' => '100', 'height' => '75'],
-        'md' => ['width' => '460', 'height' => '345'],
-        'lg' => ['width' => '800', 'height' => '600'],
-        'xl' => ['width' => '1000', 'height' => '750'],
-    ],
-
-    'page'        => [
-        'table'         => 'pages',
-        'model'         => 'Lavalite\Page\Models\Page',
-        'fillable'      => ['name', 'slug', 'order', 'view', 'compiler', 'status', 'upload_folder',
-            'heading', 'title', 'content', 'keyword', 'description', 'abstract'],
-        'listfields'    => ['id', 'name', 'category_id', 'slug', 'order', 'status', 'heading', 'title',
-            'abstract', 'compiler', 'view'],
-        'translatable'  => ['heading', 'content', 'title', 'keyword', 'description', 'images'],
-        'upload-folder' => '/uploads/page',
-        'uploadable'    => [
+        'uploadfolder' => '/uploads/page',
+        'uploads'      => [
             'single'   => ['banner'],
             'multiple' => ['images'],
         ],
+        'casts'        => [
+            'banner' => 'array',
+            'images' => 'array',
+        ],
+        'revision'     => ['name', 'title', 'heading', 'sub_heading', 'abstract', 'meta_title', 'meta_keyword'],
+        'perPage'      => '20',
     ],
 ];
