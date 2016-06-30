@@ -38,29 +38,41 @@
             </div>
             <div class="tab-pane" id="metatags">
                 <div class="row">
-                    <div class="col-md-6 col-lg-6">
+                    <div class="col-md-4 col-lg-4">
                         {!! Form::text('title')
                         -> label(trans('page::page.label.title'))
                         -> placeholder(trans('page::page.placeholder.title'))!!}
                     </div>
-                    <div class="col-md-6 col-lg-6">
+                    <div class="col-md-4 col-lg-4">
                         {!! Form::text('heading')
                         -> label(trans('page::page.label.heading'))
                         -> placeholder(trans('page::page.placeholder.heading'))!!}
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-lg-6">
-                        {!! Form::textarea('keyword')
-                        -> label(trans('page::page.label.keyword'))
-                        -> rows(4)
-                        -> placeholder(trans('page::page.placeholder.keyword'))!!}
+                    <div class='col-md-4 col-sm-4'>
+                           {!! Form::text('sub_heading')
+                           -> label(trans('page::page.label.sub_heading'))
+                           -> placeholder(trans('page::page.placeholder.sub_heading'))!!}
                     </div>
-                    <div class="col-md-6 col-lg-6">
-                        {!! Form::textarea('description')
-                        -> label(trans('page::page.label.description'))
-                        -> rows(4)
-                        -> placeholder(trans('page::page.placeholder.description'))!!}
+                    <div class='col-md-12 col-sm-12'>
+                           {!! Form::textarea('abstract')
+                           -> label(trans('page::page.label.abstract'))
+                           -> rows(4)
+                           -> placeholder(trans('page::page.placeholder.abstract'))!!}
+                    </div>
+                    <div class='col-md-4 col-sm-6'>
+                           {!! Form::text('meta_title')
+                           -> label(trans('page::page.label.meta_title'))
+                           -> placeholder(trans('page::page.placeholder.meta_title'))!!}
+                    </div>
+                    <div class='col-md-4 col-sm-6'>
+                           {!! Form::text('meta_keyword')
+                           -> label(trans('page::page.label.meta_keyword'))
+                           -> placeholder(trans('page::page.placeholder.meta_keyword'))!!}
+                    </div>
+                    <div class='col-md-4 col-sm-6'>
+                           {!! Form::text('meta_description')
+                           -> label(trans('page::page.label.meta_description'))
+                           -> placeholder(trans('page::page.placeholder.meta_description'))!!}
                     </div>
                 </div>
             </div>

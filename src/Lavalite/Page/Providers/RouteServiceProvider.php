@@ -4,8 +4,8 @@ namespace Lavalite\Page\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
-use Request;
 use Lavalite\Page\Models\Page;
+use Request;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -27,12 +27,14 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         parent::boot($router);
+
         if (Request::is('*/page/page/*')) {
             $router->bind('page', function ($id) {
                 $page = $this->app->make('\Lavalite\Page\Interfaces\PageRepositoryInterface');
                 return $page->findOrNew($id);
             });
         }
+
     }
 
     /**
@@ -45,7 +47,8 @@ class RouteServiceProvider extends ServiceProvider
     public function map(Router $router)
     {
         $router->group(['namespace' => $this->namespace], function ($router) {
-            require __DIR__.'/../Http/routes.php';
+            require __DIR__ . '/../Http/routes.php';
         });
     }
+
 }

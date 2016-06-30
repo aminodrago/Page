@@ -31,10 +31,14 @@ class PagePublicWebController extends PublicController
         // get page by slug
         $page = $this->model->getPage($slug);
 
+        if (is_null($page)) {
+            abort(404);
+        }
+
         //Set theme variables
-        $this->theme->setTitle($page->title);
-        $this->theme->setKeywords($page->keyword);
-        $this->theme->setDescription($page->description);
+        $this->theme->setTitle(strip_tags($page->title));
+        $this->theme->setKeywords(strip_tags($page->keyword));
+        $this->theme->setDescription(strip_tags($page->description));
 
         // Get view
         $view = $page->view;
@@ -43,4 +47,5 @@ class PagePublicWebController extends PublicController
         // display page
         return $this->theme->of('page::public.' . $view, compact('page'))->render();
     }
+
 }
