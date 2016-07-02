@@ -24,6 +24,7 @@ class PageAdminWebController extends AdminController
     {
         parent::__construct();
         $this->repository = $page;
+
     }
 
     /**
@@ -34,11 +35,18 @@ class PageAdminWebController extends AdminController
     public function index(PageAdminWebRequest $request)
     {
 
+        $pageLimit = $request->input('pageLimit');
+
         if ($request->wantsJson()) {
-            return $pages = $this->repository->setPresenter('\\Lavalite\\Page\\Repositories\\Presenter\\PageListPresenter')
+            $pages = $this->repository
+                ->setPresenter('\\Lavalite\\Page\\Repositories\\Presenter\\PageListPresenter')
                 ->scopeQuery(function ($query) {
                     return $query->orderBy('id', 'DESC');
-                })->all();
+                })->paginate($pageLimit);
+
+            $pages['recordsTotal']    = $pages['meta']['pagination']['total'];
+            $pages['recordsFiltered'] = $pages['meta']['pagination']['total'];
+            $pages['request']         = $request->all();
             return response()->json($pages, 200);
 
         }

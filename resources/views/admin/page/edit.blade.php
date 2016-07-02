@@ -1,8 +1,8 @@
 <div class="box-header with-border">
     <h3 class="box-title"> {{ trans('cms.edit') }}  {{ trans('page::page.name') }} [{{$page->name}}] </h3>
     <div class="box-tools pull-right">
-        <button type="button" class="btn btn-primary btn-sm" data-action='UPDATE' data-form='#edit-page'  data-load-to='#entry-page' data-datatable='#main-list'><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
-        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#entry-page' data-href='{{Trans::to('admin/page/page')}}/{{$page->getRouteKey()}}'><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
+        <button type="button" class="btn btn-primary btn-sm" data-action='UPDATE' data-form='#edit-page'  data-load-to='#page-page-entry' data-datatable='#main-list'><i class="fa fa-floppy-o"></i> {{ trans('cms.save') }}</button>
+        <button type="button" class="btn btn-default btn-sm" data-action='CANCEL' data-load-to='#page-page-entry' data-href='{{Trans::to('admin/page/page')}}/{{$page->getRouteKey()}}'><i class="fa fa-times-circle"></i> {{ trans('cms.cancel') }}</button>
         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
     </div>
 </div>

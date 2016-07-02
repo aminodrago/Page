@@ -7,6 +7,17 @@ use Litepie\Repository\Eloquent\BaseRepository;
 
 class PageRepository extends BaseRepository implements PageRepositoryInterface
 {
+
+    /**
+     * Booting the repository.
+     *
+     * @return null
+     */
+    public function boot()
+    {
+        $this->pushCriteria(app('Litepie\Repository\Criteria\RequestCriteria'));
+    }
+
     /**
      * Specify Model class name.
      *
@@ -14,6 +25,7 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
      */
     public function model()
     {
+        $this->fieldSearchable = config('package.page.page.search');
         return config('package.page.page.model');
     }
 
