@@ -88,20 +88,20 @@ class PageTableSeeder extends Seeder
 
         DB::table('permissions')->insert([
             [
-                'name'          => 'page.page.view',
-                'readable_name' => 'View Page',
+                'slug' => 'page.page.view',
+                'name' => 'View Page',
             ],
             [
-                'name'          => 'page.page.create',
-                'readable_name' => 'Create Page',
+                'slug' => 'page.page.create',
+                'name' => 'Create Page',
             ],
             [
-                'name'          => 'page.page.edit',
-                'readable_name' => 'Update Page',
+                'slug' => 'page.page.edit',
+                'name' => 'Update Page',
             ],
             [
-                'name'          => 'page.page.delete',
-                'readable_name' => 'Delete Page',
+                'slug' => 'page.page.delete',
+                'name' => 'Delete Page',
             ],
         ]);
     }
