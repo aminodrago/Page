@@ -33,6 +33,7 @@ class CreatePagesTable extends Migration
             $table->integer('order')->nullable();
             $table->string('slug', 200)->nullable();
             $table->enum('status', ['draft', 'published', 'hidden', 'suspended', 'spam'])->default('draft')->nullable();
+            $table->string('upload_folder', 100)->nullable();
             $table->integer('user_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
