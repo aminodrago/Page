@@ -71,12 +71,15 @@
                         -> options(trans('page::page.options.compiler'))
                         -> label(trans('page::page.label.compiler'))
                         -> placeholder(trans('page::page.placeholder.compiler'))!!}
+
                         {!! Form::select('category_id')
                         -> options([])
                         -> label(trans('page::page.label.category'))
                         -> placeholder(trans('page::page.placeholder.category'))!!}
+                        
                         {!! Form::hidden('status')
                         -> forceValue('0')!!}
+
                         {!! Form::checkbox('status')
                         -> label(trans('page::page.label.status'))
                         ->inline()!!}
@@ -88,19 +91,19 @@
                 <div class="row">
                     <div class='col-md-3'>
                     <label for="order" class="control-label">Banner Image</label>
-                       {!! Filer::uploader('banner', $page->getUploadURL('banner'), 1) !!}
+                       {!! $page->fileUpload('banner', 1) !!}
                     </div>
                     <div class='col-md-9'>
-                        {!! Filer::editor('banner', $page['banner'], 1) !!}
+                        {!! $page->fileEdit('banner') !!}
                     </div>
                 </div>
                 <div class="row">
                     <div class='col-md-3'>
                     <label for="order" class="control-label">Gallery Images</label>
-                        {!! Filer::uploader('images', $page->getUploadURL('images')) !!}
+                        {!! $page->fileUpload('images') !!}
                     </div>
                     <div class='col-md-9'>
-                        {!! Filer::editor('images', $page['images']) !!}
+                        {!! $page->fileEdit('images') !!}
                     </div>
                 </div>
             </div>

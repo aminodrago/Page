@@ -116,19 +116,19 @@
                 <div class="row">
                     <div class='col-md-3'>
                     <label for="order" class="control-label">Banner Image</label>
-                       {!! Filer::uploader('banner', $page->getUploadURL('banner'), 1) !!}
+                       {!! $page->fileUpload('banner', 1) !!}
                     </div>
                     <div class='col-md-9'>
-                        {!! Filer::editor('banner', $page['banner'], 1) !!}
+                        {!! $page->fileEdit('banner') !!}
                     </div>
                 </div>
                 <div class="row">
                     <div class='col-md-3'>
-                    <label for="order" class="control-label">Images</label>
-                        {!! Filer::uploader('images', $page->getUploadURL('images')) !!}
+                    <label for="order" class="control-label">Gallery Images</label>
+                        {!! $page->fileUpload('images') !!}
                     </div>
                     <div class='col-md-9'>
-                        {!! Filer::editor('images', $page['images']) !!}
+                        {!! $page->fileEdit('images') !!}
                     </div>
                 </div>
             </div>

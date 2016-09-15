@@ -50,7 +50,7 @@ return [
         'listfields'   => ['id', 'name', 'category_id', 'slug', 'order', 'status', 'heading', 
                            'title', 'abstract', 'compiler', 'view'],
         'translate'    => ['name', 'heading', 'content', 'title', 'keyword', 'description'],
-        'uploadfolder' => '/uploads/page',
+        'upload_folder' => '/page/page',
         'uploads'      => [
             'single'   => ['banner'],
             'multiple' => ['images'],

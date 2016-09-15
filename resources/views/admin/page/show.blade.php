@@ -121,14 +121,12 @@
             <div class="tab-pane" id="images">
                 <div class="row">
                     <div class='col-md-12'>
-                        <label for="order" class="control-label">Banner Image</label>
-                        {!! Filer::show($page['banner'], 1) !!}<br/><br/>
+                        {!! $page->fileShow('banner') !!}
                     </div>
                 </div>
                 <div class="row">
                     <div class='col-md-12'>
-                        <label for="order" class="control-label">Gallery Images</label><br/>
-                        {!! Filer::show($page['images']) !!}
+                        {!! $page->fileShow('images') !!}
                     </div>
                 </div>
             </div>
